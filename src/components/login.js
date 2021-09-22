@@ -1,26 +1,27 @@
 import React from 'react';
-import { Avatar, Button, Grid, Link, Paper, TextField, Typography } from '@mui/material';
+import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 
 function Login() {
-    
-    const paperStyle={padding:20, width:280, margin:"20px auto"};
-    const avatarStyle={backgroundColor:"#41a9e1"};
-    const marginStyle={margin:"8px 0"};
-    
-    return(
+
+    const paperStyle = { padding: 20, width: 280, margin: "20px auto" };
+    const avatarStyle = { backgroundColor: "#41a9e1" };
+    const headerStyle = { margin: 10 };
+    const marginStyle = { margin: "8px 0" };
+
+    return (
         <Grid>
             <Paper elevation={10} style={paperStyle}>
                 <Grid align="center">
                     <Avatar style={avatarStyle}>
-                        <LockOpenOutlinedIcon/>
+                        <LockOpenOutlinedIcon />
                     </Avatar>
-                    <h2>Rickshaw Registry</h2>
-                    {/* <h4>Log In</h4> */}
+                    <h2 style={headerStyle}>Rickshaw Registry</h2>
+                    <h4 style={headerStyle}>Log In</h4>
                 </Grid>
-                <TextField label="Email" variant="filled" size="small" style={marginStyle} fullWidth required />
+                <TextField label="Email" type="email" variant="filled" size="small" style={marginStyle} fullWidth autoFocus required />
                 <TextField label="Password" type="password" autoComplete="current-password" variant="filled" size="small" fullWidth required />
                 <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
                 <Button type="submit" color="primary" variant="contained" style={marginStyle} fullWidth>
