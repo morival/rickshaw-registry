@@ -2,9 +2,9 @@ import React from 'react';
 import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
-function Signup() {
+function Signup({handleChange}) {
 
-    const paperStyle = { padding: 20, width: 280, margin: "20px auto" };
+    const paperStyle = { padding: 20, width: 280, margin: "0 auto 20px" };
     const avatarStyle = { backgroundColor: "#41a9e1" };
     const headerStyle = { margin: 10 };
     const marginStyle = { margin: "8px 0" };
@@ -34,7 +34,7 @@ function Signup() {
             <Paper elevation={10} style={paperStyle}>
                 <Typography align="center">
                     Have an account?
-                    <Link href="#" underline="none"> Log in </Link>
+                    <Link href="#" onClick={()=>handleChange("open Log In event",0)} underline="none"> Log in </Link>
                 </Typography>
             </Paper>
         </Grid>
