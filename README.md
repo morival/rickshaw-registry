@@ -1,3 +1,16 @@
+## Built using
+
+### Front-end
+- [ReactJS](https://reactjs.org/) - React Frontend framework 
+- [Material-UI](https://material-ui.com/) - UI library
+
+### Back-end
+- [Node.js](https://nodejs.org/en/) - Runtime environment for JS
+- [Express.js](https://expressjs.com/) - Node.js framework, makes process of building APIs easier & faster
+- [Bcrypt.js](https://www.npmjs.com/package/bcryptjs) - For hashing passwords
+- [Dotenv](https://www.npmjs.com/package/dotenv) - To load environment variables from a .env file
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

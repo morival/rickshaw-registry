@@ -1,6 +1,6 @@
 import { Paper, Tab, Tabs, Typography, Box } from '@mui/material';
 // import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 
@@ -9,7 +9,7 @@ function SignupLoginContainer() {
     const paperStyle = { width: 320, margin: "20px auto" };
     const tabStyle = { width: 160 };
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

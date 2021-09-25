@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useForm, Controller } from "react-hook-form";
 import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import {FormInput} from './controls/FormInput'
 
 function Signup({handleChange}) {
 
@@ -8,6 +10,31 @@ function Signup({handleChange}) {
     const avatarStyle = { backgroundColor: "#41a9e1" };
     const headerStyle = { margin: 10 };
     const marginStyle = { margin: "8px 0" };
+
+
+    const { handleSubmit, control } = useForm();
+
+    // const initialFormData = Object.freeze({
+    //     email: ""
+    //   });
+
+    
+    // const [formData, setFormData] = useState<string>(initialFormData);
+
+    // function handleFormChange(e) {
+    //     setFormData({
+    //         ...formData,
+    //         // Trimming any whitespace
+    //         [e.target.name]: e.target.value.trim()
+    //     });
+    // };
+
+    // const handleSubmit = () => {
+    //     // e.preventDefault()
+    //     console.log(formData);
+    //     // ... submit to API or something
+    //   };
+    
 
     return (
         <Grid>
@@ -20,13 +47,11 @@ function Signup({handleChange}) {
                     <h4 style={headerStyle}>Sign Up</h4>
                 </Grid>
                 <form>
-                    <TextField label="Name" variant="filled" size="small" style={marginStyle} fullWidth autoFocus required />
-                    <TextField label="Email" type="email" variant="filled" size="small" style={marginStyle} fullWidth required />
-                    <TextField label="Phone number" type="number" variant="filled" size="small" style={marginStyle} fullWidth />
-                    <TextField label="Password" type="password" variant="filled" size="small" style={marginStyle} fullWidth required />
-                    <TextField label="Confirm password" type="password" variant="filled" size="small" style={marginStyle} fullWidth required />
-                    <FormControlLabel control={<Checkbox required />} label="By signing up, you agree to our Terms." />
-                    <Button type="submit" color="primary" variant="contained" style={marginStyle} fullWidth>
+                    {
+                        FormInput.map(input=> <TextField {...input} style={marginStyle} variant="filled" size="small" fullWidth />)
+                    }
+                    <FormControlLabel control={<Checkbox />} label="By signing up, you agree to our Terms." />
+                    <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" style={marginStyle} fullWidth>
                         Create Account
                     </Button>
                 </form>
