@@ -1,13 +1,27 @@
-import { Paper, Tab, Tabs, Typography, Box } from '@mui/material';
-// import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
+import { Paper, Tab, Tabs, Typography, Box } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+// import PropTypes from 'prop-types';
+
+
+const useStyles = makeStyles({
+    root: {
+        "&.css-1woxyl6-MuiPaper-root" :{
+            width: 320, 
+            margin: "20px auto"
+        },
+        "&.css-1h9z7r5-MuiButtonBase-root-MuiTab-root" :{
+            width: 160
+        }
+    }
+})
+
 
 function SignupLoginContainer() {
 
-    const paperStyle = { width: 320, margin: "20px auto" };
-    const tabStyle = { width: 160 };
+    const classes = useStyles();
 
     const [value, setValue] = useState(0);
 
@@ -42,10 +56,10 @@ function SignupLoginContainer() {
     // };
 
     return (
-        <Paper elevation={20} style={paperStyle}>
+        <Paper elevation={20} className={classes.root}>
             <Tabs value={value} onChange={handleChange}>
-                <Tab style={tabStyle} label="Log In" />
-                <Tab style={tabStyle} label="Sign Up" />
+                <Tab className={classes.root} label="Log In" />
+                <Tab className={classes.root} label="Sign Up" />
             </Tabs>
             <TabPanel value={value} index={0}><Login handleChange={handleChange} /></TabPanel>
             <TabPanel value={value} index={1}><Signup handleChange={handleChange} /></TabPanel>
