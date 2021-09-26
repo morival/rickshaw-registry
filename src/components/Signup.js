@@ -30,11 +30,19 @@ function Signup({handleChange}) {
         setFormData({
             ...formData,
             [name]:value
-        })
-    }
+        });
+    };
+
+    const handleCheckboxChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]:e.target.checked
+        });
+    };
 
     const { handleSubmit, control } = useForm();
 
+    console.log(formData.termsAgreement)
 
     return (
         <Grid>
@@ -48,16 +56,17 @@ function Signup({handleChange}) {
                 </Grid>
                 <form>
                     {
-                        FormInput.map(input=> <TextField 
-                                                    {...input} 
-                                                    style={marginStyle} 
-                                                    value={formData[findInputValue(input.name)]} 
-                                                    onChange={handleInputChange} 
-                                                    variant="filled" 
-                                                    size="small" 
-                                                    fullWidth />)
+                        FormInput.map(
+                            input=> <TextField
+                            {...input} 
+                            style={marginStyle} 
+                            value={formData[findInputValue(input.name)]} 
+                            onChange={handleInputChange} 
+                            variant="filled" 
+                            size="small" 
+                            fullWidth />)
                     }
-                    <FormControlLabel control={<Checkbox />} label="By signing up, you agree to our Terms." />
+                    <FormControlLabel control={<Checkbox name="termsAgreement" checked={formData.termsAgreement} onChange={handleCheckboxChange} />}  label="By signing up, you agree to our Terms." />
                     <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" style={marginStyle} fullWidth>
                         Create Account
                     </Button>
