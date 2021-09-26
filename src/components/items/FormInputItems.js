@@ -1,4 +1,4 @@
-export const FormInput = [
+export const FormInputItems = [
     {
         name:"name", 
         label:"Name", 

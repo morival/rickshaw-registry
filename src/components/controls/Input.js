@@ -15,7 +15,7 @@ export function Input(props) {
 
     const classes = useStyles();
 
-    const {name, label, value, type, onChange} = props;
+    const {name, label, value, type, onChange, autoFocus} = props;
 
 
     return(
@@ -26,7 +26,8 @@ export function Input(props) {
             label={label}
             value={value} 
             type={type}
-            onChange={onChange} 
+            onChange={onChange}
+            autoFocus={autoFocus}
             variant="filled" 
             size="small" 
             fullWidth 
@@ -34,4 +35,4 @@ export function Input(props) {
     )
 }
 
-// export default Input;
+export default Input;
