@@ -2,7 +2,8 @@ export const FormInput = [
     {
         name:"name", 
         label:"Name", 
-        key:"name", 
+        key:"name",
+        type:"text", 
         autoFocus:true 
     },
     {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import {UseForm, Form} from './UseForm';
 import {FormInput} from './controls/FormInput'
 import { useForm, Controller } from "react-hook-form";
 import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-
 
 const useStyles = makeStyles({
     root: {
@@ -46,18 +46,16 @@ function Signup({handleChange}) {
     const headerStyle = { margin: 10 };
     // const marginStyle = { margin: "8px 0" };
 
-    const [formData, setFormData] = useState(initialValues);
+    const {
+        formData,
+        setFormData,
+        handleInputChange
+    } = UseForm(initialValues);
 
 
     const findInputValue = e => Object.keys(formData).find( input=>input=== e);
 
-    const handleInputChange = e => {
-        const {name, value} = e.target
-        setFormData({
-            ...formData,
-            [name]:value
-        });
-    };
+    
 
     const handleCheckboxChange = (e) => {
         setFormData({
@@ -72,15 +70,20 @@ function Signup({handleChange}) {
 
     return (
         <Grid>
-            <Paper elevation={10} className={classes.root}>
+            <Paper elevation={10} 
+            className={classes.root}
+            >
                 <Grid align="center">
-                    <Avatar className={classes.root}>
+                    <Avatar 
+                    className={classes.root}
+                    >
                         <AddBoxOutlinedIcon />
                     </Avatar>
                     <h2 style={headerStyle}>Rickshaw Registry</h2>
                     <h4 style={headerStyle}>Sign Up</h4>
                 </Grid>
-                <form>
+                <Form>
+                    <Grid>
                     {
                         FormInput.map(
                             input=> <TextField
@@ -92,13 +95,18 @@ function Signup({handleChange}) {
                             size="small" 
                             fullWidth />)
                     }
+                    </Grid>
                     <FormControlLabel control={<Checkbox name="termsAgreement" checked={formData.termsAgreement} onChange={handleCheckboxChange} />}  label="By signing up, you agree to our Terms." />
-                    <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" className={classes.root} fullWidth>
+                    <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" 
+                    className={classes.root}
+                     fullWidth>
                         Create Account
                     </Button>
-                </form>
+                </Form>
             </Paper>
-            <Paper elevation={10} className={classes.root}>
+            <Paper elevation={10} 
+            className={classes.root}
+            >
                 <Typography align="center">
                     Have an account?
                     <Link href="#" onClick={()=>handleChange("open Log In event",0)} underline="none"> Log in </Link>
