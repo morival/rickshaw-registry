@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {UseForm, Form} from './UseForm';
-import {FormInput} from './controls/FormInput'
+import {FormInput} from './controls/FormInput';
+import {Input} from './controls/Input';
 import { useForm, Controller } from "react-hook-form";
 import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -15,9 +16,6 @@ const useStyles = makeStyles({
         },
         "&.css-2s90m6-MuiAvatar-root" :{ 
             backgroundColor: "#41a9e1" 
-        },
-        "&.css-wb57ya-MuiFormControl-root-MuiTextField-root" :{ 
-            margin: "8px 0"
         },
         "&.css-1fu7jd5-MuiButtonBase-root-MuiButton-root" :{
             margin: "8px 0"
@@ -83,19 +81,15 @@ function Signup({handleChange}) {
                     <h4 style={headerStyle}>Sign Up</h4>
                 </Grid>
                 <Form>
-                    <Grid>
                     {
                         FormInput.map(
-                            input=> <TextField
+                            input=> <Input
                             {...input} 
-                            className={classes.root}
                             value={formData[findInputValue(input.name)]} 
-                            onChange={handleInputChange} 
-                            variant="filled" 
-                            size="small" 
-                            fullWidth />)
+                            onChange={handleInputChange}
+                        />)
                     }
-                    </Grid>
+                    
                     <FormControlLabel control={<Checkbox name="termsAgreement" checked={formData.termsAgreement} onChange={handleCheckboxChange} />}  label="By signing up, you agree to our Terms." />
                     <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" 
                     className={classes.root}
