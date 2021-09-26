@@ -4,6 +4,16 @@ import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbo
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import {FormInput} from './controls/FormInput'
 
+const initialValues = {
+    id: 0,
+    name: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+    termsAgreement: false
+}
+
 function Signup({handleChange}) {
 
     const paperStyle = { padding: 20, width: 280, margin: "0 auto 20px" };
@@ -11,30 +21,20 @@ function Signup({handleChange}) {
     const headerStyle = { margin: 10 };
     const marginStyle = { margin: "8px 0" };
 
+    const [formData, setFormData] = useState(initialValues);
+
+    const findInputValue = e => Object.keys(formData).find( input=>input=== e);
+
+    const handleInputChange = e => {
+        const {name, value} = e.target
+        setFormData({
+            ...formData,
+            [name]:value
+        })
+    }
 
     const { handleSubmit, control } = useForm();
 
-    // const initialFormData = Object.freeze({
-    //     email: ""
-    //   });
-
-    
-    // const [formData, setFormData] = useState<string>(initialFormData);
-
-    // function handleFormChange(e) {
-    //     setFormData({
-    //         ...formData,
-    //         // Trimming any whitespace
-    //         [e.target.name]: e.target.value.trim()
-    //     });
-    // };
-
-    // const handleSubmit = () => {
-    //     // e.preventDefault()
-    //     console.log(formData);
-    //     // ... submit to API or something
-    //   };
-    
 
     return (
         <Grid>
@@ -48,7 +48,14 @@ function Signup({handleChange}) {
                 </Grid>
                 <form>
                     {
-                        FormInput.map(input=> <TextField {...input} style={marginStyle} variant="filled" size="small" fullWidth />)
+                        FormInput.map(input=> <TextField 
+                                                    {...input} 
+                                                    style={marginStyle} 
+                                                    value={formData[findInputValue(input.name)]} 
+                                                    onChange={handleInputChange} 
+                                                    variant="filled" 
+                                                    size="small" 
+                                                    fullWidth />)
                     }
                     <FormControlLabel control={<Checkbox />} label="By signing up, you agree to our Terms." />
                     <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" style={marginStyle} fullWidth>
