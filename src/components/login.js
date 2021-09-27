@@ -41,8 +41,8 @@ export default function Login({handleChange}) {
         setErrors({
             ...temp
         })
-        if(fieldValues == formData)
-            return Object.values(temp).every(x => x == "")
+        if(fieldValues === formData)
+            return Object.values(temp).every(x => x === "")
     }
 
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
