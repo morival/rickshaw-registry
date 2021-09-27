@@ -5,7 +5,7 @@ import React, {useState} from 'react';
 // import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
 // import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
-export function UseForm(initialValues) {
+export function UseForm(initialValues, validateOnChange=false, validate) {
 
 
     const [formData, setFormData] = useState(initialValues);
@@ -17,6 +17,8 @@ export function UseForm(initialValues) {
             ...formData,
             [name]:value
         });
+        if(validateOnChange)
+        validate({[name]: value})
     };
     
     return {

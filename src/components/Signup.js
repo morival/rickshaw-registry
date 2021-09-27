@@ -37,27 +37,38 @@ export default function Signup({handleChange}) {
 
     const classes = useStyles();
 
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues);
-
-    // dynamically read the values from formData
-    const findInputValue = e => Object.keys(formData).find( input=>input=== e);
-
-
     // Validation
-    const validate = () => {
-        let temp = {}
-        temp.name = formData.name?"":"This field is required."
-        temp.email = (/.+@.+..+/).test(formData.email)?"":"Invalid email"
-        temp.phoneNumber = formData.phoneNumber.length>10?"":"Too short number"
-        temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(formData.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
-        temp.confirmPassword = formData.password===formData.confirmPassword && formData.confirmPassword.length>5?"":"Passwords don't match."
+    const validate = ( fieldValues = formData) => {
+        let temp = {...errors}
+        if('name' in fieldValues)
+            temp.name = fieldValues.name?"":"This field is required."
+        if('email' in fieldValues)
+            temp.email = (/.+@.+..+/).test(fieldValues.email)?"":"Invalid email"
+        if('phoneNumber' in fieldValues)
+            temp.phoneNumber = fieldValues.phoneNumber.length>10?"":"Too short number"
+        if('password' in fieldValues)
+            temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(fieldValues.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+        if('confirmPassword' in fieldValues)
+            temp.confirmPassword = fieldValues.password===fieldValues.confirmPassword && fieldValues.confirmPassword.length>5?"":"Passwords don't match."
         setErrors({
             ...temp
         })
-        return Object.values(temp).every(x => x == "")
+        if(fieldValues == formData)
+            return Object.values(temp).every(x => x == "")
     }
+    
+
+
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
+
+
+
+    // dynamically read the values from formData
+    const findInputValue = e => Object.keys(formData).find( input=>input=== e);
     // dynamically read the errors from temp
     const findErrorValue = e => Object.keys(errors).find( input=>input=== e);
+
+    
 
 
 
