@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Checkbox(props) {
 
-    const {name, label, value, onChange} = props;
+    const {name, label, value, onChange, ...other} = props;
 
     const handleCheckboxChange = (name, value) => ({
         target:{
@@ -22,6 +22,7 @@ export default function Checkbox(props) {
                     checked={value}
                     onChange={e=>onChange(handleCheckboxChange(name,e.target.checked))}
                     color="primary"
+                    {...other}
                 />}
                 label={label}
             />

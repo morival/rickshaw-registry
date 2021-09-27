@@ -2,6 +2,7 @@ import React from 'react';
 import { TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
+
 const useStyles = makeStyles({
     root: {
         "&.css-wb57ya-MuiFormControl-root-MuiTextField-root" :{ 
@@ -10,24 +11,23 @@ const useStyles = makeStyles({
     }
 })
 
+
 export function Input(props) {
-    
 
     const classes = useStyles();
 
-    const {name, label, value, type, onChange, autoFocus} = props;
+    const {name, label, value, type, onChange, ...other} = props;
 
 
     return(
         <TextField
-            // {...input} 
             className={classes.root}
             name={name}
             label={label}
             value={value} 
-            type={type}
+            type={type || "text"}
             onChange={onChange}
-            autoFocus={autoFocus}
+            {...other}
             variant="filled" 
             size="small" 
             fullWidth 
