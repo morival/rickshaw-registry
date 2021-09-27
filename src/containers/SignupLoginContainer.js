@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 })
 
 
-function SignupLoginContainer() {
+export default function SignupLoginContainer() {
 
     const classes = useStyles();
 
@@ -66,5 +66,3 @@ function SignupLoginContainer() {
         </Paper>
     )
 }
-
-export default SignupLoginContainer;

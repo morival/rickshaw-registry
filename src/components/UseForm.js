@@ -18,7 +18,6 @@ export function UseForm(initialValues) {
         });
     };
     
-
     return {
         formData,
         setFormData,
@@ -27,29 +26,8 @@ export function UseForm(initialValues) {
     }
 }
 
-// const useStyles = makeStyles({
-//     root: {
-//         "&.css-14epxft-MuiPaper-root" :{ 
-//             padding: 20, 
-//             width: 280, 
-//             margin: "0 auto 20px" 
-//         },
-//         "&.css-2s90m6-MuiAvatar-root" :{ 
-//             backgroundColor: "#41a9e1" 
-//         },
-//         "&.css-wb57ya-MuiFormControl-root-MuiTextField-root" :{ 
-//             margin: "8px 0"
-//         },
-//         "&.css-1fu7jd5-MuiButtonBase-root-MuiButton-root" :{
-//             margin: "8px 0"
-//         }
-        
-//     }
-// })
 
 export function Form(props) {
-
-    // const classes = useStyles();
 
     return(
         <form>

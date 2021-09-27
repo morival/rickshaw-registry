@@ -33,7 +33,7 @@ const initialValues = {
 }
 
 
-function Signup({handleChange}) {
+export default function Signup({handleChange}) {
 
     const classes = useStyles();
 
@@ -94,5 +94,3 @@ function Signup({handleChange}) {
         </Grid>
     )
 }
-
-export default Signup;

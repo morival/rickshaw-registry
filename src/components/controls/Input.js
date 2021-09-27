@@ -12,7 +12,7 @@ const useStyles = makeStyles({
 })
 
 
-export function Input(props) {
+export default function Input(props) {
 
     const classes = useStyles();
 
@@ -34,5 +34,3 @@ export function Input(props) {
         />
     )
 }
-
-export default Input;
