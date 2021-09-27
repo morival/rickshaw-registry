@@ -33,6 +33,7 @@ const initialValues = {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
+    registerDate: new Date(),
     termsAgreement: false
 }
 
@@ -62,7 +63,7 @@ function Signup({handleChange}) {
 
     const { handleSubmit, control } = useForm();
 
-    console.log(formData.termsAgreement)
+    console.log(formData.registerDate)
 
     return (
         <Grid>
