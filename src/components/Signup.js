@@ -37,13 +37,36 @@ export default function Signup({handleChange}) {
 
     const classes = useStyles();
 
-    const { formData, setFormData, handleInputChange } = UseForm(initialValues);
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues);
 
     // dynamically read the values from formData
     const findInputValue = e => Object.keys(formData).find( input=>input=== e);
 
 
-    const { handleSubmit, control } = useForm();
+    // Validation
+    const validate = () => {
+        let temp = {}
+        temp.name = formData.name?"":"This field is required."
+        temp.email = (/.+@.+..+/).test(formData.email)?"":"Invalid email"
+        temp.phoneNumber = formData.phoneNumber.length>10?"":"Too short number"
+        temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(formData.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+        temp.confirmPassword = formData.password===formData.confirmPassword && formData.confirmPassword.length>5?"":"Passwords don't match."
+        setErrors({
+            ...temp
+        })
+        return Object.values(temp).every(x => x == "")
+    }
+    // dynamically read the errors from temp
+    const findErrorValue = e => Object.keys(errors).find( input=>input=== e);
+
+
+
+    // const { handleSubmit, control } = useForm();
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if(validate())
+        window.alert('validation passed')
+    }
 
     console.log(formData.registerDate)
 
@@ -60,13 +83,14 @@ export default function Signup({handleChange}) {
                     <h2 style={{margin: 10}}>Rickshaw Registry</h2>
                     <h4 style={{margin: 10}}>Sign Up</h4>
                 </Grid>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     {
                         FormInputItems.map(
                             input=> <Controls.Input
                                     {...input} 
                                     value={formData[findInputValue(input.name)]} 
                                     onChange={handleInputChange}
+                                    error={errors[findErrorValue(input.name)]}
                                     />
                         )
                     }

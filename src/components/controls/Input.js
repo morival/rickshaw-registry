@@ -16,7 +16,7 @@ export default function Input(props) {
 
     const classes = useStyles();
 
-    const {name, label, value, type, onChange, ...other} = props;
+    const {name, label, value, type, onChange, error=null, ...other} = props;
 
 
     return(
@@ -27,6 +27,7 @@ export default function Input(props) {
             value={value} 
             type={type || "text"}
             onChange={onChange}
+            {...(error && {error:true, helperText:error})}
             {...other}
             variant="filled" 
             size="small" 

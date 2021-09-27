@@ -9,6 +9,7 @@ export function UseForm(initialValues) {
 
 
     const [formData, setFormData] = useState(initialValues);
+    const [errors, setErrors] = useState({});
 
     const handleInputChange = e => {
         const {name, value} = e.target
@@ -21,6 +22,8 @@ export function UseForm(initialValues) {
     return {
         formData,
         setFormData,
+        errors,
+        setErrors,
         handleInputChange
 
     }
@@ -29,8 +32,10 @@ export function UseForm(initialValues) {
 
 export function Form(props) {
 
+    const {children, ...other} = props;
+
     return(
-        <form>
+        <form {...other}>
             {props.children}
         </form>
     )
