@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {UseForm, Form} from './UseForm';
 import {FormInputItems} from './items/FormInputItems';
 import Controls from './controls/Controls';
-import { useForm, Controller } from "react-hook-form";
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
@@ -58,9 +57,7 @@ export default function Signup({handleChange}) {
     }
     
 
-
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
-
 
 
     // dynamically read the values from formData
@@ -69,14 +66,12 @@ export default function Signup({handleChange}) {
     const findErrorValue = e => Object.keys(errors).find( input=>input=== e);
 
     
-
-
-
-    // const { handleSubmit, control } = useForm();
     const handleSubmit = (e) => {
         e.preventDefault()
         if(validate())
         window.alert('validation passed')
+        else
+        window.alert('not valid entry')
     }
 
     console.log(formData.registerDate)

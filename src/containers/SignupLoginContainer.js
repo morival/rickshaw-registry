@@ -3,7 +3,6 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { Paper, Tab, Tabs, Typography, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-// import PropTypes from 'prop-types';
 
 
 const useStyles = makeStyles({
@@ -48,12 +47,6 @@ export default function SignupLoginContainer() {
             </div>
         );
     }
-
-    // TabPanel.propTypes = {
-    //     children: PropTypes.node,
-    //     index: PropTypes.number.isRequired,
-    //     value: PropTypes.number.isRequired,
-    // };
 
     return (
         <Paper elevation={20} className={classes.root}>

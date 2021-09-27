@@ -18,7 +18,6 @@ export default function Input(props) {
 
     const {name, label, value, type, onChange, error=null, ...other} = props;
 
-
     return(
         <TextField
             className={classes.root}
