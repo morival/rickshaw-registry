@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Form, UseForm } from './UseForm';
+import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import {FormInputItems} from './items/FormInputItems';
-// import { useForm, Controller } from "react-hook-form";
-import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
+import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 
@@ -57,6 +56,8 @@ export default function Login({handleChange}) {
         else
         window.alert('not valid entry')
     }
+
+    console.log(formData.email)
 
     return (
         <Grid>
