@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Form, UseForm } from './UseForm';
 import Controls from './controls/Controls';
-import { useForm, Controller } from "react-hook-form";
+import {FormInputItems} from './items/FormInputItems';
+// import { useForm, Controller } from "react-hook-form";
 import { Avatar, Button, Grid, Link, Paper, TextField, FormControlLabel, Checkbox, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -31,9 +32,31 @@ export default function Login({handleChange}) {
 
     const classes = useStyles();
 
-    const { formData, setFormData, handleInputChange } = UseForm(initialValues);
+    // Validation
+    const validate = ( fieldValues = formData) => {
+        let temp = {...errors}
+        if('email' in fieldValues)
+            temp.email = (/.+@.+..+/).test(fieldValues.email)?"":"Invalid email"
+        if('password' in fieldValues)
+            temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(fieldValues.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+        setErrors({
+            ...temp
+        })
+        if(fieldValues == formData)
+            return Object.values(temp).every(x => x == "")
+    }
 
-    const { handleSubmit, control } = useForm();
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
+
+    // const { handleSubmit, control } = useForm();
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if(validate())
+        window.alert('validation passed')
+        else
+        window.alert('not valid entry')
+    }
 
     return (
         <Grid>
@@ -47,21 +70,19 @@ export default function Login({handleChange}) {
                     <h2 style={{margin: 10}}>Rickshaw Registry</h2>
                     <h4 style={{margin: 10}}>Log In</h4>
                 </Grid>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <Controls.Input 
-                    name="email"
-                    label="Email"
+                    {...FormInputItems.find(({name}) => name === "email")}
                     value={formData.email}
                     onChange={handleInputChange}
-                    type="email"
+                    error={errors.email}
                     autoFocus
                     />
                     <Controls.Input 
-                    name="password"
-                    label="Password"
+                    {...FormInputItems.find(({name}) => name === "password")}
                     value={formData.password}
                     onChange={handleInputChange}
-                    type="password"
+                    error={errors.password}
                     />
                     <Controls.Checkbox
                     name="rememberMe"
