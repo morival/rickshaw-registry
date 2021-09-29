@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import {FormInputItems} from './items/FormInputItems';
@@ -57,7 +57,7 @@ export default function Signup({handleChange}) {
     }
     
 
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
+    const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
 
     // dynamically read the values from formData
