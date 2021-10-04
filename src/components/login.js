@@ -31,12 +31,6 @@ const initialValues = {
 
 export default function Login({handleChange}) {
 
-    // const [users, setUsers] = useState([]);
-
-    // const getUsers = () => {
-    //     UsersServices.getAllUsers()
-    // }
-
     const classes = useStyles();
 
     // Validation
