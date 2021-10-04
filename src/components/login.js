@@ -2,6 +2,7 @@ import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import {FormInputItems} from './items/FormInputItems';
+// import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -23,11 +24,18 @@ const useStyles = makeStyles({
 const initialValues = {
     email: "",
     password: "",
+    showPassword: false,
     rememberMe: true
 }
 
 
 export default function Login({handleChange}) {
+
+    // const [users, setUsers] = useState([]);
+
+    // const getUsers = () => {
+    //     UsersServices.getAllUsers()
+    // }
 
     const classes = useStyles();
 
@@ -57,7 +65,7 @@ export default function Login({handleChange}) {
         window.alert('not valid entry')
     }
 
-    console.log(formData.email)
+    // console.log(formData.email)
 
     return (
         <Grid>
@@ -98,7 +106,9 @@ export default function Login({handleChange}) {
                     />
                 </Form>
                 <Typography align="center">
-                    <Link href="#" underline="none">Forgotten your password?</Link>
+                    <Link href="#" 
+                    // onClick={()=>getUsers()} 
+                    underline="none">Forgotten your password?</Link>
                 </Typography>
             </Paper>
             <Paper elevation={10} 

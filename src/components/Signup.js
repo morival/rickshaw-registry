@@ -2,9 +2,11 @@ import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import {FormInputItems} from './items/FormInputItems';
+import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+
 
 
 const useStyles = makeStyles({
@@ -27,8 +29,8 @@ const initialValues = {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    registerDate: new Date(),
-    termsAgreement: false
+    showPassword: false,
+    registerDate: new Date()
 }
 
 
@@ -69,12 +71,22 @@ export default function Signup({handleChange}) {
     const handleSubmit = (e) => {
         e.preventDefault()
         if(validate())
-        window.alert('validation passed')
+        onFormSubmit();
         else
         window.alert('not valid entry')
     }
 
-    console.log(formData.registerDate)
+    const onFormSubmit = () => {
+        UsersServices.createUser(
+            {
+                name: formData.name,
+                email: formData.email,
+                phoneNumber: formData.phoneNumber,
+                password: formData.password,
+                registerDate: formData.registerDate
+            }
+        );
+    }
 
 
     return (
@@ -90,22 +102,38 @@ export default function Signup({handleChange}) {
                     <h4 style={{margin: 10}}>Sign Up</h4>
                 </Grid>
                 <Form onSubmit={handleSubmit}>
+                    {/* {
+                        FormInputItems.map( (input, index)=> {
+                            return input.type !== 'password'?
+                            <Controls.Input key={index}
+                                {...input} 
+                                value={formData[findInputValue(input.name)]}
+                                onChange={handleInputChange}
+                                error={errors[findErrorValue(input.name)]}
+                            />
+                            :<FormControl fullWidth key={index}>
+                                <InputLabel key={index} htmlFor={input.label}>{input.label}</InputLabel>
+                                <Controls.Input key={index}
+                                {...input} 
+                                value={formData[findInputValue(input.name)]}
+                                type={formData.showPassword ? 'text' : 'password'}
+                                onChange={handleInputChange}
+                                error={errors[findErrorValue(input.name)]}
+                                />
+                            </FormControl>
+                        })
+                    } */}
                     {
                         FormInputItems.map(
                             input=> <Controls.Input
                                     {...input} 
-                                    value={formData[findInputValue(input.name)]} 
+                                    value={formData[findInputValue(input.name)]}
                                     onChange={handleInputChange}
                                     error={errors[findErrorValue(input.name)]}
                                     />
                         )
                     }
-                    <Controls.Checkbox
-                    name="termsAgreement"
-                    label="By signing up, you agree to our Terms."
-                    value={formData.termsAgreement}
-                    onChange={handleInputChange}
-                    />
+                    <p style={{fontSize: 12}}>By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.</p>
                     <Controls.Button
                     text="Create Account"
                     type="submit"
