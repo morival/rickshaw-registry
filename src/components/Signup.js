@@ -123,6 +123,7 @@ export default function Signup({handleChange}) {
                             </FormControl>
                         })
                     } */}
+                    
                     {
                         FormInputItems.map(
                             input=> <Controls.Input

@@ -5,43 +5,53 @@ const URL = "http://localhost:3001/api/users/";
 export default {
     async getAllUsers() {
         try {
-            const res = (await axios.get(URL)).data;
+            const res = (await axios.get(URL));
+            console.log(res.data);
+        } catch (err) {
+            console.error(err);
+        }
+    },
+    async validateUser(user) {
+        // console.log(user)
+        try {
+            const res = (await axios.post(URL+'/login', {
+                email: user.email,
+                password: user.password
+            }))
+            console.log(res.data._id);
+        } catch (err) {
+            console.error(err);
+        }
+    },
+
+    async createUser(user) {
+        // console.log(user)
+        try {
+            const res = (await axios.post(URL, {
+                name: user.name,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+                password: user.password,
+                registerDate: user.registerDate
+            }))
             console.log(res);
         } catch (err) {
             console.error(err);
         }
     },
 
-    // async createUser(user) {
-    //     console.log(user)
-    //     try {
-    //         const res = (await axios.post(URL), {
-    //             name: user.name,
-    //             password: user.password
-    //         })
-    //         console.log(res);
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    createUser(user) {
-        axios.post(URL, {
-            name: user.name,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
-            password: user.password,
-            registerDate: user.registerDate
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-    },
+    // TO BE TESTED
 
     // async updateUser(user) {
     //     try {
-
+    //         const res = (await axios.put(URL+user.id, {
+    //             name: user.name,
+    //             email: user.email,
+    //             phoneNumber: user.phoneNumber,
+    //             password: user.password,
+    //             registerDate: user.registerDate
+    //         }))
+    //         console.log(res)
     //     } catch (err) {
     //         console.error(err);
     //     }        
@@ -49,7 +59,8 @@ export default {
 
     // async deleteUser(user) {
     //     try {
-
+    //         const res = (await axios.delete(URL+user.id))
+    //         console.log(res)
     //     } catch (err) {
     //         console.error(err);
     //     }

@@ -2,7 +2,7 @@ import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import {FormInputItems} from './items/FormInputItems';
-// import UsersServices from '../services/UsersServices';
+import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -54,12 +54,19 @@ export default function Login({handleChange}) {
     const handleSubmit = (e) => {
         e.preventDefault()
         if(validate())
-        window.alert('validation passed')
+        onFormSubmit();
         else
         window.alert('not valid entry')
     }
 
-    // console.log(formData.email)
+    const onFormSubmit = () => {
+        UsersServices.validateUser(
+            {
+                email: formData.email,
+                password: formData.password
+            }
+        );
+    }
 
     return (
         <Grid>
