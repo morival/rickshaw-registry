@@ -14,11 +14,11 @@ export default {
     async validateUser(user) {
         // console.log(user)
         try {
-            const res = (await axios.post(URL+'/login', {
-                email: user.email,
+            const res = (await axios.post(URL+'login', {
+                login: user.login,
                 password: user.password
             }))
-            console.log(res.data._id);
+            console.log(res);
         } catch (err) {
             console.error(err);
         }

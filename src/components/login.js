@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 })
 
 const initialValues = {
-    email: "",
+    login: "",
     password: "",
     showPassword: false,
     rememberMe: true
@@ -36,10 +36,13 @@ export default function Login({handleChange}) {
     // Validation
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
-        if('email' in fieldValues)
-            temp.email = (/.+@.+..+/).test(fieldValues.email)?"":"Invalid email"
+        const testEmail = /.+@.+..+/;
+        const testNumber = /^\d+.{10,20}$/;
+        const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        if('login' in fieldValues)
+            temp.login = testEmail.test(fieldValues.login) || testNumber.test(fieldValues.login) ?"":"Invalid email or phone number"
         if('password' in fieldValues)
-            temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(fieldValues.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+            temp.password = testPassword.test(fieldValues.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         setErrors({
             ...temp
         })
@@ -62,7 +65,7 @@ export default function Login({handleChange}) {
     const onFormSubmit = () => {
         UsersServices.validateUser(
             {
-                email: formData.email,
+                login: formData.login,
                 password: formData.password
             }
         );
@@ -81,13 +84,21 @@ export default function Login({handleChange}) {
                     <h4 style={{margin: 10}}>Log In</h4>
                 </Grid>
                 <Form onSubmit={handleSubmit}>
-                    <Controls.Input 
-                    {...FormInputItems.find(({name}) => name === "email")}
-                    value={formData.email}
+                    <Controls.Input
+                    name="login"
+                    // label="Login"
+                    value={formData.login}
+                    key="login"
                     onChange={handleInputChange}
-                    error={errors.email}
+                    error={errors.login}
                     autoFocus
                     />
+                    {/* <Controls.Input 
+                    {...FormInputItems.find(({name}) => name === "name")}
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    error={errors.name}
+                    /> */}
                     <Controls.Input 
                     {...FormInputItems.find(({name}) => name === "password")}
                     value={formData.password}

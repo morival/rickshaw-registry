@@ -16,20 +16,20 @@ export default function Input(props) {
 
     const classes = useStyles();
 
-    const {name, label, value, type, onChange, error=null, ...other} = props;
+    const {name, label, value, type, onChange, variant, size, error=null, ...other} = props;
 
     return(
         <TextField
             className={classes.root}
             name={name}
-            label={label}
+            label={label || name[0].toUpperCase()+name.slice(1)}
             value={value} 
             type={type || "text"}
             onChange={onChange}
+            variant={variant || "filled"} 
+            size={size || "small"}
             {...(error && {error:true, helperText:error})}
             {...other}
-            variant="filled" 
-            size="small" 
             fullWidth 
         />
     )
