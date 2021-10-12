@@ -1,7 +1,7 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-import {FormInputItems} from './items/FormInputItems';
+// import {FormInputItems} from './items/FormInputItems';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -99,9 +99,17 @@ export default function Login({handleChange}) {
                     onChange={handleInputChange}
                     error={errors.name}
                     /> */}
-                    <Controls.Input 
+                    {/* <Controls.Input 
                     {...FormInputItems.find(({name}) => name === "password")}
                     value={formData.password}
+                    onChange={handleInputChange}
+                    error={errors.password}
+                    /> */}
+                    <Controls.Input
+                    name="password"
+                    value={formData.password}
+                    key="password"
+                    type="password"
                     onChange={handleInputChange}
                     error={errors.password}
                     />

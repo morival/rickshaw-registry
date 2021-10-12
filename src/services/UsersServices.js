@@ -34,7 +34,7 @@ export default {
                 password: user.password,
                 registerDate: user.registerDate
             }))
-            console.log(res);
+            console.log(res.data.message);
         } catch (err) {
             console.error(err);
         }
