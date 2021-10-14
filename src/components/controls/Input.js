@@ -1,21 +1,10 @@
 import React from 'react';
 import { FormControl, FormHelperText, FilledInput as MuiInput, InputLabel, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-// import { makeStyles } from '@mui/styles';
-
-
-// const useStyles = makeStyles({
-//     root: {
-//         "&.css-q8hpuo-MuiFormControl-root" :{ 
-//             margin: "8px 0"
-//         }
-//     }
-// })
 
 
 export default function Input(props) {
 
-    // const classes = useStyles();
 
     const {name, label, value, type, onChange, variant, size, error=null, showPassword, onClick, ...other} = props;
 

@@ -1,25 +1,10 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-// import {FormInputItems} from './items/FormInputItems';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
-// import { makeStyles } from '@mui/styles';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 
-
-// const useStyles = makeStyles({
-//     root: {
-//         "&.css-14epxft-MuiPaper-root" :{ 
-//             padding: 20, 
-//             width: 280, 
-//             margin: "0 auto 20px" 
-//         },
-//         "&.css-2s90m6-MuiAvatar-root" :{ 
-//             backgroundColor: "#41a9e1" 
-//         }
-//     }
-// })
 
 const initialValues = {
     login: "",
@@ -31,7 +16,6 @@ const initialValues = {
 
 export default function Login({handleChange}) {
 
-    // const classes = useStyles();
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -112,7 +96,6 @@ export default function Login({handleChange}) {
                 </Form>
                 <Typography align="center">
                     <Link href="#" 
-                    // onClick={()=>getUsers()} 
                     underline="none">Forgotten your password?</Link>
                 </Typography>
             </Paper>

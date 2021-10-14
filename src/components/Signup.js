@@ -1,26 +1,10 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-// import {FormInputItems} from './items/FormInputItems';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
-// import { makeStyles } from '@mui/styles';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
-
-
-// const useStyles = makeStyles({
-//     root: {
-//         "&.css-14epxft-MuiPaper-root" :{ 
-//             padding: 20, 
-//             width: 280, 
-//             margin: "0 auto 20px" 
-//         },
-//         "&.css-2s90m6-MuiAvatar-root" :{ 
-//             backgroundColor: "#41a9e1" 
-//         }
-//     }
-// })
 
 const initialValues = {
     id: 0,
@@ -36,7 +20,6 @@ const initialValues = {
 
 export default function Signup({handleChange}) {
 
-    // const classes = useStyles();
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -60,12 +43,6 @@ export default function Signup({handleChange}) {
     
 
     const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
-
-
-    // dynamically read the values from formData
-    // const findInputValue = e => Object.keys(formData).find( input=>input=== e);
-    // dynamically read the errors from temp
-    // const findErrorValue = e => Object.keys(errors).find( input=>input=== e);
 
     
     const handleSubmit = (e) => {
@@ -146,16 +123,6 @@ export default function Signup({handleChange}) {
                     showPassword={formData.showPassword}
                     error={errors.confirmPassword}
                     />
-                    {/* {
-                        FormInputItems.map(
-                            input=> <Controls.Input
-                                    {...input} 
-                                    value={formData[findInputValue(input.name)]}
-                                    onChange={handleInputChange}
-                                    error={errors[findErrorValue(input.name)]}
-                                    />
-                        )
-                    } */}
                     <p style={{fontSize: 12}}>By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.</p>
                     
                     <Controls.Button
