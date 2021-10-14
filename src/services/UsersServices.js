@@ -12,7 +12,6 @@ export default {
         }
     },
     async validateUser(user) {
-        // console.log(user)
         try {
             const res = (await axios.post(URL+'login', {
                 login: user.login,
@@ -25,7 +24,6 @@ export default {
     },
 
     async createUser(user) {
-        // console.log(user)
         try {
             const res = (await axios.post(URL, {
                 name: user.name,
@@ -34,7 +32,7 @@ export default {
                 password: user.password,
                 registerDate: user.registerDate
             }))
-            console.log(res.data.message);
+            console.log(res);
         } catch (err) {
             console.error(err);
         }
