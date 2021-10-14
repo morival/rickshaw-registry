@@ -4,22 +4,22 @@ import Controls from './controls/Controls';
 // import {FormInputItems} from './items/FormInputItems';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 
 
-const useStyles = makeStyles({
-    root: {
-        "&.css-14epxft-MuiPaper-root" :{ 
-            padding: 20, 
-            width: 280, 
-            margin: "0 auto 20px" 
-        },
-        "&.css-2s90m6-MuiAvatar-root" :{ 
-            backgroundColor: "#41a9e1" 
-        }
-    }
-})
+// const useStyles = makeStyles({
+//     root: {
+//         "&.css-14epxft-MuiPaper-root" :{ 
+//             padding: 20, 
+//             width: 280, 
+//             margin: "0 auto 20px" 
+//         },
+//         "&.css-2s90m6-MuiAvatar-root" :{ 
+//             backgroundColor: "#41a9e1" 
+//         }
+//     }
+// })
 
 const initialValues = {
     login: "",
@@ -31,7 +31,7 @@ const initialValues = {
 
 export default function Login({handleChange}) {
 
-    const classes = useStyles();
+    // const classes = useStyles();
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -50,16 +50,14 @@ export default function Login({handleChange}) {
             return Object.values(temp).every(x => x === "")
     }
 
-    const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
-
-    // const { handleSubmit, control } = useForm();
+    const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(validate())
+        if (validate())
         onFormSubmit();
-        else
-        window.alert('not valid entry')
+        // else
+        // window.alert('not valid entry')
     }
 
     const onFormSubmit = () => {
@@ -73,11 +71,9 @@ export default function Login({handleChange}) {
 
     return (
         <Grid>
-            <Paper elevation={10} 
-            className={classes.root}
-            >
+            <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Grid align="center">
-                    <Avatar className={classes.root}>
+                    <Avatar sx={{ bgcolor: "#41a9e1" }}>
                         <LockOpenOutlinedIcon />
                     </Avatar>
                     <h2 style={{margin: 10}}>Rickshaw Registry</h2>
@@ -86,31 +82,20 @@ export default function Login({handleChange}) {
                 <Form onSubmit={handleSubmit}>
                     <Controls.Input
                     name="login"
-                    // label="Login"
                     value={formData.login}
                     key="login"
                     onChange={handleInputChange}
                     error={errors.login}
                     autoFocus
                     />
-                    {/* <Controls.Input 
-                    {...FormInputItems.find(({name}) => name === "name")}
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    error={errors.name}
-                    /> */}
-                    {/* <Controls.Input 
-                    {...FormInputItems.find(({name}) => name === "password")}
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    error={errors.password}
-                    /> */}
                     <Controls.Input
                     name="password"
                     value={formData.password}
                     key="password"
                     type="password"
                     onChange={handleInputChange}
+                    onClick={handleClickShowPassword}
+                    showPassword={formData.showPassword}
                     error={errors.password}
                     />
                     <Controls.Checkbox
@@ -131,9 +116,7 @@ export default function Login({handleChange}) {
                     underline="none">Forgotten your password?</Link>
                 </Typography>
             </Paper>
-            <Paper elevation={10} 
-            className={classes.root}
-            >
+            <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Typography align="center">
                     Don't have an account?
                     <Link href="#" onClick={()=>handleChange("open Sign Up event",1)} underline="none"> Sign up </Link>

@@ -15,13 +15,20 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
         if(validateOnChange)
         validate({[name]: value})
     };
+    const handleClickShowPassword = () => {
+        setFormData({
+          ...formData,
+          showPassword: !formData.showPassword,
+        });
+      };
     
     return {
         formData,
         setFormData,
         errors,
         setErrors,
-        handleInputChange
+        handleInputChange,
+        handleClickShowPassword
     }
 }
 

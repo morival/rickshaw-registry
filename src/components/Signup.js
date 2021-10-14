@@ -4,23 +4,23 @@ import Controls from './controls/Controls';
 // import {FormInputItems} from './items/FormInputItems';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 
 
-const useStyles = makeStyles({
-    root: {
-        "&.css-14epxft-MuiPaper-root" :{ 
-            padding: 20, 
-            width: 280, 
-            margin: "0 auto 20px" 
-        },
-        "&.css-2s90m6-MuiAvatar-root" :{ 
-            backgroundColor: "#41a9e1" 
-        }
-    }
-})
+// const useStyles = makeStyles({
+//     root: {
+//         "&.css-14epxft-MuiPaper-root" :{ 
+//             padding: 20, 
+//             width: 280, 
+//             margin: "0 auto 20px" 
+//         },
+//         "&.css-2s90m6-MuiAvatar-root" :{ 
+//             backgroundColor: "#41a9e1" 
+//         }
+//     }
+// })
 
 const initialValues = {
     id: 0,
@@ -36,7 +36,7 @@ const initialValues = {
 
 export default function Signup({handleChange}) {
 
-    const classes = useStyles();
+    // const classes = useStyles();
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -59,7 +59,7 @@ export default function Signup({handleChange}) {
     }
     
 
-    const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
+    const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
 
 
     // dynamically read the values from formData
@@ -72,8 +72,8 @@ export default function Signup({handleChange}) {
         e.preventDefault()
         if(validate())
         onFormSubmit();
-        else
-        window.alert('not valid entry')
+        // else
+        // window.alert('not valid entry')
     }
 
     const onFormSubmit = () => {
@@ -91,11 +91,9 @@ export default function Signup({handleChange}) {
 
     return (
         <Grid>
-            <Paper elevation={10} 
-            className={classes.root}
-            >
+            <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Grid align="center">
-                    <Avatar className={classes.root}>
+                    <Avatar sx={{ bgcolor: "#41a9e1" }}>
                         <AddBoxOutlinedIcon />
                     </Avatar>
                     <h2 style={{margin: 10}}>Rickshaw Registry</h2>
@@ -133,6 +131,8 @@ export default function Signup({handleChange}) {
                     key="password"
                     type="password"
                     onChange={handleInputChange}
+                    onClick={handleClickShowPassword}
+                    showPassword={formData.showPassword}
                     error={errors.password}
                     />
                     <Controls.Input
@@ -142,6 +142,8 @@ export default function Signup({handleChange}) {
                     key="confirmPassword"
                     type="password"
                     onChange={handleInputChange}
+                    onClick={handleClickShowPassword}
+                    showPassword={formData.showPassword}
                     error={errors.confirmPassword}
                     />
                     {/* {
@@ -164,9 +166,7 @@ export default function Signup({handleChange}) {
                 </Form>
             </Paper>
 
-            <Paper elevation={10} 
-            className={classes.root}
-            >
+            <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Typography align="center">
                     Have an account?
                     <Link href="#" onClick={()=>handleChange("open Log In event",0)} underline="none"> Log in </Link>
