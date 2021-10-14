@@ -11,7 +11,7 @@ export default {
             console.error(err);
         }
     },
-    async validateUser(user) {
+    async authenticateUser(user) {
         try {
             const res = (await axios.post(URL+'login', {
                 login: user.login,

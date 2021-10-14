@@ -61,7 +61,7 @@ export default function Login({handleChange}) {
     }
 
     const onFormSubmit = () => {
-        UsersServices.validateUser(
+        UsersServices.authenticateUser(
             {
                 login: formData.login,
                 password: formData.password

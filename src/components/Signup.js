@@ -42,15 +42,15 @@ export default function Signup({handleChange}) {
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('name' in fieldValues)
-            temp.name = fieldValues.name?"":"This field is required."
+            temp.name = fieldValues.name ? "" : "This field is required."
         if('email' in fieldValues)
-            temp.email = (/.+@.+..+/).test(fieldValues.email)?"":"Invalid email"
+            temp.email = (/.+@.+..+/).test(fieldValues.email) ? "" : "Invalid email"
         if('phoneNumber' in fieldValues)
-            temp.phoneNumber = fieldValues.phoneNumber.length>10?"":"Too short number"
+            temp.phoneNumber = fieldValues.phoneNumber.length>10 ? "" : "This number is too short"
         if('password' in fieldValues)
-            temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(fieldValues.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+            temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         if('confirmPassword' in fieldValues)
-            temp.confirmPassword = fieldValues.password===fieldValues.confirmPassword && fieldValues.confirmPassword.length>5?"":"Passwords don't match."
+            temp.confirmPassword = formData.password===fieldValues.confirmPassword ? "" : "Passwords don't match"
         setErrors({
             ...temp
         })
