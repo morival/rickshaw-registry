@@ -66,6 +66,7 @@ export default function Login({handleChange}) {
                 <Form onSubmit={handleSubmit}>
                     <Controls.Input
                     name="login"
+                    label="Email or Phone"
                     value={formData.login}
                     key="login"
                     onChange={handleInputChange}
