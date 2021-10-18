@@ -33,7 +33,7 @@ export default function Signup({handleChange}) {
         if('password' in fieldValues)
             temp.password = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/).test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         if('confirmPassword' in fieldValues)
-            temp.confirmPassword = formData.password===fieldValues.confirmPassword ? "" : "Passwords don't match"
+            temp.confirmPassword = formData.password===fieldValues.confirmPassword ? "" : "Passwords do not match"
         setErrors({
             ...temp
         })

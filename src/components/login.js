@@ -1,7 +1,8 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-import UsersServices from '../services/UsersServices';
+import { useAuth } from './context/AuthContext';
+// import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 
@@ -33,25 +34,31 @@ export default function Login({handleChange}) {
         if(fieldValues === formData)
             return Object.values(temp).every(x => x === "")
     }
-
+    
     const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
+
+    const { login } = useAuth()
+    // const [loading, setLoading] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault()
         if (validate())
-        onFormSubmit();
+        // setLoading(true)
+        login(formData.login, formData.password)
+        // onFormSubmit();
+
         // else
         // window.alert('not valid entry')
     }
 
-    const onFormSubmit = () => {
-        UsersServices.authenticateUser(
-            {
-                login: formData.login,
-                password: formData.password
-            }
-        );
-    }
+    // const onFormSubmit = () => {
+    //     UsersServices.authenticateUser(
+    //         {
+    //             login: formData.login,
+    //             password: formData.password
+    //         }
+    //     );
+    // }
 
     return (
         <Grid>
@@ -92,6 +99,7 @@ export default function Login({handleChange}) {
                     <Controls.Button
                     text="Log In"
                     type="submit"
+                    // disabled={loading}
                     fullWidth
                     />
                 </Form>
