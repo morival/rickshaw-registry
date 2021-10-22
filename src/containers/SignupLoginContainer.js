@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useAuth } from '../components/context/AuthContext';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { Paper, Tab, Tabs, Typography, Box } from '@mui/material';
+import { useHistory, useLocation } from 'react-router';
 
 
 export default function SignupLoginContainer() {
@@ -32,7 +34,14 @@ export default function SignupLoginContainer() {
                 )}
             </div>
         );
-    }
+    };
+
+    // const history = useHistory();
+    // const location = useLocation();
+    // const currentUser = useAuth()
+
+    // let { from } = location.state || { from: {pathname: "/dashboard"} };
+    // history.replace(from);
 
     return (
         <Paper elevation={20} sx={{ width: 320, my: 2.5, mx: "auto" }}>

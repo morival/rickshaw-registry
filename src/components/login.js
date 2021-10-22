@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import { useAuth } from './context/AuthContext';
 // import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
+import { useHistory, useLocation } from 'react-router';
 
 
 const initialValues = {
@@ -37,6 +38,9 @@ export default function Login({handleChange}) {
     
     const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
 
+
+    const history = useHistory();
+    const location = useLocation();
     const { login } = useAuth()
     // const [loading, setLoading] = useState(false)
 
@@ -46,11 +50,12 @@ export default function Login({handleChange}) {
         // setLoading(true)
         login(formData.login, formData.password)
         // onFormSubmit();
-
-        // else
-        // window.alert('not valid entry')
     }
 
+    // useEffect(() => {
+    //     let { from } = location.state || { from: { pathname: "/dashboard" } };
+    //     history.replace(from);
+    // }, [currentUser])
     // const onFormSubmit = () => {
     //     UsersServices.authenticateUser(
     //         {

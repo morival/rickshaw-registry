@@ -35,6 +35,7 @@ export function AuthProvider({children}) {
                 password: password
             });
             setCurrentUser(checkLogin.data)
+            setLoggedIn(true)
         } catch {
             console.log("error")
         } finally {
@@ -48,8 +49,9 @@ export function AuthProvider({children}) {
     }
 
     useEffect(() => {
-        console.log(currentUser)
-        console.log(loading)
+        console.log("current user: "+JSON.stringify(currentUser))
+        // console.log("loading: "+loading)
+        console.log("is logged in: "+loggedIn)
     },[loading]);
 
     const value = {
