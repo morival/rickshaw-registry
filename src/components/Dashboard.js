@@ -18,8 +18,8 @@ function Dashboard({ children, ...rest }) {
 
     return (
         <Paper>
-            <h1>Dashboard</h1>
             <div>
+                <h1>Dashboard</h1>
                 <Controls.Button
                 text="Home"
                 size="small"
@@ -30,8 +30,13 @@ function Dashboard({ children, ...rest }) {
                 text="Log Out"
                 onClick={handleLogout}
                 />
-                <pre>{JSON.stringify(currentUser, null, 2)}</pre>
             </div>
+                {/* <pre>{JSON.stringify(currentUser, null, 2)}</pre> */}
+                <h4>id: {currentUser._id}</h4>
+                <h4>name: {currentUser.name}</h4>
+                <h4>email: {currentUser.email}</h4>
+                <h4>phone number: {currentUser.phoneNumber}</h4>
+                <h4>register date: {currentUser.registerDate}</h4>
         </Paper>
     )
 }
