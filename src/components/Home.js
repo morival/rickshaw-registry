@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
 
@@ -15,7 +14,7 @@ const Home = () => {
         history.go(0);
         // window.location.reload(false);
     }
-    
+    // console.log(currentUser)
     
     return (
         <>
@@ -39,7 +38,7 @@ const Home = () => {
                 color="primary"
                 href="/login"
                 />
-                }
+            }
         </>
     );
 }

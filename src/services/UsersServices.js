@@ -19,7 +19,7 @@ export default {
                 password: user.password
             }))
             // console.log(res);
-            return res
+            return res;
         } catch (err) {
             console.error(err);
         }
@@ -34,7 +34,7 @@ export default {
                 password: user.password,
                 registerDate: user.registerDate
             }))
-            console.log(res);
+            return res;
         } catch (err) {
             console.error(err);
         }

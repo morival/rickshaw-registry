@@ -17,6 +17,7 @@ function App() {
   useEffect(() => {
     if(credentials)
     login(credentials)
+    console.log("loging credentials")
 }, [])
 
   return (

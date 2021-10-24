@@ -39,16 +39,17 @@ export default function Login({handleChange}) {
 
 
     const history = useHistory();
-    const { login } = useAuth()
+    const { login } = useAuth();
 
     async function handleSubmit(e) {
         e.preventDefault()
-        if(!validate()) // true or false
+        if (!validate()) // true or false
             return console.log("validation failed")
         try {
             await login(formData)
+            localStorage.setItem('user', JSON.stringify(formData))
             history.push("/");
-        } catch(err){
+        } catch(err) {
             setErrors(err.mes)
         }
     }

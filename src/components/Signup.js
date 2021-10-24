@@ -1,9 +1,10 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-import UsersServices from '../services/UsersServices';
+// import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import { useAuth } from './context/AuthContext';
 
 
 const initialValues = {
@@ -44,26 +45,31 @@ export default function Signup({handleChange}) {
 
     const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
 
+    const { signup } = useAuth();
     
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault()
-        if(validate())
-        onFormSubmit();
-        // else
-        // window.alert('not valid entry')
+        if (!validate()) // true or false
+            return console.log("validation failed")
+        try {
+            await signup(formData)
+        } catch(err){
+            setErrors(err.mes)
+        }
+        // onFormSubmit();
     }
 
-    const onFormSubmit = () => {
-        UsersServices.createUser(
-            {
-                name: formData.name,
-                email: formData.email,
-                phoneNumber: formData.phoneNumber,
-                password: formData.password,
-                registerDate: formData.registerDate
-            }
-        );
-    }
+    // const onFormSubmit = () => {
+    //     UsersServices.createUser(
+    //         {
+    //             name: formData.name,
+    //             email: formData.email,
+    //             phoneNumber: formData.phoneNumber,
+    //             password: formData.password,
+    //             registerDate: formData.registerDate
+    //         }
+    //     );
+    // }
 
 
     return (

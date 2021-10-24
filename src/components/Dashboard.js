@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Paper } from '@mui/material';
-// import { useHistory } from 'react-router';
 import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
 
