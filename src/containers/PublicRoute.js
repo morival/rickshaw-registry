@@ -1,4 +1,3 @@
-import { CodeSharp } from '@mui/icons-material';
 import React from 'react';
 import { Redirect, Route } from 'react-router';
 import { useAuth } from '../components/context/AuthContext';
@@ -6,12 +5,12 @@ import { useAuth } from '../components/context/AuthContext';
 
 const PublicRoute = ({component: Component, restricted, ...rest}) => {
     
-    const {loggedIn}  = useAuth()
+    const { loggedIn}  = useAuth()
 
     return (
         <Route {...rest} render={props => (
             loggedIn && restricted
-            ?   <Redirect to="/dashboard" />
+            ?   <Redirect to="/" />
             :   <Component {...props} />
         )} />
     );

@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import { useAuth } from './context/AuthContext';
-// import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 
 
 const initialValues = {
-    login: "",
+    userLogin: "",
     password: "",
     showPassword: false,
     rememberMe: true
@@ -25,8 +24,8 @@ export default function Login({handleChange}) {
         const testEmail = /.+@.+..+/;
         const testNumber = /^\d+.{10,20}$/;
         const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-        if('login' in fieldValues)
-            temp.login = testEmail.test(fieldValues.login) || testNumber.test(fieldValues.login) ?"":"Invalid email or phone number"
+        if('userLogin' in fieldValues)
+            temp.userLogin = testEmail.test(fieldValues.userLogin) || testNumber.test(fieldValues.userLogin) ?"":"Invalid email or phone number"
         if('password' in fieldValues)
             temp.password = testPassword.test(fieldValues.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         setErrors({
@@ -40,30 +39,19 @@ export default function Login({handleChange}) {
 
 
     const history = useHistory();
-    const location = useLocation();
     const { login } = useAuth()
-    // const [loading, setLoading] = useState(false)
 
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault()
-        if (validate())
-        // setLoading(true)
-        login(formData.login, formData.password)
-        // onFormSubmit();
+        if(!validate()) // true or false
+            return console.log("validation failed")
+        try {
+            await login(formData)
+            history.push("/");
+        } catch(err){
+            setErrors(err.mes)
+        }
     }
-
-    // useEffect(() => {
-    //     let { from } = location.state || { from: { pathname: "/dashboard" } };
-    //     history.replace(from);
-    // }, [currentUser])
-    // const onFormSubmit = () => {
-    //     UsersServices.authenticateUser(
-    //         {
-    //             login: formData.login,
-    //             password: formData.password
-    //         }
-    //     );
-    // }
 
     return (
         <Grid>
@@ -77,12 +65,12 @@ export default function Login({handleChange}) {
                 </Grid>
                 <Form onSubmit={handleSubmit}>
                     <Controls.Input
-                    name="login"
+                    name="userLogin"
                     label="Email or Phone"
-                    value={formData.login}
-                    key="login"
+                    value={formData.userLogin}
+                    key="userLogin"
                     onChange={handleInputChange}
-                    error={errors.login}
+                    error={errors.userLogin}
                     autoFocus
                     />
                     <Controls.Input

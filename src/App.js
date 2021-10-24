@@ -1,39 +1,35 @@
 import React, { useEffect } from 'react';
-import { AuthProvider, useAuth } from './components/context/AuthContext';
+import { useAuth } from './components/context/AuthContext';
 import SignupLoginContainer from './containers/SignupLoginContainer';
 import Dashboard from './components/Dashboard';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import PublicRoute from './containers/PublicRoute';
 import PrivateRoute from './containers/PrivateRoute';
 import Home from './components/Home';
+import { useLocalStorage } from './components/UseLocalStorage';
 
 function App() {
 
-  // const loggedIn  = useAuth()
+  const { login }  = useAuth()
 
-// useEffect(() => {
+  const [credentials, setCredentials] = useLocalStorage('user', '');
 
-// })
+  useEffect(() => {
+    if(credentials)
+    login(credentials)
+}, [])
 
   return (
-    
-  //       <Router>
-  //         <Switch>
-  //           {!loggedIn
-  //           ? <Route exact path='/' component={Dashboard} />
-  //           : <Route exact path='/' component={SignupLoginContainer} />}
-  //         </Switch>
-  //       </Router>
 
-    <AuthProvider>
+    // <AuthProvider>
         <Router>
           <Switch>
-            <PublicRoute restricted={false} component={Home} path="/" exact />
-            <PublicRoute restricted={true} component={SignupLoginContainer} path="/login" exact />
-            <PrivateRoute component={Dashboard} path="/dashboard" exact />
+            <PublicRoute exact path="/" component={Home} restricted={false} />
+            <PublicRoute exact path="/login" component={SignupLoginContainer} restricted={true} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
         </Router>
-    </AuthProvider>
+    // </AuthProvider>
 
   );
 }

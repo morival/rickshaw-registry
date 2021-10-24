@@ -12,12 +12,13 @@ export default {
         }
     },
     async authenticateUser(user) {
+        // console.log(user)
         try {
             const res = (await axios.post(URL+'login', {
-                login: user.login,
+                login: user.userLogin,
                 password: user.password
             }))
-            console.log(res);
+            // console.log(res);
             return res
         } catch (err) {
             console.error(err);
