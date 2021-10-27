@@ -34,15 +34,6 @@ export function AuthProvider({children}) {
         } finally {
             setLoading(false)
         }
-        // UsersServices.createUser(
-        //     {
-        //         name: name,
-        //         email: email,
-        //         phoneNumber: phoneNumber,
-        //         password: password,
-        //         registerDate: registerDate
-        //     }
-        // );
     }
 
     async function login(user) {
@@ -53,9 +44,9 @@ export function AuthProvider({children}) {
             if(!user || !res) {
                 return console.log("you are not logged in")
             } else {
-                console.log(loggedIn)
-                setCurrentUser(res.data)
-                setLoggedIn(true)
+                await setCurrentUser(res.data)
+                console.log(res.data)
+                await setLoggedIn(true)
             }
         } catch(err) {
             console.log(err)
@@ -72,14 +63,9 @@ export function AuthProvider({children}) {
         setLoading(false)
     }
 
-    // useEffect(() => {
-    //     console.log(loading)
-    //     // if (currentUser){
-    //     //     console.log("current user: "+JSON.stringify(currentUser))
-    //     //     console.log(localStorage.getItem('user'))
-    //     //     console.log("is logged in: "+loggedIn)
-    //     // }
-    // },[loading]);
+    useEffect(() => {
+        console.log(loggedIn)
+    }, [loggedIn]);
 
     const value = {
         currentUser,

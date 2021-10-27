@@ -46,9 +46,10 @@ export default function Login({handleChange}) {
         if (!validate()) // true or false
             return console.log("validation failed")
         try {
-            await login(formData)
-            localStorage.setItem('user', JSON.stringify(formData))
-            history.push("/");
+            if (await login(formData)) {
+                localStorage.setItem('user', JSON.stringify(formData))
+                history.push("/");
+            }
         } catch(err) {
             setErrors(err.mes)
         }
