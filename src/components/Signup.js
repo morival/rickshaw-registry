@@ -1,7 +1,6 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-// import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { useAuth } from './context/AuthContext';
@@ -68,20 +67,7 @@ export default function Signup({handleChange}) {
         } catch(err){
             setErrors(err.mes)
         }
-        // onFormSubmit();
     }
-
-    // const onFormSubmit = () => {
-    //     UsersServices.createUser(
-    //         {
-    //             name: formData.name,
-    //             email: formData.email,
-    //             phoneNumber: formData.phoneNumber,
-    //             password: formData.password,
-    //             registerDate: formData.registerDate
-    //         }
-    //     );
-    // }
 
 
     return (

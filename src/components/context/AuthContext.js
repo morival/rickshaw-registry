@@ -24,11 +24,8 @@ export function AuthProvider({children}) {
         else if (res.status === 409)
             return res
         try {
-            // if (res.status !== 409) {
                 setCurrentUser(res.data)
                 setLoggedIn(true)
-            // }
-            // console.log(res)
         } catch(err) {
             return err
         } finally {
