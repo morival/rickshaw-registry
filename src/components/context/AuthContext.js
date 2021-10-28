@@ -19,20 +19,21 @@ export function AuthProvider({children}) {
     async function signup(user) {
         setLoading(true)
         const res = await UsersServices.createUser(user)
+        if(!user || !res) 
+            return console.log("coudn't create an account")
+        else if (res.status === 409)
+            return res
         try {
-            if(!user || !res) {
-                return console.log("coudn't create an account")
-            } else {
-                console.log(res.data)
+            // if (res.status !== 409) {
                 setCurrentUser(res.data)
                 setLoggedIn(true)
-                const newUser = {userLogin: user.email, password: user.password}
-                localStorage.setItem('user', JSON.stringify(newUser))
-            }
+            // }
+            // console.log(res)
         } catch(err) {
-            console.log(err)
+            return err
         } finally {
             setLoading(false)
+            return res
         }
     }
 
@@ -45,7 +46,7 @@ export function AuthProvider({children}) {
                 return console.log("you are not logged in")
             } else {
                 await setCurrentUser(res.data)
-                console.log(res.data)
+                // console.log(res.data)
                 await setLoggedIn(true)
             }
         } catch(err) {

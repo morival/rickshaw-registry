@@ -33,7 +33,13 @@ export default {
                 phoneNumber: user.phoneNumber,
                 password: user.password,
                 registerDate: user.registerDate
+            }, 
+            {
+                validateStatus: (status) => {
+                    return status
+                }
             }))
+            // console.log(res)
             return res;
         } catch (err) {
             console.error(err);

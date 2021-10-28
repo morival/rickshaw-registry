@@ -49,10 +49,22 @@ export default function Signup({handleChange}) {
     
     async function handleSubmit(e) {
         e.preventDefault()
-        if (!validate()) // true or false
+        if (!validate())
             return console.log("validation failed")
+        const res = await signup(formData)
+        if (res.status && res.status === 409) {
+            console.log(res)
+            res.data.code === "email" 
+            ?   setErrors({ email: res.data.message })
+            :   setErrors({ phoneNumber: res.data.message })
+            return
+        }
         try {
-            await signup(formData)
+            if (res) {
+                console.log(res)
+                const newUser = {userLogin: formData.email, password: formData.password}
+                localStorage.setItem('user', JSON.stringify(newUser))
+            }
         } catch(err){
             setErrors(err.mes)
         }
