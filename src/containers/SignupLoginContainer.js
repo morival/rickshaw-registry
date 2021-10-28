@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { useAuth } from '../components/context/AuthContext';
-import Login from '../components/LLogin';
+import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { Paper, Tab, Tabs, Typography, Box } from '@mui/material';
 // import { useHistory, useLocation } from 'react-router';
