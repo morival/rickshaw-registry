@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     if(credentials)
     login(credentials)
-    console.log("loging credentials")
+    console.log("Local Storage - User: "+credentials.userLogin)
 }, [])
 
   return (

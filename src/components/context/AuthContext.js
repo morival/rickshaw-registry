@@ -36,7 +36,7 @@ export function AuthProvider({children}) {
 
     async function login(user) {
         setLoading(true)
-        console.log(user)
+        // console.log(user)
         const res = await UsersServices.authenticateUser(user)
         try {
             if(!user || !res) {
@@ -50,6 +50,7 @@ export function AuthProvider({children}) {
             console.log(err)
         } finally {
             setLoading(false)
+            return res
         }
     }
 
@@ -62,7 +63,7 @@ export function AuthProvider({children}) {
     }
 
     useEffect(() => {
-        console.log(loggedIn)
+        console.log("Logged In: "+loggedIn)
     }, [loggedIn]);
 
     const value = {

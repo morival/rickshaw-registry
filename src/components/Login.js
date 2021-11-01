@@ -38,6 +38,8 @@ export default function Login({handleChange}) {
     const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
 
 
+    
+
     const history = useHistory();
     const { login } = useAuth();
 
@@ -47,8 +49,10 @@ export default function Login({handleChange}) {
             return console.log("validation failed")
         try {
             if (await login(formData)) {
+                if (formData.rememberMe)
                 localStorage.setItem('user', JSON.stringify(formData))
                 history.push("/");
+                console.log("remember me: "+formData.rememberMe)
             }
         } catch(err) {
             setErrors(err.mes)
