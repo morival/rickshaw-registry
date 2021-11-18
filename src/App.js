@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { useLocalStorage } from './components/UseLocalStorage';
 import { useAuth } from './components/context/AuthContext';
 import SignupLoginContainer from './containers/SignupLoginContainer';
-import Dashboard from './components/Dashboard';
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import PublicRoute from './containers/PublicRoute';
 import PrivateRoute from './containers/PrivateRoute';
 import Home from './components/Home';
-import { useLocalStorage } from './components/UseLocalStorage';
+import Dashboard from './components/Dashboard';
 
 function App() {
 

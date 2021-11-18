@@ -1,6 +1,8 @@
+import { Box } from '@mui/system';
 import React from 'react';
 import { Redirect, Route } from 'react-router';
 import { useAuth } from '../components/context/AuthContext';
+import Navbar from '../components/Navbar';
 
 
 const PublicRoute = ({component: Component, restricted, ...rest}) => {
@@ -11,7 +13,12 @@ const PublicRoute = ({component: Component, restricted, ...rest}) => {
         <Route {...rest} render={props => (
             loggedIn && restricted
             ?   <Redirect to="/" />
-            :   <Component {...props} />
+            :   <Box>
+                    {restricted
+                    ?   ""
+                    :   <Navbar />}
+                    <Component {...props} />
+                </Box>
         )} />
     );
 }

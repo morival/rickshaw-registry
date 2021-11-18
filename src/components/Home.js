@@ -1,20 +1,20 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
 
 const Home = () => {
 
-    const { currentUser, loggedIn, logout }  = useAuth()
+    const { currentUser, loggedIn }  = useAuth()
 
-    const history = useHistory();
+    // const history = useHistory();
 
-    async function handleLogout() {
-        await logout();
-        history.go(0);
-        // window.location.reload(false);
-    }
-    // console.log(currentUser)
+    // async function handleLogout() {
+    //     await logout();
+    //     history.go(0);
+    //     // window.location.reload(false);
+    // }
+    // // console.log(currentUser)
     
     return (
         <>
@@ -28,16 +28,19 @@ const Home = () => {
                     color="success"
                     href="/dashboard"
                     />
-                    <Controls.Button
+                    {/* <Controls.Button
                     text="Log Out"
                     onClick={handleLogout}
-                />
+                    /> */}
                 </>
-            :   <Controls.Button
-                text="Go to Log in / Sign up page"
-                color="primary"
-                href="/login"
-                />
+            :   <>
+                    <h3>Welcome to the home page of Rickshaw Registery!</h3>
+                </>
+                // <Controls.Button
+                // text="Log in / Sign up"
+                // color="primary"
+                // href="/login"
+                // />
             }
         </>
     );
