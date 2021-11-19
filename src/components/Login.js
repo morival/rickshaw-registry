@@ -110,7 +110,7 @@ export default function Login({handleChange}) {
             <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Typography align="center">
                     Don't have an account?
-                    <Link href="#" onClick={()=>handleChange("open Sign Up event",1)} underline="none"> Sign up </Link>
+                    <Link href="#" onClick={()=>handleChange("open Sign Up event","1")} underline="none"> Sign up </Link>
                 </Typography>
             </Paper>
         </Grid>

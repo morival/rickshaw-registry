@@ -1,49 +1,29 @@
 import React, { useState } from 'react';
-// import { useAuth } from '../components/context/AuthContext';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
-import { Paper, Tab, Tabs, Typography, Box } from '@mui/material';
-// import { useHistory, useLocation } from 'react-router';
+import { Paper, Tab } from '@mui/material';
 
 
 export default function SignupLoginContainer() {
 
 
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState("0");
 
     const handleChange = (event, newValue) => {
-        // console.log(event)
         setValue(newValue);
     };
 
-    function TabPanel(props) {
-        const { children, value, index, ...other } = props;
-
-        return (
-            <div
-                role="tabpanel"
-                hidden={value !== index}
-                id={`simple-tabpanel-${index}`}
-                aria-labelledby={`simple-tab-${index}`}
-                {...other}
-            >
-                {value === index && (
-                    <Box >
-                        <Typography component={'span'}>{children}</Typography>
-                    </Box>
-                )}
-            </div>
-        );
-    };
-
     return (
-        <Paper elevation={20} sx={{ width: 320, my: 2.5, mx: "auto" }}>
-            <Tabs value={value} onChange={handleChange}>
-                <Tab sx={{ width: 160 }} label="Log In" />
-                <Tab sx={{ width: 160 }} label="Sign Up" />
-            </Tabs>
-            <TabPanel value={value} index={0}><Login handleChange={handleChange} /></TabPanel>
-            <TabPanel value={value} index={1}><Signup handleChange={handleChange} /></TabPanel>
+        <Paper sx={{ width: 320, my: 2.5, mx: "auto" }}>
+            <TabContext value={value}>
+            <TabList value={value} onChange={handleChange} variant="fullWidth">
+                <Tab label="Log In" value="0" />
+                <Tab label="Sign Up" value="1" />
+            </TabList>
+            <TabPanel sx={{ p:0 }} value="0"><Login handleChange={handleChange} /></TabPanel>
+            <TabPanel sx={{ p:0 }} value="1"><Signup handleChange={handleChange} /></TabPanel>
+            </TabContext>
         </Paper>
     )
 }

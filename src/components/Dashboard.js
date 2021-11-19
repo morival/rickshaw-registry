@@ -1,44 +1,56 @@
-import React from 'react';
-// import { useHistory } from 'react-router-dom';
-import { Paper } from '@mui/material';
-import { useAuth } from './context/AuthContext';
+import React, { useState } from 'react';
+import { Paper, Tab } from '@mui/material';
+// import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
+import { Box } from '@mui/system';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-function Dashboard({ children, ...rest }) {
+export default function Dashboard({ children, ...rest }) {
 
-    const { currentUser } = useAuth()
+    // const { currentUser } = useAuth()
 
-    // const history = useHistory();
+    const [value, setValue] = useState("0")
 
-    // async function handleLogout() {
-    //     await logout();
-    //     history.go(0);
-    //     // window.location.reload(false);
-    // }
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     return (
-        <Paper>
-            <div>
-                <h1>Dashboard</h1>
-                <Controls.Button
-                text="Home"
-                size="small"
-                color="success"
-                href="/"
-                />
-                {/* <Controls.Button
-                text="Log Out"
-                onClick={handleLogout}
-                /> */}
-            </div>
-                {/* <pre>{JSON.stringify(currentUser, null, 2)}</pre> */}
-                <h4>id: {currentUser._id}</h4>
-                <h4>name: {currentUser.name}</h4>
-                <h4>email: {currentUser.email}</h4>
-                <h4>phone number: {currentUser.phoneNumber}</h4>
-                <h4>register date: {currentUser.registerDate}</h4>
-        </Paper>
+        <Box sx={{ p:2 }}>
+            <h1>Dashboard</h1>
+            <Controls.Button
+            text="Home"
+            size="small"
+            color="success"
+            href="/"
+            />
+            <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+            <Paper sx={{ p:1, maxWidth: "800px", width: '100%' }}>
+                <Box sx={{ display: 'flex' }}>
+                    <TabContext value={value}>
+                        {/* <Paper> */}
+                                <TabList value={value} onChange={handleChange} orientation="vertical" sx={{ borderRight: 1, borderColor: 'divider' }}>
+                                    <Tab label="Contact and basic info" value="0" />
+                                    <Tab label="Security and login" value="1" />
+                                </TabList>
+                        {/* </Paper> */}
+                        <Box sx={{ width: '80%' }}>
+                                <TabPanel sx={{ p:0 }} value="0">Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very long Text</TabPanel>
+                                <TabPanel sx={{ p:0 }} value="1"></TabPanel>
+                        </Box>
+                    </TabContext>
+                </Box>
+            </Paper>
+            </Box>
+        </Box>
+        
+                    // <Paper>
+                    //     <h4>id: {currentUser._id}</h4>
+                    //     <h4>name: {currentUser.name}</h4>
+                    //     <h4>email: {currentUser.email}</h4>
+                    //     <h4>phone number: {currentUser.phoneNumber}</h4>
+                    //     <h4>register date: {currentUser.registerDate}</h4>
+                    // </Paper> 
+        
     )
 }
-
-export default Dashboard;

@@ -1,9 +1,10 @@
+import { Paper } from '@mui/material';
 import React from 'react';
 // import { useHistory } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
 
-const Home = () => {
+export default function Home() {
 
     const { currentUser, loggedIn }  = useAuth()
 
@@ -17,7 +18,7 @@ const Home = () => {
     // // console.log(currentUser)
     
     return (
-        <>
+        <Paper>
             <h1>Home</h1>
             {loggedIn
             ?   <>
@@ -42,8 +43,6 @@ const Home = () => {
                 // href="/login"
                 // />
             }
-        </>
+        </Paper>
     );
 }
-
-export default Home;
