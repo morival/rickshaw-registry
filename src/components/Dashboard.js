@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Paper, Tab } from '@mui/material';
-// import { useAuth } from './context/AuthContext';
+import { List, ListItem, ListItemText, Paper, Tab } from '@mui/material';
+import { Edit } from '@mui/icons-material';
+import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
 import { Box } from '@mui/system';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 export default function Dashboard({ children, ...rest }) {
 
-    // const { currentUser } = useAuth()
+    const { currentUser } = useAuth()
 
     const [value, setValue] = useState("0")
 
@@ -15,8 +16,27 @@ export default function Dashboard({ children, ...rest }) {
         setValue(newValue);
     };
 
+    console.log(ListItem)
+
+    const itemsList = [{
+        text: 'Name',
+        value: currentUser.name
+    }, {
+        text: 'Address',
+        value: 'not available'
+    }, {
+        text: 'Date of birth',
+        value: 'not available'
+    }, {
+        text: 'Email',
+        value: currentUser.email
+    }, {
+        text: 'Phone number',
+        value: currentUser.phoneNumber
+    }]
+
     return (
-        <Box sx={{ p:2 }}>
+        <Box sx={{ p: 2 }}>
             <h1>Dashboard</h1>
             <Controls.Button
             text="Home"
@@ -25,7 +45,7 @@ export default function Dashboard({ children, ...rest }) {
             href="/"
             />
             <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-            <Paper sx={{ p:1, maxWidth: "800px", width: '100%' }}>
+            <Paper sx={{ p: 1, maxWidth: "800px", width: '100%' }}>
                 <Box sx={{ display: 'flex' }}>
                     <TabContext value={value}>
                         {/* <Paper> */}
@@ -35,8 +55,21 @@ export default function Dashboard({ children, ...rest }) {
                                 </TabList>
                         {/* </Paper> */}
                         <Box sx={{ width: '80%' }}>
-                                <TabPanel sx={{ p:0 }} value="0">Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very, Very long Text</TabPanel>
-                                <TabPanel sx={{ p:0 }} value="1"></TabPanel>
+                                <TabPanel sx={{ p: 0 }} value="0">
+                                    <List>
+                                        {itemsList.map((item, key) => {
+                                            const {text, value} = item;
+                                            return(
+                                                <ListItem key={text}>
+                                                    <ListItemText primary={text}/>
+                                                    <ListItemText primary={value}/>
+                                                    <Controls.Button text="Edit" endIcon={<Edit />}/>
+                                                </ListItem>
+                                            )
+                                        })}
+                                    </List>
+                                </TabPanel>
+                                <TabPanel value="1"></TabPanel>
                         </Box>
                     </TabContext>
                 </Box>
