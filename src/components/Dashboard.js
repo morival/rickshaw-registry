@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { List, ListItem, ListItemText, Paper, Tab } from '@mui/material';
-import { Edit } from '@mui/icons-material';
+import { Add, Edit } from '@mui/icons-material';
 import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
 import { Box } from '@mui/system';
@@ -16,17 +16,18 @@ export default function Dashboard({ children, ...rest }) {
         setValue(newValue);
     };
 
-    console.log(ListItem)
+    // console.log(ListItem)
+    // console.log(currentUser.address)
 
     const itemsList = [{
         text: 'Name',
         value: currentUser.name
     }, {
         text: 'Address',
-        value: 'not available'
+        value: currentUser.address
     }, {
         text: 'Date of birth',
-        value: 'not available'
+        value: currentUser.dOB
     }, {
         text: 'Email',
         value: currentUser.email
@@ -49,7 +50,12 @@ export default function Dashboard({ children, ...rest }) {
                 <Box sx={{ display: 'flex' }}>
                     <TabContext value={value}>
                         {/* <Paper> */}
-                                <TabList value={value} onChange={handleChange} orientation="vertical" sx={{ borderRight: 1, borderColor: 'divider' }}>
+                                <TabList 
+                                value={value} 
+                                onChange={handleChange} 
+                                orientation="vertical" 
+                                sx={{ borderRight: 1, borderColor: 'divider' }}
+                                >
                                     <Tab label="Contact and basic info" value="0" />
                                     <Tab label="Security and login" value="1" />
                                 </TabList>
@@ -60,10 +66,13 @@ export default function Dashboard({ children, ...rest }) {
                                         {itemsList.map((item, key) => {
                                             const {text, value} = item;
                                             return(
-                                                <ListItem key={text}>
+                                                <ListItem key={key}>
                                                     <ListItemText primary={text}/>
                                                     <ListItemText primary={value}/>
-                                                    <Controls.Button text="Edit" endIcon={<Edit />}/>
+                                                    {value
+                                                    ?   <Controls.Button text="Edit" endIcon={<Edit />}/>
+                                                    :   <Controls.Button text="Add" endIcon={<Add />}/>
+                                                    }
                                                 </ListItem>
                                             )
                                         })}
