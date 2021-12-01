@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 export default function Input(props) {
 
 
-    const {name, label, value, type, onChange, variant, size, error=null, showPassword, onClick, ...other} = props;
+    const {name, label, value, type, onChange, variant, size, fullWidth, error=null, showPassword, onClick, ...other} = props;
 
     const checkInputType = () => {
          const inputType = type;
@@ -28,8 +28,8 @@ export default function Input(props) {
     return(
         <FormControl
         sx={{ my: 1 }}
-        variant={variant || "filled"} 
-        fullWidth
+        variant={variant || "filled"}
+        fullWidth={fullWidth || false}
         >
             <InputLabel>{label || name[0].toUpperCase()+name.slice(1)}</InputLabel>
             <MuiInput

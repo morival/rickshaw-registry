@@ -1,9 +1,9 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
+import { useAuth } from './context/AuthContext';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { useAuth } from './context/AuthContext';
 
 
 const initialValues = {
@@ -88,6 +88,7 @@ export default function Signup({handleChange}) {
                     key="name"
                     onChange={handleInputChange}
                     error={errors.name}
+                    fullWidth
                     autoFocus
                     />
                     <Controls.Input
@@ -96,6 +97,7 @@ export default function Signup({handleChange}) {
                     key="email"
                     onChange={handleInputChange}
                     error={errors.email}
+                    fullWidth
                     />
                     <Controls.Input
                     name="phoneNumber"
@@ -105,6 +107,7 @@ export default function Signup({handleChange}) {
                     type="number"
                     onChange={handleInputChange}
                     error={errors.phoneNumber}
+                    fullWidth
                     />
                     <Controls.Input
                     name="password"
@@ -115,6 +118,7 @@ export default function Signup({handleChange}) {
                     onClick={handleClickShowPassword}
                     showPassword={formData.showPassword}
                     error={errors.password}
+                    fullWidth
                     />
                     <Controls.Input
                     name="confirmPassword"
@@ -126,6 +130,7 @@ export default function Signup({handleChange}) {
                     onClick={handleClickShowPassword}
                     showPassword={formData.showPassword}
                     error={errors.confirmPassword}
+                    fullWidth
                     />
                     <p style={{fontSize: 12}}>By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.</p>
                     

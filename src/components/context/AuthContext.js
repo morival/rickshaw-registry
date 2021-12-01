@@ -24,8 +24,8 @@ export function AuthProvider({children}) {
         else if (res.status === 409)
             return res
         try {
-                setCurrentUser(res.data)
-                setLoggedIn(true)
+            setCurrentUser(res.data)
+            setLoggedIn(true)
         } catch(err) {
             return err
         } finally {
@@ -54,6 +54,12 @@ export function AuthProvider({children}) {
         }
     }
 
+    async function updateProfile(user) {
+        setLoading(true)
+        // console.log(user)
+        const res = await UsersServices.updateUser(user)
+    }
+
 
     function logout() {
         setLoading(true)
@@ -74,6 +80,7 @@ export function AuthProvider({children}) {
         loading,
         signup,
         login,
+        updateProfile,
         logout
     }
 

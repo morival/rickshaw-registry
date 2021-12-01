@@ -12,6 +12,7 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
             ...formData,
             [name]:value
         });
+        console.log(value)
         if(validateOnChange)
         validate({[name]: value})
     };
@@ -24,7 +25,6 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
     
     return {
         formData,
-        setFormData,
         errors,
         setErrors,
         handleInputChange,

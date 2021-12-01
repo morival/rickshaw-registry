@@ -46,22 +46,26 @@ export default {
         }
     },
 
+    
+    async updateUser(user) {
+        console.log(user)
+        try {
+            const res = (await axios.put(URL+user.id, {
+                    name: user.name,
+                    email: user.email,
+                    phoneNumber: user.phoneNumber,
+                    address: user.address,
+                    dOB: user.dOB,
+                    password: user.password
+                }))
+            console.log(res)
+        } catch (err) {
+                console.error(err);
+            }        
+        },
+    
+                
     // TO BE TESTED
-
-    // async updateUser(user) {
-    //     try {
-    //         const res = (await axios.put(URL+user.id, {
-    //             name: user.name,
-    //             email: user.email,
-    //             phoneNumber: user.phoneNumber,
-    //             password: user.password,
-    //             registerDate: user.registerDate
-    //         }))
-    //         console.log(res)
-    //     } catch (err) {
-    //         console.error(err);
-    //     }        
-    // },
 
     // async deleteUser(user) {
     //     try {

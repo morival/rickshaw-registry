@@ -77,6 +77,7 @@ export default function Login({handleChange}) {
                     key="userLogin"
                     onChange={handleInputChange}
                     error={errors.userLogin}
+                    fullWidth
                     autoFocus
                     />
                     <Controls.Input
@@ -88,6 +89,7 @@ export default function Login({handleChange}) {
                     onClick={handleClickShowPassword}
                     showPassword={formData.showPassword}
                     error={errors.password}
+                    fullWidth
                     />
                     <Controls.Checkbox
                     name="rememberMe"
