@@ -21,7 +21,7 @@ export function AuthProvider({children}) {
         const res = await UsersServices.createUser(user)
         if(!user || !res) 
             return console.log("coudn't create an account")
-        else if (res.status === 409)
+        else if(res.status === 409)
             return res
         try {
             setCurrentUser(res.data)
@@ -36,6 +36,9 @@ export function AuthProvider({children}) {
 
     async function login(user) {
         setLoading(true)
+        // const response = (user) => {
+        //     Object.keys(user)
+        // }
         // console.log(user)
         const res = await UsersServices.authenticateUser(user)
         try {
@@ -55,9 +58,21 @@ export function AuthProvider({children}) {
     }
 
     async function updateProfile(user) {
+        console.log(user)
         setLoading(true)
-        // console.log(user)
-        const res = await UsersServices.updateUser(user)
+        const authRes = await UsersServices.authenticateUser(user)
+        console.log(authRes)
+        try{
+            if(!authRes) {
+                return console.log("password incorrect")
+            } else {
+                const res = await UsersServices.updateUser(user)
+            }
+        } catch(err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
+        }
     }
 
 

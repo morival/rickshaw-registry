@@ -79,6 +79,7 @@ export default function Login({handleChange}) {
                     error={errors.userLogin}
                     fullWidth
                     autoFocus
+                    autoComplete="on"
                     />
                     <Controls.Input
                     name="password"
@@ -90,6 +91,7 @@ export default function Login({handleChange}) {
                     showPassword={formData.showPassword}
                     error={errors.password}
                     fullWidth
+                    autoComplete="on"
                     />
                     <Controls.Checkbox
                     name="rememberMe"

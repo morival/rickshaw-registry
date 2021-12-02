@@ -9,22 +9,11 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 
 export default function Dashboard({ children, ...rest }) {
-    
-    
-    // const initialValues = Object.create(currentUser)
-
-    // const initialValues = {
-    //     name: "",
-    //     address: "",
-    //     dOB: new Date(),
-    //     email: "",
-    //     phoneNumber: ""
-    // }
-    
+ 
     
     const { currentUser, updateProfile } = useAuth()
 
-    const { formData, setErrors, handleInputChange } = UseForm(currentUser)
+    const { formData, setErrors, handleInputChange, handleClickShowPassword } = UseForm(currentUser)
 
     const [value, setValue] = useState("0")
 
@@ -33,10 +22,6 @@ export default function Dashboard({ children, ...rest }) {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    // const handleOpenForm = e => {
-    //     console.log(formData)
-    // }
 
 
     const itemsList = [{
@@ -110,16 +95,17 @@ export default function Dashboard({ children, ...rest }) {
                                                     sx={{ maxWidth: 150 }}
                                                     />
                                                     {openForm===name
-                                                    ?   <Form onSubmit={handleSubmit}>
+                                                    ?   <Form>
                                                             <Controls.Input
                                                             name={name}
+                                                            label={label}
                                                             value={value?value:""}
                                                             onChange={handleInputChange}
                                                             autoFocus
                                                             />
                                                             <Controls.Button
                                                             text="Save"
-                                                            type="submit"
+                                                            onClick={()=> setOpenForm(undefined)}
                                                             />
                                                         </Form>
                                                     :   <ListItemText primary={value}/>
@@ -133,37 +119,27 @@ export default function Dashboard({ children, ...rest }) {
                                                         name={name} 
                                                         value={value} 
                                                         onClick={()=> setOpenForm(name)}
-                                                    />
+                                                        />
                                                     }
-                                                    
                                                 </ListItem>
-                                                // <ListItem key={key}>
-                                                //     <ListItemText primary={label}/>
-                                                //     {openForm===name
-                                                //     ?   <Form>
-                                                //             <Controls.Input
-                                                //             name={name}
-                                                //             value={value}
-                                                //             onChange={handleInputChange}
-                                                //             autoFocus
-                                                //             />
-                                                //         </Form>
-                                                //     :   <ListItemText primary={value}/>
-                                                //     }
-                                                //     <Controls.Button 
-                                                //     text={value?"Edit":"Add"}
-                                                //     // endIcon={value?<Edit/>:<Add/>}
-                                                //     size="small" 
-                                                //     name={name} 
-                                                //     value={value} 
-                                                //     onClick={()=> setOpenForm(name)}
-                                                //     />
-                                                // </ListItem>
                                             )
                                         })}
+                                        <Controls.Dialog
+                                        buttonText="Save"
+                                        dialogTitle="Password Verification"
+                                        dialogText="Confirm your password"
+                                        inputName="password"
+                                        inputType="password"
+                                        // inputValue={formData.password}
+                                        inputOnChange={handleInputChange}
+                                        inputOnClick={handleClickShowPassword}
+                                        showPassword={formData.showPassword}
+                                        handleConfirm={handleSubmit}
+                                        />
                                     </List>
                                 </TabPanel>
-                                <TabPanel value="1"></TabPanel>
+                                <TabPanel value="1">
+                                </TabPanel>
                         </Box>
                     </TabContext>
                 </Box>
