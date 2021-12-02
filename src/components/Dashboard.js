@@ -100,6 +100,7 @@ export default function Dashboard({ children, ...rest }) {
                                                             name={name}
                                                             label={label}
                                                             value={value?value:""}
+                                                            type={name==="dOB"?"date":undefined}
                                                             onChange={handleInputChange}
                                                             autoFocus
                                                             />
