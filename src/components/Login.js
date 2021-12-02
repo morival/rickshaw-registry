@@ -10,7 +10,6 @@ import { useHistory } from 'react-router';
 const initialValues = {
     userLogin: "",
     password: "",
-    showPassword: false,
     rememberMe: true
 }
 
@@ -35,7 +34,7 @@ export default function Login({handleChange}) {
             return Object.values(temp).every(x => x === "")
     }
     
-    const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
+    const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
 
     
@@ -87,8 +86,6 @@ export default function Login({handleChange}) {
                     key="password"
                     type="password"
                     onChange={handleInputChange}
-                    onClick={handleClickShowPassword}
-                    showPassword={formData.showPassword}
                     error={errors.password}
                     fullWidth
                     autoComplete="on"

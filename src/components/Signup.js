@@ -13,7 +13,6 @@ const initialValues = {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    showPassword: false,
     registerDate: new Date()
 }
 
@@ -42,7 +41,7 @@ export default function Signup({handleChange}) {
     }
     
 
-    const { formData, errors, setErrors, handleInputChange, handleClickShowPassword } = UseForm(initialValues, true, validate);
+    const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
     const { signup } = useAuth();
     
@@ -115,8 +114,6 @@ export default function Signup({handleChange}) {
                     key="password"
                     type="password"
                     onChange={handleInputChange}
-                    onClick={handleClickShowPassword}
-                    showPassword={formData.showPassword}
                     error={errors.password}
                     fullWidth
                     />
@@ -127,8 +124,6 @@ export default function Signup({handleChange}) {
                     key="confirmPassword"
                     type="password"
                     onChange={handleInputChange}
-                    onClick={handleClickShowPassword}
-                    showPassword={formData.showPassword}
                     error={errors.confirmPassword}
                     fullWidth
                     />

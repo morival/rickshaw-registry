@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormControl, FormHelperText, FilledInput as MuiInput, InputLabel, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 export default function Input(props) {
 
 
-    const { name, label, value, type, onChange, variant, size, fullWidth, autoComplete, error=null, showPassword, onClick, ...other } = props;
+    const { name, label, value, type, onChange, variant, size, fullWidth, autoComplete, error=null, onClick, ...other } = props;
 
     const checkInputType = () => {
         const inputType = type;
@@ -19,6 +19,12 @@ export default function Input(props) {
             return inputType
         else 
             return "text"
+    };
+
+    const [showPassword, setShowPassword] = useState(false)
+
+    const handleClickShowPassword = () => {
+      setShowPassword(!showPassword)
     };
     
     const handleMouseDownPassword = (event) => {
@@ -45,7 +51,7 @@ export default function Input(props) {
             ?   <InputAdornment position="end">
                   <IconButton
                   aria-label="toggle password visibility"
-                  onClick={onClick}
+                  onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                   >

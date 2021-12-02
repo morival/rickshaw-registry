@@ -66,7 +66,7 @@ export function AuthProvider({children}) {
             if(!authRes) {
                 return console.log("password incorrect")
             } else {
-                const res = await UsersServices.updateUser(user)
+                await UsersServices.updateUser(user)
             }
         } catch(err) {
             console.log(err)

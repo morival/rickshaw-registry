@@ -3,7 +3,6 @@ import { useAuth } from './context/AuthContext';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import { List, ListItem, ListItemText, Paper, Tab } from '@mui/material';
-import { Add, Edit } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
@@ -13,7 +12,7 @@ export default function Dashboard({ children, ...rest }) {
     
     const { currentUser, updateProfile } = useAuth()
 
-    const { formData, setErrors, handleInputChange, handleClickShowPassword } = UseForm(currentUser)
+    const { formData, setErrors, handleInputChange } = UseForm(currentUser)
 
     const [value, setValue] = useState("0")
 
@@ -100,7 +99,7 @@ export default function Dashboard({ children, ...rest }) {
                                                             name={name}
                                                             label={label}
                                                             value={value?value:""}
-                                                            type={name==="dOB"?"date":undefined}
+                                                            type={name==="dOB"?"date":name==="phoneNumber"?"number":name==="email"?"email":undefined}
                                                             onChange={handleInputChange}
                                                             autoFocus
                                                             />
@@ -115,7 +114,6 @@ export default function Dashboard({ children, ...rest }) {
                                                     ?   ""
                                                     :   <Controls.Button 
                                                         text={value?"Edit":"Add"}
-                                                        // endIcon={value?<Edit/>:<Add/>}
                                                         size="small" 
                                                         name={name} 
                                                         value={value} 
@@ -133,8 +131,6 @@ export default function Dashboard({ children, ...rest }) {
                                         inputType="password"
                                         // inputValue={formData.password}
                                         inputOnChange={handleInputChange}
-                                        inputOnClick={handleClickShowPassword}
-                                        showPassword={formData.showPassword}
                                         handleConfirm={handleSubmit}
                                         />
                                     </List>

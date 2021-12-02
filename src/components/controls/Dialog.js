@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function AlertDialogSlide(props) {
 
-    const { buttonText, dialogTitle, dialogText, inputName, inputType, inputValue, inputOnChange, inputOnClick, showPassword, handleConfirm } = props;
+    const { buttonText, dialogTitle, dialogText, inputName, inputType, inputValue, inputOnChange, inputOnClick, handleConfirm } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -51,8 +51,6 @@ export default function AlertDialogSlide(props) {
           type={inputType}
           value={inputValue}
           onChange={inputOnChange}
-          onClick={inputOnClick}
-          showPassword={showPassword}
           autoFocus
           />
         </DialogContent>
