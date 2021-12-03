@@ -58,10 +58,10 @@ export function AuthProvider({children}) {
     }
 
     async function updateProfile(user) {
-        console.log(user)
+        // console.log(user)
         setLoading(true)
         const authRes = await UsersServices.authenticateUser(user)
-        console.log(authRes)
+        // console.log(authRes)
         try{
             if(!authRes) {
                 return console.log("password incorrect")

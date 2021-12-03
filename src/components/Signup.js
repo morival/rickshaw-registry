@@ -64,7 +64,7 @@ export default function Signup({handleChange}) {
                 localStorage.setItem('user', JSON.stringify(newUser))
             }
         } catch(err){
-            setErrors(err.mes)
+            setErrors(err)
         }
     }
 

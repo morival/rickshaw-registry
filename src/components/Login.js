@@ -54,7 +54,8 @@ export default function Login({handleChange}) {
                 console.log("remember me: "+formData.rememberMe)
             }
         } catch(err) {
-            setErrors(err.mes)
+            // setErrors(err)
+            console.log(err)
         }
     }
 

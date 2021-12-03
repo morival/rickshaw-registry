@@ -64,7 +64,7 @@ export default {
                     dOB: user.dOB,
                     password: user.password
                 }))
-            console.log(res)
+            // console.log(res)
         } catch (err) {
                 console.error(err);
             }        

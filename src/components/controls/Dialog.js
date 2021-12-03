@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function AlertDialogSlide(props) {
 
-    const { buttonText, dialogTitle, dialogText, inputName, inputType, inputValue, inputOnChange, inputOnClick, handleConfirm } = props;
+    const { buttonText, dialogTitle, dialogText, inputName, inputType, inputValue, inputOnChange, handleConfirm } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -26,6 +26,24 @@ export default function AlertDialogSlide(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  async function handleSubmit(e)  {
+    
+      e.preventDefault()
+      console.log(handleConfirm(e))
+      const promise = await handleConfirm(e)
+      try {
+        handleClose()
+      } catch(err) {
+        console.log("Wrong password")
+      }
+    
+
+
+    
+    // console.log(promise.PromiseStatus)
+    // handleClose()
+  }
 
   return (
     <div>
@@ -56,7 +74,7 @@ export default function AlertDialogSlide(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleConfirm}>Confirm</Button>
+          <Button onClick={handleSubmit}>Confirm</Button>
         </DialogActions>
       </Dialog>
     </div>
