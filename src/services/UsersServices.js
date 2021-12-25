@@ -57,14 +57,20 @@ export default {
         // console.log(user._id)
         try {
             const res = (await axios.put(URL+user._id, {
-                    name: user.name,
-                    email: user.email,
-                    phoneNumber: user.phoneNumber,
-                    address: user.address,
-                    dOB: user.dOB,
-                    password: user.password
-                }))
+                name: user.name,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+                address: user.address,
+                dOB: user.dOB,
+                password: user.password
+            }, 
+            {
+                validateStatus: (status) => {
+                    return status
+                }
+            }))
             // console.log(res)
+            return res;
         } catch (err) {
                 console.error(err);
             }        

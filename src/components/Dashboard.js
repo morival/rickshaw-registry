@@ -8,19 +8,48 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 
 export default function Dashboard({ children, ...rest }) {
+
+    const validate = (  fieldValues = formData ) => {
+        let temp = {...errors}
+        if('name' in fieldValues)
+            temp.name = fieldValues.name ? "" : "This field is required."
+        if('address' in fieldValues)
+            temp.address = fieldValues.address ? "" : "This field is required."
+        if('dOB' in fieldValues)
+            temp.dOB = fieldValues.dOB ? "" : "This field is required."
+        if('email' in fieldValues)
+            temp.email = (/.+@.+..+/).test(fieldValues.email) ? "" : "Invalid email"
+        if('phoneNumber' in fieldValues)
+            temp.phoneNumber = fieldValues.phoneNumber.length>10 ? "" : "This number is too short"
+        setErrors({
+            ...temp
+        })
+        if(fieldValues === formData)
+            return Object.values(temp).every(x => x === "")
+    }
  
     
     const { currentUser, updateProfile } = useAuth()
 
-    const { formData, setErrors, handleInputChange } = UseForm(currentUser)
+    const { formData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
 
-    const [value, setValue] = useState("0")
+    const [panel, setPanel] = useState("0")
 
     const [openForm, setOpenForm] = useState()
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setPanel(newValue);
     };
+
+    // async function save(name) {
+    //     try {
+    //         const res = await updateProfile(formData)
+    //     } catch(err) {
+    //         setErrors(err)
+    //     } finally {
+    //         setOpenForm(undefined)
+    //     }
+    // }
 
 
     const itemsList = [{
@@ -49,12 +78,21 @@ export default function Dashboard({ children, ...rest }) {
         e.preventDefault()
         // console.log(formData)
         const res = await updateProfile(formData)
+        if (res.status && res.status === 409) {
+            console.log(res)
+            res.data.code === "email"
+            ?   setErrors({ email: res.data.message })
+            :   setErrors({ phoneNumber: res.data.message })
+            return
+        }
         try {
             if (res) {
                 console.log(res)
+                const newUser = {userLogin: formData.email, password: formData.password}
+                localStorage.setItem('user', JSON.stringify(newUser))
             }
         } catch(err) {
-            setErrors(err.mes)
+            setErrors(err)
         }
     }
 
@@ -70,10 +108,10 @@ export default function Dashboard({ children, ...rest }) {
             <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
             <Paper sx={{ p: 1, maxWidth: '800px', width: '100%' }}>
                 <Box sx={{ display: 'flex' }}>
-                    <TabContext value={value}>
+                    <TabContext value={panel}>
                         {/* <Paper> */}
                                 <TabList 
-                                value={value} 
+                                value={panel} 
                                 onChange={handleChange} 
                                 orientation='vertical' 
                                 sx={{ borderRight: 1, borderColor: 'divider' }}
@@ -101,6 +139,7 @@ export default function Dashboard({ children, ...rest }) {
                                                             value={value?value:""}
                                                             type={name==="dOB"?"date":name==="phoneNumber"?"number":name==="email"?"email":undefined}
                                                             onChange={handleInputChange}
+                                                            error={errors.email}
                                                             autoFocus
                                                             />
                                                             <Controls.Button
@@ -108,17 +147,16 @@ export default function Dashboard({ children, ...rest }) {
                                                             onClick={()=> setOpenForm(undefined)}
                                                             />
                                                         </Form>
-                                                    :   <ListItemText primary={value}/>
-                                                    }
-                                                    {openForm===name
-                                                    ?   ""
-                                                    :   <Controls.Button 
-                                                        text={value?"Edit":"Add"}
-                                                        size="small" 
-                                                        name={name} 
-                                                        value={value} 
-                                                        onClick={()=> setOpenForm(name)}
-                                                        />
+                                                    :   <>
+                                                            <ListItemText primary={value}/>
+                                                            <Controls.Button 
+                                                            text={value?"Edit":"Add"}
+                                                            size="small" 
+                                                            name={name} 
+                                                            value={value} 
+                                                            onClick={()=> setOpenForm(name)}
+                                                            />
+                                                        </>
                                                     }
                                                 </ListItem>
                                             )
@@ -136,6 +174,9 @@ export default function Dashboard({ children, ...rest }) {
                                     </List>
                                 </TabPanel>
                                 <TabPanel value="1">
+                                    <List>
+                                        
+                                    </List>
                                 </TabPanel>
                         </Box>
                     </TabContext>

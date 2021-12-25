@@ -21,7 +21,7 @@ export default function Signup({handleChange}) {
 
 
     // Validation
-    const validate = ( fieldValues = formData) => {
+    const validate = ( fieldValues = formData ) => {
         let temp = {...errors}
         if('name' in fieldValues)
             temp.name = fieldValues.name ? "" : "This field is required."

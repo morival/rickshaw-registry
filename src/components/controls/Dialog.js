@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Controls from './Controls';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -19,44 +19,33 @@ export default function AlertDialogSlide(props) {
   const [open, setOpen] = useState(false);
 
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => {setOpen((prevState) => !prevState)}
 
   async function handleSubmit(e)  {
     
       e.preventDefault()
       console.log(handleConfirm(e))
-      const promise = await handleConfirm(e)
       try {
-        handleClose()
+        await handleConfirm(e)
       } catch(err) {
         console.log("Wrong password")
+      } finally {
+        handleOpen()
       }
-    
-
-
-    
-    // console.log(promise.PromiseStatus)
-    // handleClose()
   }
 
   return (
     <div>
       <Controls.Button 
       variant="outlined" 
-      onClick={handleClickOpen}
+      onClick={handleOpen}
       text={buttonText}
       />
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={handleOpen}
         TransitionComponent={Transition}
-        keepMounted
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{dialogTitle}</DialogTitle>
@@ -65,15 +54,15 @@ export default function AlertDialogSlide(props) {
             {dialogText}
           </DialogContentText>
           <Controls.Input
+          autoFocus
           name={inputName}
           type={inputType}
           value={inputValue}
           onChange={inputOnChange}
-          autoFocus
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleOpen}>Cancel</Button>
           <Button onClick={handleSubmit}>Confirm</Button>
         </DialogActions>
       </Dialog>

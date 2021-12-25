@@ -10,6 +10,7 @@ import { useHistory } from 'react-router';
 const initialValues = {
     userLogin: "",
     password: "",
+    authentification: "",
     rememberMe: true
 }
 
@@ -24,9 +25,11 @@ export default function Login({handleChange}) {
         const testNumber = /^\d+.{10,20}$/;
         const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if('userLogin' in fieldValues)
-            temp.userLogin = testEmail.test(fieldValues.userLogin) || testNumber.test(fieldValues.userLogin) ?"":"Invalid email or phone number"
+            temp.userLogin = testEmail.test(fieldValues.userLogin) || testNumber.test(fieldValues.userLogin) ? "" : "Invalid email or phone number"
         if('password' in fieldValues)
-            temp.password = testPassword.test(fieldValues.password)?"":"Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+            temp.password = testPassword.test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+        if('authentification' in fieldValues)
+            temp.authentification = fieldValues.authentification ? fieldValues.authentification : ""
         setErrors({
             ...temp
         })
@@ -56,6 +59,7 @@ export default function Login({handleChange}) {
         } catch(err) {
             // setErrors(err)
             console.log(err)
+            console.log(errors)
         }
     }
 
@@ -105,8 +109,7 @@ export default function Login({handleChange}) {
                     />
                 </Form>
                 <Typography align="center">
-                    <Link href="#" 
-                    underline="none">Forgotten your password?</Link>
+                    <Link href="#" underline="none">Forgotten your password?</Link>
                 </Typography>
             </Paper>
             <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>

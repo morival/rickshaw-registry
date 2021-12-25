@@ -62,16 +62,20 @@ export function AuthProvider({children}) {
         setLoading(true)
         const authRes = await UsersServices.authenticateUser(user)
         // console.log(authRes)
-        try{
-            if(!authRes) {
-                return console.log("password incorrect")
-            } else {
-                await UsersServices.updateUser(user)
+        if(!authRes) {
+            return console.log("password incorrect")
+        } else {
+            const res = await UsersServices.updateUser(user)
+            if(res.status === 409)
+                return res
+            try{
+                setCurrentUser(res.data)
+            } catch(err) {
+                console.log(err)
+            } finally {
+                setLoading(false)
+                return res
             }
-        } catch(err) {
-            console.log(err)
-        } finally {
-            setLoading(false)
         }
     }
 

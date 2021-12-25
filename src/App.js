@@ -18,7 +18,7 @@ function App() {
     if(credentials)
     login(credentials)
     console.log("Local Storage - User: "+credentials.userLogin)
-}, [])
+  }, [])
 
   return (
 
