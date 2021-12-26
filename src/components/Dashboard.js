@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from './context/AuthContext';
-import {UseForm, Form} from './UseForm';
+import {UseForm} from './UseForm';
 import Controls from './controls/Controls';
-import { List, ListItem, ListItemText, Paper, Tab } from '@mui/material';
+import { List, Paper, Tab } from '@mui/material';
 import { Box } from '@mui/system';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
+// import DashboardItem from './controls/DashboardItem';
 
 
 export default function Dashboard({ children, ...rest }) {
@@ -33,9 +34,8 @@ export default function Dashboard({ children, ...rest }) {
 
     const { formData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
 
+    
     const [panel, setPanel] = useState("0")
-
-    const [openForm, setOpenForm] = useState()
 
     const handleChange = (event, newValue) => {
         setPanel(newValue);
@@ -55,19 +55,23 @@ export default function Dashboard({ children, ...rest }) {
     const itemsList = [{
         name: "name",
         label: "Name",
-        value: formData.name
+        value: formData.name,
+        error: errors.name
     }, {
         name: "address",
         label: "Address",
-        value: formData.address
+        value: formData.address,
+        error: errors.address
     }, {
         name: "dOB",
         label: "Date of birth",
-        value: formData.dOB
+        value: formData.dOB,
+        error: errors.dOB
     }, {
         name: "email",
         label: "Email",
-        value: formData.email
+        value: formData.email,
+        error: errors.email
     }, {
         name: "phoneNumber",
         label: "Phone number",
@@ -124,58 +128,54 @@ export default function Dashboard({ children, ...rest }) {
                                 <TabPanel sx={{ p: 0 }} value="0">
                                     <List>
                                         {itemsList.map((item, key) => {
-                                            const {name, label, value} = item;
-                                            return(
-                                                <ListItem key={key}>
-                                                    <ListItemText 
-                                                    primary={label}
-                                                    sx={{ maxWidth: 150 }}
-                                                    />
-                                                    {openForm===name
-                                                    ?   <Form>
-                                                            <Controls.Input
-                                                            name={name}
-                                                            label={label}
-                                                            value={value?value:""}
-                                                            type={name==="dOB"?"date":name==="phoneNumber"?"number":name==="email"?"email":undefined}
-                                                            onChange={handleInputChange}
-                                                            error={errors.email}
-                                                            autoFocus
-                                                            />
-                                                            <Controls.Button
-                                                            text="Save"
-                                                            onClick={()=> setOpenForm(undefined)}
-                                                            />
-                                                        </Form>
-                                                    :   <>
-                                                            <ListItemText primary={value}/>
-                                                            <Controls.Button 
-                                                            text={value?"Edit":"Add"}
-                                                            size="small" 
-                                                            name={name} 
-                                                            value={value} 
-                                                            onClick={()=> setOpenForm(name)}
-                                                            />
-                                                        </>
-                                                    }
-                                                </ListItem>
-                                            )
+                                            const {name, label, value, error} = item;
+                                            let dashboardItems
+                                            if (name==="name"||name==="address"||name==="dOB")
+                                            dashboardItems = 
+                                                <Controls.Dialog
+                                                key={key}
+                                                buttonText={value?"Edit":"Add"}
+                                                dialogTitle={`Update ${label}`}
+                                                label={label}
+                                                name={name}
+                                                type={name==="dOB"?"date":undefined}
+                                                value={value}
+                                                onChange={handleInputChange}
+                                                handleConfirm={handleSubmit}
+                                                />
+                                            return dashboardItems
                                         })}
                                         <Controls.Dialog
                                         buttonText="Save"
                                         dialogTitle="Password Verification"
                                         dialogText="Confirm your password"
-                                        inputName="password"
-                                        inputType="password"
-                                        // inputValue={formData.password}
-                                        inputOnChange={handleInputChange}
+                                        name="password"
+                                        type="password"
+                                        onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         />
                                     </List>
                                 </TabPanel>
                                 <TabPanel value="1">
                                     <List>
-                                        
+                                        {itemsList.map((item, key) => {
+                                            const {name, label, value, error} = item;
+                                            let dashboardItems
+                                            if (name==="phoneNumber"||name==="email")
+                                            dashboardItems = 
+                                                <Controls.Dialog
+                                                key={key}
+                                                buttonText={value?"Edit":"Add"}
+                                                dialogTitle={`Update ${label}`}
+                                                label={label}
+                                                name={name}
+                                                type={name==="phoneNumber"?"tel":name==="email"?"email":undefined}
+                                                value={value}
+                                                onChange={handleInputChange}
+                                                handleConfirm={handleSubmit}
+                                                />
+                                            return dashboardItems
+                                        })}
                                     </List>
                                 </TabPanel>
                         </Box>

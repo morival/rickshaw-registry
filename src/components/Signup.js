@@ -103,7 +103,7 @@ export default function Signup({handleChange}) {
                     label="Phone Number"
                     value={formData.phoneNumber}
                     key="phoneNumber"
-                    type="number"
+                    type="tel"
                     onChange={handleInputChange}
                     error={errors.phoneNumber}
                     fullWidth

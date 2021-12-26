@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import { ListItem as MuiListItem, ListItemText} from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -14,7 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function AlertDialogSlide(props) {
 
-    const { buttonText, dialogTitle, dialogText, inputName, inputType, inputValue, inputOnChange, handleConfirm } = props;
+  const { buttonText, buttonVariant, dialogTitle, dialogText, label, name, type, value, onChange, handleConfirm } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -25,9 +26,10 @@ export default function AlertDialogSlide(props) {
   async function handleSubmit(e)  {
     
       e.preventDefault()
-      console.log(handleConfirm(e))
       try {
+        if(type==="password")
         await handleConfirm(e)
+        // console.log(handleConfirm(e))
       } catch(err) {
         console.log("Wrong password")
       } finally {
@@ -36,9 +38,14 @@ export default function AlertDialogSlide(props) {
   }
 
   return (
-    <div>
+    <MuiListItem>
+      <ListItemText 
+      primary={label}
+      sx={{ maxWidth: 150 }}
+      />
+      <ListItemText primary={value}/>
       <Controls.Button 
-      variant="outlined" 
+      variant={buttonVariant} 
       onClick={handleOpen}
       text={buttonText}
       />
@@ -55,10 +62,10 @@ export default function AlertDialogSlide(props) {
           </DialogContentText>
           <Controls.Input
           autoFocus
-          name={inputName}
-          type={inputType}
-          value={inputValue}
-          onChange={inputOnChange}
+          name={name}
+          type={type}
+          value={value}
+          onChange={onChange}
           />
         </DialogContent>
         <DialogActions>
@@ -66,6 +73,6 @@ export default function AlertDialogSlide(props) {
           <Button onClick={handleSubmit}>Confirm</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </MuiListItem>
   );
 }
