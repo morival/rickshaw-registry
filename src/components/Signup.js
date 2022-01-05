@@ -60,17 +60,16 @@ export default function Signup({handleChange}) {
                     localStorage.setItem('user', JSON.stringify(newUser))
                 } else if (res && res.status === 409) {
                     console.log(res)
-                    res.data.code === "email" 
-                    ?   setErrors({ email: res.data.message })
-                    :   setErrors({ phoneNumber: res.data.message })
-                    return
+                    setErrors(res.data.code === "email"
+                    ?   { email: res.data.message }
+                    :   { phoneNumber: res.data.message }
+                    )
                 }
             } else {
                 return console.log("validation failed")
             }
         } catch(err){
             console.log(err)
-            // setErrors(err)
         } finally {
             setLoading(false)
         }

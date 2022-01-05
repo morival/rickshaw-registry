@@ -24,14 +24,22 @@ export default {
         const login = Object.keys(user).find((val) => {
             return testedLogins.includes(val)
         })
-        const res = (await axios.post(URL+'login', {
-            login: user[login],
-            password: user.password
-        }))
+        // console.log(login)
         try {
-            // Clear password from the retreived user details
-            console.log("authenticateUser: "+res.status)
-            delete res.data.password
+            const res = (await axios.post(URL+'login', {
+                login: user[login],
+                password: user.password
+            }, 
+            {
+                validateStatus: (status) => {
+                    return status
+                }
+            }))
+            if (res) {
+                // Clear password from the retreived user details
+                console.log("authenticateUser: "+res.status)
+                delete res.data.password
+            }
             return res;
         } catch(err) {
             // console.error(err);

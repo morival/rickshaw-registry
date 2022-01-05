@@ -34,30 +34,30 @@ export function AuthProvider({children}) {
     //     }
     // }
 
-    async function login(user) {
-        setLoading(true)
-        // const response = (user) => {
-        //     Object.keys(user)
-        // }
-        // console.log(user)
-        const res = await UsersServices.authenticateUser(user)
-        // console.log(res)
-        try {
-            if(!user || !res) {
-                return console.log("you are not logged in")
-            } else {
-                // delete res.data.password
-                await setCurrentUser(res.data)
-                // console.log(res.data)
-                await setLoggedIn(true)
-            }
-        } catch(err) {
-            console.log(err)
-        } finally {
-            setLoading(false)
-            return res
-        }
-    }
+    // async function login(user) {
+    //     setLoading(true)
+    //     // const response = (user) => {
+    //     //     Object.keys(user)
+    //     // }
+    //     // console.log(user)
+    //     const res = await UsersServices.authenticateUser(user)
+    //     // console.log(res)
+    //     try {
+    //         if(!user || !res) {
+    //             return console.log("you are not logged in")
+    //         } else {
+    //             // delete res.data.password
+    //             await setCurrentUser(res.data)
+    //             // console.log(res.data)
+    //             await setLoggedIn(true)
+    //         }
+    //     } catch(err) {
+    //         console.log(err)
+    //     } finally {
+    //         setLoading(false)
+    //         return res
+    //     }
+    // }
 
     async function update(user) {
         setLoading(true)
@@ -103,7 +103,7 @@ export function AuthProvider({children}) {
         loading,
         setLoading,
         // signup,
-        login,
+        // login,
         update,
         logout
     }

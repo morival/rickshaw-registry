@@ -52,13 +52,18 @@ export default function Login({handleChange}) {
             if (validate()) {
                 setLoading(true)
                 const res = await UsersServices.authenticateUser(formData)
-                if (res) {
+                console.log(res)
+                if (res && res.status < 300) {
                     setCurrentUser(res.data)
                     setLoggedIn(true)
                     if (formData.rememberMe)
                         localStorage.setItem('user', JSON.stringify(formData))
                     // history.push("/");
                     console.log("remember me: "+formData.rememberMe)
+                } else if (res && res.status === 404) {
+                    setErrors({ userLogin: res.data.message })
+                } else if (res && res.status === 401) {
+                    setErrors({ password: res.data.message })
                 }
             }
         } catch(err) {
