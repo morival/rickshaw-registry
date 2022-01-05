@@ -2,6 +2,7 @@ import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import { useAuth } from './context/AuthContext';
+import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
@@ -43,28 +44,35 @@ export default function Signup({handleChange}) {
 
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
-    const { signup } = useAuth();
+    const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
     
     async function handleSubmit(e) {
         e.preventDefault()
-        if (!validate())
-            return console.log("validation failed")
-        const res = await signup(formData)
-        if (res.status && res.status === 409) {
-            console.log(res)
-            res.data.code === "email" 
-            ?   setErrors({ email: res.data.message })
-            :   setErrors({ phoneNumber: res.data.message })
-            return
-        }
         try {
-            if (res) {
-                console.log(res)
-                const newUser = {userLogin: formData.email, password: formData.password}
-                localStorage.setItem('user', JSON.stringify(newUser))
+            if (validate()) {
+                setLoading(true)
+                const res = await UsersServices.createUser(formData)
+                if (res && res.status < 300) {
+                    setCurrentUser(res.data)
+                    setLoggedIn(true)
+                    console.log(res)
+                    const newUser = {userLogin: formData.email, password: formData.password}
+                    localStorage.setItem('user', JSON.stringify(newUser))
+                } else if (res && res.status === 409) {
+                    console.log(res)
+                    res.data.code === "email" 
+                    ?   setErrors({ email: res.data.message })
+                    :   setErrors({ phoneNumber: res.data.message })
+                    return
+                }
+            } else {
+                return console.log("validation failed")
             }
         } catch(err){
-            setErrors(err)
+            console.log(err)
+            // setErrors(err)
+        } finally {
+            setLoading(false)
         }
     }
 

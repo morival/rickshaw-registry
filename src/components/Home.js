@@ -22,7 +22,7 @@ export default function Home() {
             <h1>Home</h1>
             {loggedIn
             ?   <>
-                    <h3>Hi {currentUser.name}!<br/>You are logged in</h3>
+                    <h3>Hi {currentUser && currentUser.name}!<br/>You are logged in</h3>
                     <Controls.Button
                     text="Dashboard"
                     size="small"

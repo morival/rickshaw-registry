@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAuth } from './context/AuthContext';
+import UsersServices from '../services/UsersServices';
 import {UseForm} from './UseForm';
 import Controls from './controls/Controls';
 import { List, Paper, Tab } from '@mui/material';
@@ -12,6 +13,9 @@ export default function Dashboard({ children, ...rest }) {
 
     const validate = (  fieldValues = formData ) => {
         let temp = {...errors}
+        const testEmail = /.+@.+..+/;
+        const testNumber = /^\d+.{10,20}$/;
+        // const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if('name' in fieldValues)
             temp.name = fieldValues.name ? "" : "This field is required."
         if('address' in fieldValues)
@@ -19,9 +23,11 @@ export default function Dashboard({ children, ...rest }) {
         if('dOB' in fieldValues)
             temp.dOB = fieldValues.dOB ? "" : "This field is required."
         if('email' in fieldValues)
-            temp.email = (/.+@.+..+/).test(fieldValues.email) ? "" : "Invalid email"
+            temp.email = testEmail.test(fieldValues.email) ? "" : "Invalid email"
         if('phoneNumber' in fieldValues)
-            temp.phoneNumber = fieldValues.phoneNumber.length>10 ? "" : "This number is too short"
+            temp.phoneNumber = testNumber.test(fieldValues.phoneNumber) ? "" : "This number is too short"
+        // if('password' in fieldValues)
+        //     temp.password = testPassword.test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         setErrors({
             ...temp
         })
@@ -30,74 +36,112 @@ export default function Dashboard({ children, ...rest }) {
     }
  
     
-    const { currentUser, updateProfile } = useAuth()
+    const { currentUser } = useAuth()
 
     const { formData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
 
     
-    const [panel, setPanel] = useState("0")
+    const [panel, setPanel] = useState("0");
+
+    const [passwordVerification, setPasswordVerification] = useState({password:""});
+
+    const handlePassChange = (e) => {
+        setPasswordVerification({password: e.target.value});
+    }
+
+
+    const ref = useRef(null);
 
     const handleChange = (event, newValue) => {
         setPanel(newValue);
     };
 
-    // async function save(name) {
-    //     try {
-    //         const res = await updateProfile(formData)
-    //     } catch(err) {
-    //         setErrors(err)
-    //     } finally {
-    //         setOpenForm(undefined)
-    //     }
-    // }
-
-
     const itemsList = [{
         name: "name",
         label: "Name",
         value: formData.name,
-        error: errors.name
+        error: errors.name,
+        info: "basic"
     }, {
         name: "address",
         label: "Address",
         value: formData.address,
-        error: errors.address
+        error: errors.address,
+        info: "basic"
     }, {
         name: "dOB",
         label: "Date of birth",
         value: formData.dOB,
-        error: errors.dOB
+        error: errors.dOB,
+        info: "basic"
     }, {
         name: "email",
         label: "Email",
         value: formData.email,
-        error: errors.email
+        error: errors.email,
+        info: "security"
     }, {
         name: "phoneNumber",
         label: "Phone number",
-        value: formData.phoneNumber
+        value: formData.phoneNumber,
+        error: errors.phoneNumber,
+        info: "security"
+    }, {
+        name: "password",
+        label: "Password",
+        value: formData.password,
+        error: errors.password,
+        info: "security"
     }]
 
     async function handleSubmit(e) {
         e.preventDefault()
-        // console.log(formData)
-        const res = await updateProfile(formData)
-        if (res.status && res.status === 409) {
-            console.log(res)
-            res.data.code === "email"
-            ?   setErrors({ email: res.data.message })
-            :   setErrors({ phoneNumber: res.data.message })
-            return
-        }
+        // console.log(currentUser)
         try {
-            if (res) {
-                console.log(res)
-                const newUser = {userLogin: formData.email, password: formData.password}
-                localStorage.setItem('user', JSON.stringify(newUser))
+            if (!passwordVerification.password) {
+                console.log("password verification required")
+                ref.current.handleOpen();
+            } else {
+                if (!validate()) // true or false
+                    return console.log("validation failed")
+                console.log("password verification passed")
+                const user = {
+                    _id: currentUser._id,
+                    password: passwordVerification.password
+                }
+                const authPassword = await UsersServices.authenticateUser(user)
+                console.log(authPassword.status)
+                console.log(formData)
+                const res = await UsersServices.updateUser(formData)
             }
         } catch(err) {
-            setErrors(err)
+            if(err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+              } else {
+                console.log(`Error: ${err.message}`)
+              }
         }
+
+
+        // // const res = await update(formData)
+        // if (res.status && res.status === 409) {
+        //     console.log(res)
+        //     res.data.code === "email"
+        //     ?   setErrors({ email: res.data.message })
+        //     :   setErrors({ phoneNumber: res.data.message })
+        //     return
+        // }
+        // try {
+        //     if (res.status && res.status===200) {
+        //         console.log(res)
+        //         const newUser = {userLogin: formData.email, password: formData.password}
+        //         localStorage.setItem('user', JSON.stringify(newUser))
+        //     }
+        // } catch(err) {
+        //     setErrors(err)
+        // }
     }
 
     return (
@@ -128,7 +172,7 @@ export default function Dashboard({ children, ...rest }) {
                                 <TabPanel sx={{ p: 0 }} value="0">
                                     <List>
                                         {itemsList.map((item, key) => {
-                                            const {name, label, value, error} = item;
+                                            const {name, label, value, error, info} = item;
                                             let dashboardItems
                                             if (name==="name"||name==="address"||name==="dOB")
                                             dashboardItems = 
@@ -140,18 +184,22 @@ export default function Dashboard({ children, ...rest }) {
                                                 name={name}
                                                 type={name==="dOB"?"date":undefined}
                                                 value={value}
+                                                error={error}
+                                                info={info}
                                                 onChange={handleInputChange}
                                                 handleConfirm={handleSubmit}
                                                 />
                                             return dashboardItems
                                         })}
                                         <Controls.Dialog
-                                        buttonText="Save"
+                                        // buttonText="Save"
                                         dialogTitle="Password Verification"
                                         dialogText="Confirm your password"
                                         name="password"
                                         type="password"
-                                        onChange={handleInputChange}
+                                        error={errors.password}
+                                        ref={ref}
+                                        onChange={handlePassChange}
                                         handleConfirm={handleSubmit}
                                         />
                                     </List>
@@ -159,9 +207,9 @@ export default function Dashboard({ children, ...rest }) {
                                 <TabPanel value="1">
                                     <List>
                                         {itemsList.map((item, key) => {
-                                            const {name, label, value, error} = item;
+                                            const {name, label, value, error, info} = item;
                                             let dashboardItems
-                                            if (name==="phoneNumber"||name==="email")
+                                            if (name==="phoneNumber"||name==="email"||name==="password")
                                             dashboardItems = 
                                                 <Controls.Dialog
                                                 key={key}
@@ -169,8 +217,10 @@ export default function Dashboard({ children, ...rest }) {
                                                 dialogTitle={`Update ${label}`}
                                                 label={label}
                                                 name={name}
-                                                type={name==="phoneNumber"?"tel":name==="email"?"email":undefined}
+                                                type={name==="phoneNumber"?"tel":name==="email"?"email":name==="password"?"password":undefined}
                                                 value={value}
+                                                error={error}
+                                                info={info}
                                                 onChange={handleInputChange}
                                                 handleConfirm={handleSubmit}
                                                 />
