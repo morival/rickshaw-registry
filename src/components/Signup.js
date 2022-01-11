@@ -52,14 +52,13 @@ export default function Signup({handleChange}) {
             if (validate()) {
                 setLoading(true)
                 const res = await UsersServices.createUser(formData)
+                console.log(res)
                 if (res && res.status < 300) {
                     setCurrentUser(res.data)
                     setLoggedIn(true)
-                    console.log(res)
-                    const newUser = {userLogin: formData.email, password: formData.password}
-                    localStorage.setItem('user', JSON.stringify(newUser))
+                    // const newUser = {userLogin: formData.email, password: formData.password}
+                    // localStorage.setItem('user', JSON.stringify(newUser))
                 } else if (res && res.status === 409) {
-                    console.log(res)
                     setErrors(res.data.code === "email"
                     ?   { email: res.data.message }
                     :   { phoneNumber: res.data.message }

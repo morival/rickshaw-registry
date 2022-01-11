@@ -1,5 +1,6 @@
 import { Paper } from '@mui/material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
@@ -23,25 +24,16 @@ export default function Home() {
             {loggedIn
             ?   <>
                     <h3>Hi {currentUser && currentUser.name}!<br/>You are logged in</h3>
-                    <Controls.Button
-                    text="Dashboard"
-                    size="small"
-                    color="success"
-                    href="/dashboard"
-                    />
-                    {/* <Controls.Button
-                    text="Log Out"
-                    onClick={handleLogout}
-                    /> */}
+                        <Controls.Button
+                        text="Dashboard"
+                        size="small"
+                        color="success"
+                        component={Link} to={"/dashboard"}
+                        />
                 </>
             :   <>
                     <h3>Welcome to the home page of Rickshaw Registery!</h3>
                 </>
-                // <Controls.Button
-                // text="Log in / Sign up"
-                // color="primary"
-                // href="/login"
-                // />
             }
         </Paper>
     );

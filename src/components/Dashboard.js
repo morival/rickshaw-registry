@@ -6,6 +6,7 @@ import Controls from './controls/Controls';
 import { List, Paper, Tab } from '@mui/material';
 import { Box } from '@mui/system';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Link } from 'react-router-dom';
 // import DashboardItem from './controls/DashboardItem';
 
 
@@ -36,7 +37,7 @@ export default function Dashboard({ children, ...rest }) {
     }
  
     
-    const { currentUser } = useAuth()
+    const { currentUser, setCurrentUser } = useAuth()
 
     const { formData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
 
@@ -96,23 +97,30 @@ export default function Dashboard({ children, ...rest }) {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        // console.log(currentUser)
         try {
             if (!passwordVerification.password) {
                 console.log("password verification required")
                 ref.current.handleOpen();
             } else {
-                if (!validate()) // true or false
+                if (!validate()) {
                     return console.log("validation failed")
-                console.log("password verification passed")
-                const user = {
-                    _id: currentUser._id,
-                    password: passwordVerification.password
+                } else {
+                    console.log("password verification passed")
+                    const user = { _id: currentUser._id, password: passwordVerification.password }
+                    const authPassword = await UsersServices.authenticateUser(user)
+                    console.log(authPassword.status)
+                    console.log(formData)
+                    const res = await UsersServices.updateUser(formData)
+                    console.log(res)
+                    if (res && res.status < 300) {
+                        setCurrentUser(res.data)
+                    } else if (res && res.status === 409) {
+                        setErrors(res.data.code === "email"
+                        ?   { email: res.data.message }
+                        :   { phoneNumber: res.data.message }
+                        )
+                    }
                 }
-                const authPassword = await UsersServices.authenticateUser(user)
-                console.log(authPassword.status)
-                console.log(formData)
-                const res = await UsersServices.updateUser(formData)
             }
         } catch(err) {
             if(err.response){
@@ -123,25 +131,6 @@ export default function Dashboard({ children, ...rest }) {
                 console.log(`Error: ${err.message}`)
               }
         }
-
-
-        // // const res = await update(formData)
-        // if (res.status && res.status === 409) {
-        //     console.log(res)
-        //     res.data.code === "email"
-        //     ?   setErrors({ email: res.data.message })
-        //     :   setErrors({ phoneNumber: res.data.message })
-        //     return
-        // }
-        // try {
-        //     if (res.status && res.status===200) {
-        //         console.log(res)
-        //         const newUser = {userLogin: formData.email, password: formData.password}
-        //         localStorage.setItem('user', JSON.stringify(newUser))
-        //     }
-        // } catch(err) {
-        //     setErrors(err)
-        // }
     }
 
     return (
@@ -151,7 +140,7 @@ export default function Dashboard({ children, ...rest }) {
             text="Home"
             size="small"
             color="success"
-            href="/"
+            component={Link} to={"/"}
             />
             <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
             <Paper sx={{ p: 1, maxWidth: '800px', width: '100%' }}>
@@ -191,20 +180,10 @@ export default function Dashboard({ children, ...rest }) {
                                                 />
                                             return dashboardItems
                                         })}
-                                        <Controls.Dialog
-                                        // buttonText="Save"
-                                        dialogTitle="Password Verification"
-                                        dialogText="Confirm your password"
-                                        name="password"
-                                        type="password"
-                                        error={errors.password}
-                                        ref={ref}
-                                        onChange={handlePassChange}
-                                        handleConfirm={handleSubmit}
-                                        />
+                                        
                                     </List>
                                 </TabPanel>
-                                <TabPanel value="1">
+                                <TabPanel sx={{ p: 0 }} value="1">
                                     <List>
                                         {itemsList.map((item, key) => {
                                             const {name, label, value, error, info} = item;
@@ -228,6 +207,17 @@ export default function Dashboard({ children, ...rest }) {
                                         })}
                                     </List>
                                 </TabPanel>
+                                <Controls.Dialog
+                                // buttonText="Save"
+                                dialogTitle="Password Verification"
+                                dialogText="Confirm your password"
+                                name="password"
+                                type="password"
+                                error={errors.password}
+                                ref={ref}
+                                onChange={handlePassChange}
+                                handleConfirm={handleSubmit}
+                                />
                         </Box>
                     </TabContext>
                 </Box>

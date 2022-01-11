@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useLocalStorage } from '../UseLocalStorage';
 import UsersServices from '../../services/UsersServices';
 
 
-const AuthContext = React.createContext()
+const AuthContext = createContext()
 
 export function useAuth() {
     return useContext(AuthContext)
@@ -84,17 +84,6 @@ export function AuthProvider({children}) {
     }
 
 
-    function logout() {
-        setLoading(true)
-        localStorage.clear();
-        setCurrentUser(null)
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        console.log("Logged In: "+loggedIn)
-    }, [loggedIn]);
-
     const value = {
         currentUser,
         setCurrentUser,
@@ -104,8 +93,8 @@ export function AuthProvider({children}) {
         setLoading,
         // signup,
         // login,
-        update,
-        logout
+        update
+        // logout
     }
 
     return (

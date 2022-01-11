@@ -5,13 +5,12 @@ import { useAuth } from './context/AuthContext';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
 
 
 const initialValues = {
     userLogin: "",
     password: "",
-    authentification: "",
     rememberMe: true
 }
 
@@ -43,7 +42,7 @@ export default function Login({handleChange}) {
 
     
 
-    const history = useHistory();
+    // const history = useHistory();
     const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
 
     async function handleSubmit(e) {
@@ -55,10 +54,9 @@ export default function Login({handleChange}) {
                 console.log(res)
                 if (res && res.status < 300) {
                     setCurrentUser(res.data)
+                    // if (formData.rememberMe)
+                    //     localStorage.setItem('user', JSON.stringify(formData))
                     setLoggedIn(true)
-                    if (formData.rememberMe)
-                        localStorage.setItem('user', JSON.stringify(formData))
-                    // history.push("/");
                     console.log("remember me: "+formData.rememberMe)
                 } else if (res && res.status === 404) {
                     setErrors({ userLogin: res.data.message })

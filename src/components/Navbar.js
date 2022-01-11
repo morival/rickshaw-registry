@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 // import MenuIcon from '@mui/icons-material/Menu';
 import { Box } from '@mui/system';
@@ -6,6 +6,7 @@ import { useAuth } from './context/AuthContext';
 import Controls from './controls/Controls';
 import { useHistory } from 'react-router';
 import { makeStyles } from '@mui/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
         container: {
@@ -15,16 +16,22 @@ const useStyles = makeStyles({
 
 function Navbar() {
 
-    const { loggedIn, logout }  = useAuth()
+    const { setCurrentUser, loggedIn, setLoggedIn, setLoading }  = useAuth()
 
     const history = useHistory();
 
-    async function handleLogout() {
-        await logout();
-        history.go(0);
-        // window.location.reload(false);
+    function logout() {
+        setLoading(true)
+        localStorage.clear()
+        setCurrentUser(null)
+        setLoggedIn(false)
+        setLoading(false)
+        history.push('/')
     }
 
+    useEffect(() => {
+        console.log("logged in: "+loggedIn)
+      }, [loggedIn])
 
     
     const classes = useStyles();
@@ -41,12 +48,12 @@ function Navbar() {
                 {loggedIn
                 ? <Controls.Button
                     text="Log Out"
-                    onClick={handleLogout}
+                    onClick={logout}
                     />
                 : <Controls.Button
                     text="Log in / Sign up"
                     color="primary"
-                    href="/login"
+                    component={Link} to={"/login"}
                     />}
                 {/* </Button> */}
             </Toolbar>

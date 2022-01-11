@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import { ListItem as MuiListItem, ListItemText} from '@mui/material';
+import { Alert, ListItem as MuiListItem, ListItemText} from '@mui/material';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -15,7 +15,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const AlertDialogSlide = forwardRef((props, ref) => {
 
-  const { buttonText, buttonVariant, dialogTitle, dialogText, label, name, type, value, error, info, onChange, handleConfirm } = props;
+  const { buttonText, buttonVariant, dialogTitle, dialogText, label, name, type, value, error, onChange, handleConfirm } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -31,10 +31,8 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       // const currentUser = localStorage.getItem('user')
       e.preventDefault()
       try {
-        // if(info==="basic") {
-        //   console.log(currentUser.password)
+        if(!error)
           await handleConfirm(e)
-        // }
       } catch(err) {
         // console.log("Wrong password")
         if(err.response){
@@ -45,19 +43,26 @@ const AlertDialogSlide = forwardRef((props, ref) => {
           console.log(`Error: ${err.message}`)
         }
       } finally {
-        handleOpen()
+        if(!error)
+          handleOpen()
       }
   }
 
   return (
-    <MuiListItem>
+    <MuiListItem
+    // hide component if label is missing
+    style={label?undefined:{display:"none"}}>
       <ListItemText 
       primary={label}
       sx={{ maxWidth: 150 }}
       />
-      <ListItemText primary={name==="password"?"*****":value}/>
+      <ListItemText 
+      primary={name==="password"?"*****":value}
+      secondary={error?<Alert severity="error">{error}</Alert>:null}
+      />
       <Controls.Button 
-      variant={buttonVariant} 
+      variant={buttonVariant}
+      color={error?"warning":"primary"}
       onClick={handleOpen}
       text={buttonText}
       />
@@ -83,7 +88,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleOpen}>Cancel</Button>
-          <Button onClick={handleSubmit}>Confirm</Button>
+          <Button onClick={handleSubmit} color={error?"error":"primary"}>Confirm</Button>
         </DialogActions>
       </Dialog>
     </MuiListItem>

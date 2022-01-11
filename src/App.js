@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
-import { useLocalStorage } from './components/UseLocalStorage';
+// import { useLocalStorage } from './components/UseLocalStorage';
 import { useAuth } from './components/context/AuthContext';
 import PublicRoute from './containers/PublicRoute';
 import PrivateRoute from './containers/PrivateRoute';
@@ -10,16 +10,15 @@ import Dashboard from './components/Dashboard';
 
 function App() {
 
-  const { login }  = useAuth()
+  const { currentUser }  = useAuth()
 
-  const [credentials] = useLocalStorage('user', '');
+  // const [credentials, setCredentials] = useLocalStorage('user', '');
 
   useEffect(() => {
-    if(credentials)
-    login(credentials)
-    console.log("Local Storage - User: "+credentials.userLogin)
-    console.log("Local Storage - Password: "+credentials.password)
-  }, [])
+    console.log(currentUser)
+    // console.log("Local Storage - User: "+credentials.userLogin)
+    // console.log("Local Storage - Password: "+credentials.password)
+  }, [currentUser])
 
   return (
 

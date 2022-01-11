@@ -21,16 +21,10 @@ export default {
     async authenticateUser(user) {
         const testedLogins = ["userLogin", "_id"]
         // Find value of first found key in user that matches testedLogins elements
-        const login = Object.keys(user).find((val) => {
-            return testedLogins.includes(val)
-        })
-        // console.log(login)
+        const userLogin = Object.keys(user).find((val) => testedLogins.includes(val))
+        const credentials = { login: user[userLogin], password: user.password }
         try {
-            const res = (await axios.post(URL+'login', {
-                login: user[login],
-                password: user.password
-            }, 
-            {
+            const res = (await axios.post(URL+'login', credentials , {
                 validateStatus: (status) => {
                     return status
                 }
