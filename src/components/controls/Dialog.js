@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import { Alert, ListItem as MuiListItem, ListItemText} from '@mui/material';
+import { ListItem as MuiListItem, ListItemText, Typography} from '@mui/material';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -58,7 +58,8 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       />
       <ListItemText 
       primary={name==="password"?"*****":value}
-      secondary={error?<Alert severity="error">{error}</Alert>:null}
+      // set error message
+      secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />
       <Controls.Button 
       variant={buttonVariant}

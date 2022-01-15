@@ -56,8 +56,6 @@ export default function Signup({handleChange}) {
                 if (res && res.status < 300) {
                     setCurrentUser(res.data)
                     setLoggedIn(true)
-                    // const newUser = {userLogin: formData.email, password: formData.password}
-                    // localStorage.setItem('user', JSON.stringify(newUser))
                 } else if (res && res.status === 409) {
                     setErrors(res.data.code === "email"
                     ?   { email: res.data.message }
