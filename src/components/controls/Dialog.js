@@ -15,7 +15,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const AlertDialogSlide = forwardRef((props, ref) => {
 
-  const { buttonText, buttonVariant, dialogTitle, dialogText, label, name, type, value, error, onChange, handleConfirm } = props;
+  const { buttonVariant, dialogTitle, dialogText, label, name, type, value, error, onChange, handleConfirm } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -28,13 +28,11 @@ const AlertDialogSlide = forwardRef((props, ref) => {
   const handleOpen = () => {setOpen((prevState) => !prevState)}
 
   async function handleSubmit(e)  {
-      // const currentUser = localStorage.getItem('user')
       e.preventDefault()
       try {
         if(!error)
           await handleConfirm(e)
       } catch(err) {
-        // console.log("Wrong password")
         if(err.response){
           console.log(err.response.data)
           console.log(err.response.status)
@@ -65,7 +63,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       variant={buttonVariant}
       color={error?"warning":"primary"}
       onClick={handleOpen}
-      text={buttonText}
+      text={value||name==="password"?"Change":"Add"}
       />
       <Dialog
         open={open}
@@ -73,13 +71,14 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         TransitionComponent={Transition}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{dialogTitle}</DialogTitle>
+        <DialogTitle>{dialogTitle?dialogTitle:"Update "+label}</DialogTitle>
         <DialogContent sx={{ maxWidth: 260 }}>
           <DialogContentText id="alert-dialog-slide-description">
             {dialogText}
           </DialogContentText>
           <Controls.Input
           autoFocus
+          label={label}
           name={name}
           type={type}
           value={value}

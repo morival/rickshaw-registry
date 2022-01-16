@@ -56,7 +56,7 @@ export default function Dashboard({ children, ...rest }) {
     const handleChange = (event, newValue) => {
         setPanel(newValue);
     };
-
+    
     async function handleSubmit(e) {
         e.preventDefault()
         try {
@@ -71,9 +71,14 @@ export default function Dashboard({ children, ...rest }) {
                     console.log("password verification passed")
                     const user = { _id: currentUser._id, password: passwordVerification.password }
                     const authPassword = await UsersServices.authenticateUser(user)
+                    console.log("id: "+currentUser._id)
+                    console.log("password: "+passwordVerification.password)
                     console.log(authPassword)
                     console.log(formData)
-                    if (authPassword.status < 300) {
+                    if (authPassword.status === 401) {
+                        setErrors({ passwordVerification: authPassword.data.message })
+                    }
+                    else if (authPassword.status < 300) {
                         const res = await UsersServices.updateUser(formData)
                         console.log(res)
                         if (res && res.status < 300) {
@@ -98,6 +103,10 @@ export default function Dashboard({ children, ...rest }) {
         }
     }
 
+
+    
+
+
     return (
         <Box sx={{ p: 2 }}>
             <h1>Dashboard</h1>
@@ -119,15 +128,14 @@ export default function Dashboard({ children, ...rest }) {
                                 sx={{ borderRight: 1, borderColor: 'divider' }}
                                 >
                                     <Tab label="Contact and basic info" value="0" />
-                                    <Tab label="Security and login" value="1" />
+                                    <Tab label="Address details" value="1" />
+                                    <Tab label="Security " value="2" />
                                 </TabList>
                         {/* </Paper> */}
                         <Box sx={{ width: '80%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
                                     <List>
                                         <Controls.Dialog
-                                        buttonText={formData.name?"Edit":"Add"}
-                                        dialogTitle="Update Name"
                                         label="Name"
                                         name="name"
                                         value={formData.name}
@@ -136,35 +144,6 @@ export default function Dashboard({ children, ...rest }) {
                                         handleConfirm={handleSubmit}
                                         />
                                         <Controls.Dialog
-                                        buttonText={formData.dOB?"Edit":"Add"}
-                                        dialogTitle="Update date of birth"
-                                        label="Date of birth"
-                                        name="dOB"
-                                        type="date"
-                                        value={formData.dOB}
-                                        error={errors.dOB}
-                                        onChange={handleInputChange}
-                                        handleConfirm={handleSubmit}
-                                        />
-                                        {/* <Controls.Dialog
-                                        buttonText={formData.dOB?"Edit":"Add"}
-                                        dialogTitle="Update date of birth"
-                                        label="Date of birth"
-                                        name="dOB"
-                                        type="date"
-                                        value={formData.dOB}
-                                        error={errors.dOB}
-                                        onChange={handleInputChange}
-                                        handleConfirm={handleSubmit}
-                                        /> */}
-                                        
-                                    </List>
-                                </TabPanel>
-                                <TabPanel sx={{ p: 0 }} value="1">
-                                    <List>
-                                        <Controls.Dialog
-                                        buttonText={formData.email?"Edit":"Add"}
-                                        dialogTitle="Update email address"
                                         label="Email"
                                         name="email"
                                         type="email"
@@ -174,9 +153,7 @@ export default function Dashboard({ children, ...rest }) {
                                         handleConfirm={handleSubmit}
                                         />
                                         <Controls.Dialog
-                                        buttonText={formData.phoneNumber?"Edit":"Add"}
-                                        dialogTitle="Update phone number"
-                                        label="Phone number"
+                                        label="Phone Number"
                                         name="phoneNumber"
                                         type="tel"
                                         value={formData.phoneNumber}
@@ -185,8 +162,64 @@ export default function Dashboard({ children, ...rest }) {
                                         handleConfirm={handleSubmit}
                                         />
                                         <Controls.Dialog
-                                        buttonText={formData.password?"Edit":"Add"}
-                                        dialogTitle="Update password"
+                                        label="Date of Birth"
+                                        name="dOB"
+                                        type="date"
+                                        value={formData.dOB}
+                                        error={errors.dOB}
+                                        onChange={handleInputChange}
+                                        handleConfirm={handleSubmit}
+                                        />
+                                    </List>
+                                </TabPanel>
+                                <TabPanel sx={{ p: 0 }} value="1">
+                                    <List>
+                                        <Controls.Dialog
+                                        label="Address Line 1"
+                                        name="line 1"
+                                        value={formData.line_1}
+                                        error={errors.line_1}
+                                        onChange={handleInputChange}
+                                        handleConfirm={handleSubmit}
+                                        />
+                                        <Controls.Dialog
+                                        label="Address Line 2"
+                                        name="line 2"
+                                        value={formData.line_2}
+                                        error={errors.line_2}
+                                        onChange={handleInputChange}
+                                        handleConfirm={handleSubmit}
+                                        />
+                                        <Controls.Dialog
+                                        label="Address Line 3"
+                                        name="line 3"
+                                        value={formData.line_3}
+                                        error={errors.line_3}
+                                        onChange={handleInputChange}
+                                        handleConfirm={handleSubmit}
+                                        />
+                                        <Controls.Dialog
+                                        label="Town or City"
+                                        name="post town"
+                                        value={formData.post_town}
+                                        error={errors.post_town}
+                                        onChange={handleInputChange}
+                                        handleConfirm={handleSubmit}
+                                        />
+                                        <Controls.Dialog
+                                        label="Postcode"
+                                        name="postcode"
+                                        value={formData.postcode}
+                                        error={errors.postcode}
+                                        onChange={handleInputChange}
+                                        handleConfirm={handleSubmit}
+                                        />
+                                        
+                                    </List>
+                                </TabPanel>
+                                <TabPanel sx={{ p: 0 }} value="2">
+                                    <List>
+                                        <Controls.Dialog
                                         label="Password"
                                         name="password"
                                         type="password"
@@ -198,7 +231,6 @@ export default function Dashboard({ children, ...rest }) {
                                     </List>
                                 </TabPanel>
                                 <Controls.Dialog
-                                // buttonText="Save"
                                 dialogTitle="Password Verification"
                                 dialogText="Confirm your current password"
                                 name="password"
