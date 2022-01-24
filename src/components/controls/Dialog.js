@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { ListItem as MuiListItem, ListItemText, Typography} from '@mui/material';
+import { Form } from '../UseForm';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -25,13 +26,26 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     };
   });
 
-  const handleOpen = () => {setOpen((prevState) => !prevState)}
+  const handleOpen = () => {setOpen(true)}
+
+  const handleClose = () => {
+    setOpen(false);
+
+    // if (newValue) {
+    //   setValue(newValue);
+    // }
+  };
 
   async function handleSubmit(e)  {
       e.preventDefault()
       try {
-        if(!error)
-          await handleConfirm(e)
+        if (!error) {
+          const res = await handleConfirm(e)
+          console.log(name)
+          console.log(res)
+          if (res && res.status < 300)
+          handleClose()
+        }
       } catch(err) {
         if(err.response){
           console.log(err.response.data)
@@ -40,9 +54,6 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         } else {
           console.log(`Error: ${err.message}`)
         }
-      } finally {
-        if(!error)
-          handleOpen()
       }
   }
 
@@ -67,29 +78,31 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       />
       <Dialog
         open={open}
-        onClose={handleOpen}
+        onClose={handleClose}
         TransitionComponent={Transition}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{dialogTitle?dialogTitle:"Update "+label}</DialogTitle>
-        <DialogContent sx={{ maxWidth: 260 }}>
-          <DialogContentText id="alert-dialog-slide-description">
-            {dialogText}
-          </DialogContentText>
-          <Controls.Input
-          autoFocus
-          label={label}
-          name={name}
-          type={type}
-          value={value}
-          error={error}
-          onChange={onChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleOpen}>Cancel</Button>
-          <Button onClick={handleSubmit} color={error?"error":"primary"}>Confirm</Button>
-        </DialogActions>
+        <Form onSubmit={handleSubmit}>
+          <DialogTitle>{dialogTitle?dialogTitle:"Update "+label}</DialogTitle>
+          <DialogContent sx={{ maxWidth: 260 }}>
+            <DialogContentText id="alert-dialog-slide-description">
+              {dialogText}
+            </DialogContentText>
+            <Controls.Input
+            autoFocus
+            label={label}
+            name={name}
+            type={type}
+            value={value}
+            error={error}
+            onChange={onChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmit} type="submit" color={error?"error":"primary"}>Confirm</Button>
+          </DialogActions>
+        </Form>
       </Dialog>
     </MuiListItem>
   );

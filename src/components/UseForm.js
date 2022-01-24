@@ -19,6 +19,7 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
     
     return {
         formData,
+        setFormData,
         errors,
         setErrors,
         handleInputChange,

@@ -79,6 +79,7 @@ async function createUser(user) {
                 return status
             }
         }))
+        delete res.data.password
         console.log(res)
         return res;
     } catch(err) {
@@ -94,11 +95,11 @@ async function createUser(user) {
 
 
 async function updateUser(user) {
-    // console.log(user._id)
     try {
         const res = (await axios.put(URL+user._id, user, {
             validateStatus: (status) => status
         }))
+        delete res.data.password
         console.log(res)
         return res;
     } catch(err) {

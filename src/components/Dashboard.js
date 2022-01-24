@@ -16,7 +16,7 @@ export default function Dashboard({ children, ...rest }) {
         let temp = {...errors}
         const testEmail = /.+@.+..+/;
         const testNumber = /^\d+.{10,20}$/;
-        // const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if('name' in fieldValues)
             temp.name = fieldValues.name ? "" : "This field is required."
         // if('address' in fieldValues)
@@ -27,8 +27,8 @@ export default function Dashboard({ children, ...rest }) {
             temp.email = testEmail.test(fieldValues.email) ? "" : "Invalid email"
         if('phoneNumber' in fieldValues)
             temp.phoneNumber = testNumber.test(fieldValues.phoneNumber) ? "" : "This number is too short"
-        // if('password' in fieldValues)
-        //     temp.password = testPassword.test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+        if('password' in fieldValues)
+            temp.password = testPassword.test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         setErrors({
             ...temp
         })
@@ -39,7 +39,7 @@ export default function Dashboard({ children, ...rest }) {
     
     const { currentUser, setCurrentUser } = useAuth()
 
-    const { formData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
 
     
     const [panel, setPanel] = useState("0");
@@ -76,7 +76,12 @@ export default function Dashboard({ children, ...rest }) {
                     console.log(authPassword)
                     console.log(formData)
                     if (authPassword.status === 401) {
-                        setErrors({ passwordVerification: authPassword.data.message })
+                        setFormData(currentUser)
+                        setPasswordVerification({password:""})
+                        console.log("password verification reset")
+                        console.log(passwordVerification)
+                        // setErrors({ password: authPassword.data.message })
+                        return authPassword
                     }
                     else if (authPassword.status < 300) {
                         const res = await UsersServices.updateUser(formData)
@@ -89,6 +94,7 @@ export default function Dashboard({ children, ...rest }) {
                             :   { phoneNumber: res.data.message }
                             )
                         }
+                        return res
                     }
                 }
             }
@@ -176,7 +182,7 @@ export default function Dashboard({ children, ...rest }) {
                                     <List>
                                         <Controls.Dialog
                                         label="Address Line 1"
-                                        name="line 1"
+                                        name="line_1"
                                         value={formData.line_1}
                                         error={errors.line_1}
                                         onChange={handleInputChange}
@@ -184,7 +190,7 @@ export default function Dashboard({ children, ...rest }) {
                                         />
                                         <Controls.Dialog
                                         label="Address Line 2"
-                                        name="line 2"
+                                        name="line_2"
                                         value={formData.line_2}
                                         error={errors.line_2}
                                         onChange={handleInputChange}
@@ -192,7 +198,7 @@ export default function Dashboard({ children, ...rest }) {
                                         />
                                         <Controls.Dialog
                                         label="Address Line 3"
-                                        name="line 3"
+                                        name="line_3"
                                         value={formData.line_3}
                                         error={errors.line_3}
                                         onChange={handleInputChange}
@@ -200,7 +206,7 @@ export default function Dashboard({ children, ...rest }) {
                                         />
                                         <Controls.Dialog
                                         label="Town or City"
-                                        name="post town"
+                                        name="post_town"
                                         value={formData.post_town}
                                         error={errors.post_town}
                                         onChange={handleInputChange}
@@ -231,7 +237,7 @@ export default function Dashboard({ children, ...rest }) {
                                     </List>
                                 </TabPanel>
                                 <Controls.Dialog
-                                dialogTitle="Password Verification"
+                                dialogTitle="Password Required"
                                 dialogText="Confirm your current password"
                                 name="password"
                                 type="password"
