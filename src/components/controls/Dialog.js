@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import Controls from './Controls';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -16,7 +16,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const AlertDialogSlide = forwardRef((props, ref) => {
 
-  const { buttonVariant, dialogTitle, dialogText, label, name, type, value, error, onChange, handleConfirm } = props;
+  const { buttonVariant, dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, handleConfirm, closeDialog } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -26,17 +26,17 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     };
   });
 
-  const handleOpen = () => {setOpen(true)}
+  const handleOpen = () => {
+    setOpen(true);
+    // if (!value)
+    // defineValue(true)
+  };
 
   const handleClose = () => {
     setOpen(false);
-
-    // if (newValue) {
-    //   setValue(newValue);
-    // }
   };
 
-  async function handleSubmit(e)  {
+  async function handleSubmit(e) {
       e.preventDefault()
       try {
         if (!error) {
@@ -57,6 +57,14 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       }
   }
 
+  useEffect(() => {
+    const handleClose = () => {
+      setOpen(false);
+    };
+    handleClose();
+  },[closeDialog])
+
+
   return (
     <MuiListItem
     // hide component if label is missing
@@ -66,7 +74,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       sx={{ maxWidth: 150 }}
       />
       <ListItemText 
-      primary={name==="password"?"*****":value}
+      primary={name==="password"?"*****":defaultValue}
       // set error message
       secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />

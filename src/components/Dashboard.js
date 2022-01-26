@@ -46,12 +46,18 @@ export default function Dashboard({ children, ...rest }) {
 
     const [passwordVerification, setPasswordVerification] = useState({password:""});
 
+    const [closeDialog, setCloseDialog] = useState(false);
+
     const handlePassChange = (e) => {
         setPasswordVerification({password: e.target.value});
     }
 
+    // const defineValue = (name) => {
+    //     console.log(name)
+    // }
 
-    const ref = useRef(null);
+
+    const refOpen = useRef(null);
 
     const handleChange = (event, newValue) => {
         setPanel(newValue);
@@ -59,11 +65,12 @@ export default function Dashboard({ children, ...rest }) {
     
     async function handleSubmit(e) {
         e.preventDefault()
+        console.log(e)
         try {
             // if password was not verified open password verification window
             if (!passwordVerification.password) {
                 console.log("password verification required")
-                ref.current.handleOpen();
+                refOpen.current.handleOpen();
             } else {
                 if (!validate()) {
                     return console.log("validation failed")
@@ -71,10 +78,10 @@ export default function Dashboard({ children, ...rest }) {
                     console.log("password verification passed")
                     const user = { _id: currentUser._id, password: passwordVerification.password }
                     const authPassword = await UsersServices.authenticateUser(user)
-                    console.log("id: "+currentUser._id)
-                    console.log("password: "+passwordVerification.password)
-                    console.log(authPassword)
-                    console.log(formData)
+                    // console.log("id: "+currentUser._id)
+                    // console.log("password: "+passwordVerification.password)
+                    // console.log(authPassword)
+                    // console.log(formData)
                     if (authPassword.status === 401) {
                         setFormData(currentUser)
                         setPasswordVerification({password:""})
@@ -88,6 +95,8 @@ export default function Dashboard({ children, ...rest }) {
                         console.log(res)
                         if (res && res.status < 300) {
                             setCurrentUser(res.data)
+                            setCloseDialog((prevState) => !prevState)
+                            console.log("set res.data and handleClose")
                         } else if (res && res.status === 409) {
                             setErrors(res.data.code === "email"
                             ?   { email: res.data.message }
@@ -108,8 +117,6 @@ export default function Dashboard({ children, ...rest }) {
               }
         }
     }
-
-
     
 
 
@@ -144,37 +151,45 @@ export default function Dashboard({ children, ...rest }) {
                                         <Controls.Dialog
                                         label="Name"
                                         name="name"
+                                        defaultValue={currentUser.name}
                                         value={formData.name}
                                         error={errors.name}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         <Controls.Dialog
                                         label="Email"
                                         name="email"
                                         type="email"
+                                        defaultValue={currentUser.email}
                                         value={formData.email}
                                         error={errors.email}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         <Controls.Dialog
                                         label="Phone Number"
                                         name="phoneNumber"
                                         type="tel"
+                                        defaultValue={currentUser.phoneNumber}
                                         value={formData.phoneNumber}
                                         error={errors.phoneNumber}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         <Controls.Dialog
                                         label="Date of Birth"
                                         name="dOB"
                                         type="date"
+                                        defaultValue={currentUser.dOB}
                                         value={formData.dOB}
                                         error={errors.dOB}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                     </List>
                                 </TabPanel>
@@ -183,42 +198,52 @@ export default function Dashboard({ children, ...rest }) {
                                         <Controls.Dialog
                                         label="Address Line 1"
                                         name="line_1"
+                                        defaultValue={currentUser.line_1}
                                         value={formData.line_1}
                                         error={errors.line_1}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         <Controls.Dialog
                                         label="Address Line 2"
                                         name="line_2"
+                                        defaultValue={currentUser.line_2}
                                         value={formData.line_2}
                                         error={errors.line_2}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         <Controls.Dialog
                                         label="Address Line 3"
                                         name="line_3"
+                                        defaultValue={currentUser.line_3}
                                         value={formData.line_3}
                                         error={errors.line_3}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         <Controls.Dialog
                                         label="Town or City"
                                         name="post_town"
+                                        defaultValue={currentUser.post_town}
                                         value={formData.post_town}
                                         error={errors.post_town}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         <Controls.Dialog
                                         label="Postcode"
                                         name="postcode"
+                                        defaultValue={currentUser.postcode}
                                         value={formData.postcode}
                                         error={errors.postcode}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                         
                                     </List>
@@ -229,10 +254,12 @@ export default function Dashboard({ children, ...rest }) {
                                         label="Password"
                                         name="password"
                                         type="password"
+                                        defaultValue={currentUser.password}
                                         value={formData.password}
                                         error={errors.password}
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
+                                        closeDialog={closeDialog}
                                         />
                                     </List>
                                 </TabPanel>
@@ -242,9 +269,9 @@ export default function Dashboard({ children, ...rest }) {
                                 name="password"
                                 type="password"
                                 error={errors.password}
-                                ref={ref}
                                 onChange={handlePassChange}
                                 handleConfirm={handleSubmit}
+                                ref={refOpen}
                                 />
                         </Box>
                     </TabContext>
