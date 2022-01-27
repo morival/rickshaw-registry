@@ -39,29 +39,29 @@ export default function Dashboard({ children, ...rest }) {
     
     const { currentUser, setCurrentUser } = useAuth()
 
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
+    const { formData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
 
     
     const [panel, setPanel] = useState("0");
 
-    const [passwordVerification, setPasswordVerification] = useState({password:""});
+    const [passwordVerification, setPasswordVerification] = useState({ password: "" });
 
     const [closeDialog, setCloseDialog] = useState(false);
 
     const handlePassChange = (e) => {
-        setPasswordVerification({password: e.target.value});
+        setPasswordVerification({ password: e.target.value });
+        validate({ password: e.target.value })
     }
-
-    // const defineValue = (name) => {
-    //     console.log(name)
-    // }
-
 
     const refOpen = useRef(null);
 
     const handleChange = (event, newValue) => {
         setPanel(newValue);
     };
+
+        // const cleanupForm = () => {
+        //     setFormData(currentUser)
+        // }
     
     async function handleSubmit(e) {
         e.preventDefault()
@@ -83,11 +83,11 @@ export default function Dashboard({ children, ...rest }) {
                     // console.log(authPassword)
                     // console.log(formData)
                     if (authPassword.status === 401) {
-                        setFormData(currentUser)
+                        // cleanupForm();
                         setPasswordVerification({password:""})
                         console.log("password verification reset")
                         console.log(passwordVerification)
-                        // setErrors({ password: authPassword.data.message })
+                        setErrors({ password: authPassword.data.message })
                         return authPassword
                     }
                     else if (authPassword.status < 300) {
@@ -157,6 +157,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         <Controls.Dialog
                                         label="Email"
@@ -168,6 +169,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         <Controls.Dialog
                                         label="Phone Number"
@@ -179,6 +181,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         <Controls.Dialog
                                         label="Date of Birth"
@@ -190,6 +193,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                     </List>
                                 </TabPanel>
@@ -204,6 +208,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         <Controls.Dialog
                                         label="Address Line 2"
@@ -214,6 +219,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         <Controls.Dialog
                                         label="Address Line 3"
@@ -224,6 +230,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         <Controls.Dialog
                                         label="Town or City"
@@ -234,6 +241,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         <Controls.Dialog
                                         label="Postcode"
@@ -244,6 +252,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                         
                                     </List>
@@ -260,6 +269,7 @@ export default function Dashboard({ children, ...rest }) {
                                         onChange={handleInputChange}
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
+                                        // cleanupForm={cleanupForm}
                                         />
                                     </List>
                                 </TabPanel>

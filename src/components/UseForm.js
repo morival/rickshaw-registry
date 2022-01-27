@@ -10,11 +10,11 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
         const {name, value} = e.target
         setFormData({
             ...formData,
-            [name]:value
+            [name]: value
         });
         console.log("name: "+name+", value: "+value)
         if(validateOnChange)
-        validate({[name]: value})
+        validate({ [name]: value })
     };
     
     return {
