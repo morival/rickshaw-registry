@@ -24,12 +24,18 @@ export default function Home() {
             {loggedIn
             ?   <>
                     <h3>Hi {currentUser && currentUser.name}!<br/>You are logged in</h3>
-                        <Controls.Button
-                        text="Dashboard"
-                        size="small"
-                        color="success"
-                        component={Link} to={"/dashboard"}
-                        />
+                    <Controls.Button
+                    text="Checklist"
+                    size="small"
+                    color="warning"
+                    component={Link} to={"/checklist"}
+                    />
+                    <Controls.Button
+                    text="Dashboard"
+                    size="small"
+                    color="success"
+                    component={Link} to={"/dashboard"}
+                    />
                 </>
             :   <>
                     <h3>Welcome to the home page of Rickshaw Registery!</h3>

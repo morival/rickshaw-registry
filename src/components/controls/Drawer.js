@@ -22,7 +22,7 @@ const Drawer = props => {
     const itemsList = [{
         text: 'Safety Checklist',
         icon: <ChecklistIcon/>,
-        onClick: () => history.push('/')
+        onClick: () => history.push('/checklist')
     }, {
         text: 'Previous Records',
         icon: <HistoryIcon/>,
