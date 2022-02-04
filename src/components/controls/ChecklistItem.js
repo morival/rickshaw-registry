@@ -1,4 +1,4 @@
-import { Container, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Radio, RadioGroup, TextareaAutosize, Typography } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Radio, RadioGroup, TextareaAutosize, Typography } from '@mui/material';
 import { green, red } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
 import Controls from './Controls';
@@ -8,7 +8,7 @@ export default function ChecklistItem(props) {
 
     const { item, onChange } = props;
 
-    const { description, status, comments} = item;
+    const { id, description, status, comments} = item;
 
     // Description
     const [background, setBackground] = useState(null)
@@ -16,8 +16,10 @@ export default function ChecklistItem(props) {
     // Status
     const [value, setValue] = useState(status);
     
-    const handleRadioChange = (event) => {
-        setValue(event.target.value);
+    const handleRadioChange = (e) => {
+        setValue(e.target.value);
+        onChange(e)
+        console.log(e.target.id)
     };
     
     // Comments
@@ -25,7 +27,6 @@ export default function ChecklistItem(props) {
 
     const handleClickOpen = () => {
         setOpen(true);
-        console.log(item)
     };
     
       const handleClose = () => {
@@ -66,13 +67,13 @@ export default function ChecklistItem(props) {
                 <FormControlLabel
                 sx={{ justifyContent: 'center', flexDirection: 'column-reverse', ml: 0 }}
                 value="true" 
-                control={<Radio sx={{ p: 0 }} color='success'/>} 
+                control={<Radio name='status' id={id} sx={{ p: 0 }} color='success'/>} 
                 label="yes"
                 />
                 <FormControlLabel
                 sx={{ justifyContent: 'center', flexDirection: 'column-reverse', ml: 0 }}
                 value="false" 
-                control={<Radio sx={{ p: 0 }} color='error'/>} 
+                control={<Radio name='status' id={id} sx={{ p: 0 }} color='error'/>} 
                 label="no"
                 />
             </RadioGroup>
@@ -91,17 +92,23 @@ export default function ChecklistItem(props) {
             open={open} 
             onClose={handleClose}
             >
-                <DialogTitle sx={{ p: 0 }}>Comment</DialogTitle>
+                <DialogTitle sx={{ p: 0 }}>Add comment on:</DialogTitle>
                 <DialogContent sx={{ p: 0 }}>
-                    <DialogContentText>Add comment if required</DialogContentText>
+                    <DialogContentText>{description}</DialogContentText>
                 </DialogContent>
                 <TextareaAutosize
-                defaultValue={comments}
+                id={id}
+                name='comments'
+                value={comments}
                 onChange={onChange}
                 minRows={4}
                 maxLength={300}
                 placeholder="write your comment here"
                 />
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Confirm</Button>
+                </DialogActions>
             </Dialog>
         </FormControl>
     )

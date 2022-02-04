@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 
 export function UseForm(initialValues, validateOnChange=false, validate) {
 
     const [formData, setFormData] = useState(initialValues);
+    const [object, setObject] = useState({});
     const [errors, setErrors] = useState({});
 
     const handleInputChange = e => {
@@ -12,26 +13,33 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
             ...formData,
             [name]: value
         });
-        console.log("name: "+name+", value: "+value)
+        console.log(e)
+        // console.log("name: "+name+", value: "+value)
         if(validateOnChange)
         validate({ [name]: value })
     };
     
     const handleInputChangeInListOfObjects = e => {
         const {name, value} = e.target
-        console.log(e)
-        // setFormData({
-        //     ...formData,
-        //     [name]: value
-        // });
-        // console.log("name: "+name+", value: "+value)
-        if(validateOnChange)
-        validate({ [name]: value })
+        const getObject = formData.find(({ id }) => id === e.target.id)
+        // console.log(e)
+        setObject({ ...getObject, [name]: value })
+        // console.log(object)
+        // setObject({ ...getObject, id: parseInt(e.target.id), comments: value })
     };
+    useEffect(() => {
+        if(object.id) {
+            const updatedObject = formData.map((item) => item.id === object.id ? object : item)
+            setFormData(updatedObject)
+            console.log(updatedObject)
+        }
+    },[object])
     
     return {
         formData,
         setFormData,
+        object,
+        setObject,
         errors,
         setErrors,
         handleInputChange,
