@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Checkbox(props) {
 
-    const {name, label, value, onChange, ...other} = props;
+    const {name, label, color, value, onChange, ...other} = props;
 
     const handleCheckboxChange = (name, value) => ({
         target:{
@@ -18,14 +18,14 @@ export default function Checkbox(props) {
             <FormControlLabel
                 control={<MuiCheckbox
                     name={name}
-                    label={label}
+                    label={label || ""}
+                    color={color || "primary"}
                     checked={value}
                     onChange={e=>onChange(handleCheckboxChange(name,e.target.checked))}
-                    color="primary"
                     {...other}
                 />}
-                label={label}
+                label={label || ""}
             />
         </FormControl>
     )
-}
+};

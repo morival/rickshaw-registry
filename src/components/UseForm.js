@@ -17,12 +17,25 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
         validate({ [name]: value })
     };
     
+    const handleInputChangeInListOfObjects = e => {
+        const {name, value} = e.target
+        console.log(e)
+        // setFormData({
+        //     ...formData,
+        //     [name]: value
+        // });
+        // console.log("name: "+name+", value: "+value)
+        if(validateOnChange)
+        validate({ [name]: value })
+    };
+    
     return {
         formData,
         setFormData,
         errors,
         setErrors,
         handleInputChange,
+        handleInputChangeInListOfObjects
     }
 }
 
