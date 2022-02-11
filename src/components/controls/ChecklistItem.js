@@ -1,18 +1,20 @@
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Radio, RadioGroup, TextareaAutosize, Typography } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
 import { green, red } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
-import Controls from './Controls';
+// import { UseForm } from '../UseForm';
 
 
 export default function ChecklistItem(props) {
-
+    
     const { item, onChange } = props;
-
-    const { id, description, status, comments} = item;
-
+    
+    // const { object } = UseForm(item);
+    
+    const { id, description, status, comments } = item;
+    
     // Description
     const [background, setBackground] = useState(null)
-
+    
     // Status
     const [value, setValue] = useState(status);
     
@@ -24,15 +26,30 @@ export default function ChecklistItem(props) {
     
     // Comments
     const [open, setOpen] = useState(false);
-
+    
+    
     const handleClickOpen = () => {
+        // setObject(item)
         setOpen(true);
     };
     
-      const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
     };
-
+    // Tooltip child
+    const MyComponent = React.forwardRef(function MyComponent(props, ref) {
+        //  Spread the props to the underlying DOM element.
+        return <Button 
+        {...props}
+        ref={ref}
+        sx={{ my: 0.5, maxWidth: 100 }}
+        size="small"
+        color="warning"
+        variant="outlined"
+        onClick={handleClickOpen}
+        // text="comment (optional)"
+        >comment</Button>
+      });
 
     // Validation
     // const validate = ( fieldValues = formData) => {
@@ -44,7 +61,6 @@ export default function ChecklistItem(props) {
     //         return Object.values(temp).every(x => x === "")
     // }
 
-    // const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
     
     useEffect(() => {
         if (value === "true")
@@ -77,14 +93,9 @@ export default function ChecklistItem(props) {
                 label="no"
                 />
             </RadioGroup>
-            <Controls.Button
-            sx={{ my: 0.5, maxWidth: 100 }}
-            size="small"
-            color="warning"
-            variant="outlined"
-            onClick={handleClickOpen}
-            text="comment (optional)"
-            />
+            <Tooltip TransitionComponent={Zoom} title={comments} placement="left" arrow>
+                <MyComponent/>
+            </Tooltip>
             <Dialog
             sx={{ '& .MuiDialog-paper': { p: 2 } }}
             fullWidth
@@ -98,7 +109,7 @@ export default function ChecklistItem(props) {
                 </DialogContent>
                 <TextareaAutosize
                 id={id}
-                name='comments'
+                name="comments"
                 value={comments}
                 onChange={onChange}
                 minRows={4}

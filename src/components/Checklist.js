@@ -38,12 +38,7 @@ const descriptionList= [
 
 
 const initialValues = []
-
-// descriptionList.forEach(item => {
-//     const newItem = {description: item, status: null, comments: ""}
-//     initialValues.push(newItem)
-// })
-descriptionList.map((item, i) => {
+descriptionList.forEach((item, i) => {
     const newItem = {id: (i+1).toString(), description: item, status: null, comments: ""}
     initialValues.push(newItem)
 })
@@ -63,7 +58,7 @@ export default function Checklist(params) {
         return Object.values(temp).every(x => x === "")
     }
     
-    const { formData, object, setObject, errors, setErrors, handleInputChangeInListOfObjects } = UseForm(initialValues, true, validate);
+    const { formData, errors, setErrors, handleInputChangeInListOfObjects } = UseForm(initialValues, true, validate);
     
     // console.log(formData)
 
