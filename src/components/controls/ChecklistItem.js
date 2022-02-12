@@ -1,16 +1,28 @@
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
 import { green, red } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
-// import { UseForm } from '../UseForm';
+import { UseForm } from '../UseForm';
 
 
 export default function ChecklistItem(props) {
     
-    const { item, onChange } = props;
+    const { initialItemValues } = props;
     
-    // const { object } = UseForm(item);
+
+    // Validation
+    const validate = ( fieldValues = formData) => {
+        let temp = {...errors}
+        setErrors({
+            ...temp
+        })
+        if(fieldValues === formData)
+        return Object.values(temp).every(x => x === "")
+    }
+
+
+    const { formData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
     
-    const { id, description, status, comments } = item;
+    const { id, description, status, comments } = formData;
     
     // Description
     const [background, setBackground] = useState(null)
@@ -20,7 +32,7 @@ export default function ChecklistItem(props) {
     
     const handleRadioChange = (e) => {
         setValue(e.target.value);
-        onChange(e)
+        handleInputChange(e)
         console.log(e.target.id)
     };
     
@@ -50,16 +62,6 @@ export default function ChecklistItem(props) {
         // text="comment (optional)"
         >comment</Button>
       });
-
-    // Validation
-    // const validate = ( fieldValues = formData) => {
-    //     let temp = {...errors}
-    //    setErrors({
-    //         ...temp
-    //     })
-    //     if(fieldValues === formData)
-    //         return Object.values(temp).every(x => x === "")
-    // }
 
     
     useEffect(() => {
@@ -111,7 +113,7 @@ export default function ChecklistItem(props) {
                 id={id}
                 name="comments"
                 value={comments}
-                onChange={onChange}
+                onChange={handleInputChange}
                 minRows={4}
                 maxLength={300}
                 placeholder="write your comment here"

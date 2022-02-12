@@ -12,41 +12,22 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
             ...formData,
             [name]: value
         });
-        console.log(e)
-        // console.log("name: "+name+", value: "+value)
+        // console.log(e)
+        console.log("name: "+name+", value: "+value)
         if(validateOnChange)
         validate({ [name]: value })
     };
     
-    const handleInputChangeInListOfObjects = e => {
-        const {name, value} = e.target
-        console.log(e)
-        const newObject = formData.map(obj => obj.id === e.target.id ? {...obj, [name]: value} : obj);
-        setFormData(newObject)
-    };
-
-
-
     // const handleInputChangeInListOfObjects = e => {
     //     const {name, value} = e.target
     //     console.log(e)
-    //     // const getObject = formData.find(({ id }) => id === e.target.id)
-        
-    //     setObject({ 
-    //         ...object, 
-    //         [name]: value
-    //     });
-    //     // console.log("name: "+name+", value: "+value)
+    //     const newObject = formData.map(obj => obj.id === e.target.id ? {...obj, [name]: value} : obj);
+    //     setFormData(newObject)
     // };
 
 
-
-    // useEffect(() => {
-    //     console.log(object)
-    // },[object])
-
     useEffect(() => {
-        console.log(formData)
+        // console.log(formData)
     },[formData])
     
     return {
@@ -54,8 +35,7 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
         setFormData,
         errors,
         setErrors,
-        handleInputChange,
-        handleInputChangeInListOfObjects
+        handleInputChange
     }
 }
 

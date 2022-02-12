@@ -14,6 +14,12 @@ const initialValues = {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
+    dOB: "",
+    line_1: "",
+    line_2: "",
+    line_3: "",
+    post_town: "",
+    postcode: "",
     registerDate: new Date()
 }
 

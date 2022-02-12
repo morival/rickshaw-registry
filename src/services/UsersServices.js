@@ -1,6 +1,15 @@
 const axios = require('axios').default;
 
 const URL = "http://localhost:3001/api/users/";
+// const URL = "https://parseapi.back4app.com/classes/users";
+
+let config = {
+    headers : {
+        "X-Parse-Application-Id": "4oFovioSMOe1CJiiw8UeO3FdHEkHbka7FZx2awzn",
+        "X-Parse-REST-API-Key": "Rszcv5J1Q794frmM5Qrt4JHJizmP0WPdti70vvQN",
+        "Content-Type": "application/json"
+    }, validateStatus: (status) => status
+}
 
 
 async function authenticateUser(user) {
@@ -12,10 +21,8 @@ async function authenticateUser(user) {
     try {
         const res = (await axios.post(URL+'login', { 
             login: user[userLogin], password: user.password 
-        } , {
-            validateStatus: (status) => status
-        }))
-        console.log(res.data.message)
+        } , config))
+        console.log(res)
         return res;
     } catch(err) {
         if(err.response){
@@ -31,10 +38,8 @@ async function authenticateUser(user) {
 
 async function getUser(id) {
     try {
-        const res = (await axios.get(URL+id , {
-            validateStatus: (status) => status
-        }))
-        delete res.data.password
+        const res = (await axios.get(URL+id , config))
+        // delete res.data.password
         console.log(res)
         return res
     } catch(err) {
@@ -51,7 +56,7 @@ async function getUser(id) {
 
 async function getAllUsers() {
     try {
-        const res = (await axios.get(URL));
+        const res = (await axios.get(URL, config));
         console.log(res.data);
     } catch (err) {
         if(err.response){
@@ -73,13 +78,8 @@ async function createUser(user) {
             phoneNumber: user.phoneNumber,
             password: user.password,
             registerDate: user.registerDate
-        }, 
-        {
-            validateStatus: (status) => {
-                return status
-            }
-        }))
-        delete res.data.password
+        }, config))
+        // delete res.data.password
         console.log(res)
         return res;
     } catch(err) {
@@ -96,10 +96,8 @@ async function createUser(user) {
 
 async function updateUser(user) {
     try {
-        const res = (await axios.put(URL+user._id, user, {
-            validateStatus: (status) => status
-        }))
-        delete res.data.password
+        const res = (await axios.put(URL+user._id, user, config))
+        // delete res.data.password
         console.log(res)
         return res;
     } catch(err) {

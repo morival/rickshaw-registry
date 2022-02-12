@@ -65,7 +65,7 @@ export default function Dashboard({ children, ...rest }) {
     
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log(e)
+        // console.log(e)
         try {
             // if password was not verified open password verification window
             if (!passwordVerification.password) {

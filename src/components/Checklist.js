@@ -58,7 +58,7 @@ export default function Checklist(params) {
         return Object.values(temp).every(x => x === "")
     }
     
-    const { formData, errors, setErrors, handleInputChangeInListOfObjects } = UseForm(initialValues, true, validate);
+    const { formData, errors, setErrors } = UseForm(initialValues, true, validate);
     
     // console.log(formData)
 
@@ -82,8 +82,8 @@ export default function Checklist(params) {
                         {formData.map((item, index) => 
                             <ChecklistItem
                             key={index}
-                            item={item}
-                            onChange={handleInputChangeInListOfObjects}
+                            initialItemValues={item}
+                            // onChange={handleInputChangeInListOfObjects}
                             />
                         )}
                     </Stack>
