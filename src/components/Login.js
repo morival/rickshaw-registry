@@ -46,10 +46,10 @@ export default function Login({handleChange}) {
     const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
 
     async function handleSubmit(e) {
+        setLoading(true)
         e.preventDefault()
         try {
             if (validate()) {
-                setLoading(true)
                 const auth = await UsersServices.authenticateUser(formData)
                 console.log(auth)
                 if (auth && auth.status < 300) {

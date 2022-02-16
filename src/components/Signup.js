@@ -53,10 +53,10 @@ export default function Signup({handleChange}) {
     const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
     
     async function handleSubmit(e) {
+        setLoading(true)
         e.preventDefault()
         try {
             if (validate()) {
-                setLoading(true)
                 const res = await UsersServices.createUser(formData)
                 console.log(res)
                 if (res && res.status < 300) {

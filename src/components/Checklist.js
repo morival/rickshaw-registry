@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import Controls from './controls/Controls';
 import { UseForm } from './UseForm';
 import ChecklistItem from './controls/ChecklistItem';
-// import { DataGrid } from '@mui/x-data-grid';
 
 
 const descriptionList= [
@@ -60,7 +59,12 @@ export default function Checklist(params) {
     
     const { formData, errors, setErrors } = UseForm(initialValues, true, validate);
     
-    // console.log(formData)
+    async function handleSubmit(e) {
+        e.preventDefault()
+        // console.log(e)
+        // updateValues()
+        // console.log(formData)
+    }
 
     return(
         <Box sx={{ p: 2 }}>
@@ -83,9 +87,14 @@ export default function Checklist(params) {
                             <ChecklistItem
                             key={index}
                             initialItemValues={item}
+                            // updateValues={updateValues}
                             // onChange={handleInputChangeInListOfObjects}
                             />
                         )}
+                        <Controls.Button
+                        text="Save"
+                        onClick={handleSubmit}
+                        />
                     </Stack>
                 </Paper>
             </Box>

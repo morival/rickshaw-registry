@@ -108,7 +108,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleSubmit} type="submit" color={error?"error":"primary"}>Confirm</Button>
+            <Button type="submit" color={error?"error":"primary"}>Confirm</Button>
           </DialogActions>
         </Form>
       </Dialog>

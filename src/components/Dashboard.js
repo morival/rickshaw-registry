@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 
 export default function Dashboard({ children, ...rest }) {
 
+
+    // Validation
     const validate = (  fieldValues = formData ) => {
         let temp = {...errors}
         const testEmail = /.+@.+..+/;
@@ -71,40 +73,37 @@ export default function Dashboard({ children, ...rest }) {
             if (!passwordVerification.password) {
                 console.log("password verification required")
                 refOpen.current.handleOpen();
+            } else if (!validate()) {
+                return console.log("validation failed")
             } else {
-                if (!validate()) {
-                    return console.log("validation failed")
-                } else {
-                    console.log("password verification passed")
-                    const user = { _id: currentUser._id, password: passwordVerification.password }
-                    const authPassword = await UsersServices.authenticateUser(user)
-                    // console.log("id: "+currentUser._id)
-                    // console.log("password: "+passwordVerification.password)
-                    // console.log(authPassword)
-                    // console.log(formData)
-                    if (authPassword.status === 401) {
-                        // cleanupForm();
-                        setPasswordVerification({password:""})
-                        console.log("password verification reset")
-                        console.log(passwordVerification)
-                        setErrors({ password: authPassword.data.message })
-                        return authPassword
+                console.log("password verification and validation passed")
+                const user = { _id: currentUser._id, password: passwordVerification.password }
+                const authPassword = await UsersServices.authenticateUser(user)
+                // console.log("id: "+currentUser._id)
+                // console.log("password: "+passwordVerification.password)
+                // console.log(authPassword)
+                // console.log(formData)
+                if (authPassword.status === 401) {
+                    // cleanupForm();
+                    setPasswordVerification({password:""})
+                    console.log("password verification reset")
+                    console.log(passwordVerification)
+                    setErrors({ password: authPassword.data.message })
+                    return authPassword
+                } else if (authPassword.status < 300) {
+                    const res = await UsersServices.updateUser(formData)
+                    console.log(res)
+                    if (res && res.status < 300) {
+                        setCurrentUser(res.data)
+                        setCloseDialog((prevState) => !prevState)
+                        console.log("set res.data and handleClose")
+                    } else if (res && res.status === 409) {
+                        setErrors(res.data.code === "email"
+                        ?   { email: res.data.message }
+                        :   { phoneNumber: res.data.message }
+                        )
                     }
-                    else if (authPassword.status < 300) {
-                        const res = await UsersServices.updateUser(formData)
-                        console.log(res)
-                        if (res && res.status < 300) {
-                            setCurrentUser(res.data)
-                            setCloseDialog((prevState) => !prevState)
-                            console.log("set res.data and handleClose")
-                        } else if (res && res.status === 409) {
-                            setErrors(res.data.code === "email"
-                            ?   { email: res.data.message }
-                            :   { phoneNumber: res.data.message }
-                            )
-                        }
-                        return res
-                    }
+                    return res
                 }
             }
         } catch(err) {

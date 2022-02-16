@@ -12,6 +12,8 @@ export default function ChecklistItem(props) {
     // Validation
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
+        if('status' in fieldValues)
+        temp.status = fieldValues.status ? "" : "This field is required."
         setErrors({
             ...temp
         })
@@ -20,10 +22,11 @@ export default function ChecklistItem(props) {
     }
 
 
-    const { formData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
     
     const { id, description, status, comments } = formData;
     
+
     // Description
     const [background, setBackground] = useState(null)
     
@@ -38,17 +41,10 @@ export default function ChecklistItem(props) {
     
     // Comments
     const [open, setOpen] = useState(false);
+    const [tempValue, setTempValue] = useState(formData)
     
     
-    const handleClickOpen = () => {
-        // setObject(item)
-        setOpen(true);
-    };
-    
-    const handleClose = () => {
-        setOpen(false);
-    };
-    // Tooltip child
+    // Tooltip child component
     const MyComponent = React.forwardRef(function MyComponent(props, ref) {
         //  Spread the props to the underlying DOM element.
         return <Button 
@@ -61,7 +57,23 @@ export default function ChecklistItem(props) {
         onClick={handleClickOpen}
         // text="comment (optional)"
         >comment</Button>
-      });
+    });
+    
+    
+    const handleClickOpen = () => {
+        setTempValue(formData)
+        setOpen(true);
+        // console.log(tempValue)
+    };
+    
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleCancel = () => {
+        setFormData(tempValue);
+        handleClose();
+    }
 
     
     useEffect(() => {
@@ -69,10 +81,13 @@ export default function ChecklistItem(props) {
         setBackground(green[100])
         else if (value === "false")
         setBackground(red[100])
+        // console.log(errors)
     },[value])
 
     return(
-        <FormControl sx={{ width: '100%', flexDirection: 'row' }}>
+        <FormControl 
+        sx={{ width: '100%', flexDirection: 'row' }}
+        >
             <Container sx={{ display: 'flex', alignItems: 'center', m: 0.5, borderRadius: 2, bgcolor: background }}>
                 <Typography sx={{  }} variant='body1'>{description}</Typography>
             </Container>
@@ -95,7 +110,7 @@ export default function ChecklistItem(props) {
                 label="no"
                 />
             </RadioGroup>
-            <Tooltip TransitionComponent={Zoom} title={comments} placement="left" arrow>
+            <Tooltip TransitionComponent={Zoom} title={!open?comments:""} placement="left" arrow>
                 <MyComponent/>
             </Tooltip>
             <Dialog
@@ -103,7 +118,7 @@ export default function ChecklistItem(props) {
             fullWidth
             maxWidth='md'
             open={open} 
-            onClose={handleClose}
+            onClose={handleCancel}
             >
                 <DialogTitle sx={{ p: 0 }}>Add comment on:</DialogTitle>
                 <DialogContent sx={{ p: 0 }}>
@@ -119,8 +134,8 @@ export default function ChecklistItem(props) {
                 placeholder="write your comment here"
                 />
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Confirm</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
+                    <Button onClick={handleClose}>Save</Button>
                 </DialogActions>
             </Dialog>
         </FormControl>
