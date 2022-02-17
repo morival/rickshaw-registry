@@ -1,13 +1,19 @@
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
 import { green, red } from '@mui/material/colors';
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { UseForm } from '../UseForm';
 
 
-export default function ChecklistItem(props) {
+// export default function ChecklistItem(props) {
+const ChecklistItem = forwardRef((props, ref) => {
     
-    const { initialItemValues } = props;
+    const { initialItemValues, updatedValues } = props;
     
+    useImperativeHandle(ref, () => ({
+        requestValues() {
+            updatedValues(formData)
+        }
+    }));
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -63,7 +69,6 @@ export default function ChecklistItem(props) {
     const handleClickOpen = () => {
         setTempValue(formData)
         setOpen(true);
-        // console.log(tempValue)
     };
     
     const handleClose = () => {
@@ -74,6 +79,11 @@ export default function ChecklistItem(props) {
         setFormData(tempValue);
         handleClose();
     }
+
+    // async function handleSubmit() {
+    //     // e.preventDefault()
+    //     return formData
+    // }
 
     
     useEffect(() => {
@@ -125,6 +135,7 @@ export default function ChecklistItem(props) {
                     <DialogContentText>{description}</DialogContentText>
                 </DialogContent>
                 <TextareaAutosize
+                autoFocus
                 id={id}
                 name="comments"
                 value={comments}
@@ -141,4 +152,6 @@ export default function ChecklistItem(props) {
         </FormControl>
     )
     
-};
+// }
+});
+export default ChecklistItem;

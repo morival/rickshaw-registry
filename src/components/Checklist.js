@@ -1,9 +1,9 @@
-import React from 'react';
-import { Paper, Stack } from '@mui/material';
+import React, { useRef } from 'react';
+import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
 import Controls from './controls/Controls';
-import { UseForm } from './UseForm';
+import { Form, UseForm } from './UseForm';
 import ChecklistItem from './controls/ChecklistItem';
 
 
@@ -50,6 +50,7 @@ export default function Checklist(params) {
     // Validation
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
+        
         setErrors({
             ...temp
         })
@@ -57,13 +58,28 @@ export default function Checklist(params) {
         return Object.values(temp).every(x => x === "")
     }
     
-    const { formData, errors, setErrors } = UseForm(initialValues, true, validate);
+    const { formData, setFormData, errors, setErrors } = UseForm(initialValues, true, validate);
     
+
+    // const refSubmit = useRef(null);
+    const refs = useRef([])
+
+
+    const newFormData = []
+
+    const updatedValues = (data) => {
+        newFormData.push(data)
+        setFormData(newFormData)
+        // console.log(newFormData)
+        // console.log(formData)
+    }
+
     async function handleSubmit(e) {
         e.preventDefault()
-        // console.log(e)
-        // updateValues()
-        // console.log(formData)
+        refs.current.forEach(element => {
+            element.requestValues()
+        });
+        console.log(errors)
     }
 
     return(
@@ -82,20 +98,22 @@ export default function Checklist(params) {
             />
             <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                 <Paper sx={{ p: 1, maxWidth: '1000px', width: '100%' }}>
-                    <Stack sx={{ width: '100%' }}>
+                    <Form onSubmit={handleSubmit}>
                         {formData.map((item, index) => 
                             <ChecklistItem
                             key={index}
                             initialItemValues={item}
-                            // updateValues={updateValues}
+                            updatedValues={updatedValues}
+                            // error={errors[index]}
+                            ref={(element)=>{refs.current[index]=element}}
                             // onChange={handleInputChangeInListOfObjects}
                             />
                         )}
                         <Controls.Button
                         text="Save"
-                        onClick={handleSubmit}
+                        type="submit"
                         />
-                    </Stack>
+                    </Form>
                 </Paper>
             </Box>
         </Box>

@@ -13,7 +13,7 @@ function App() {
   const { currentUser }  = useAuth()
 
   useEffect(() => {
-    console.log(currentUser)
+    // console.log(currentUser)
   }, [currentUser])
 
   return (
