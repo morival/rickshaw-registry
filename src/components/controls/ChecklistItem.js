@@ -1,10 +1,18 @@
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
-import { green, red } from '@mui/material/colors';
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { green, red } from '@mui/material/colors';
 import { UseForm } from '../UseForm';
 
 
-// export default function ChecklistItem(props) {
+const CustomisedContainer = styled(Container)(({ theme }) => ({
+    padding: 0,
+    width: 80,
+    [theme.breakpoints.up('sm')]: {
+        padding: 0,
+    }
+}));
+
 const ChecklistItem = forwardRef((props, ref) => {
     
     const { initialItemValues, updatedValues } = props;
@@ -13,7 +21,6 @@ const ChecklistItem = forwardRef((props, ref) => {
         requestValues() {
             updatedValues(formData)
             validate() ? setHelperText("") : setHelperText(errors.status)
-            console.log(validate())
         }
     }));
 
@@ -21,7 +28,7 @@ const ChecklistItem = forwardRef((props, ref) => {
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('status' in fieldValues)
-            temp.status = fieldValues.status ? "" : "This field is required."
+            temp.status = fieldValues.status ? "" : "Required"
         setErrors({
             ...temp
         })
@@ -60,7 +67,7 @@ const ChecklistItem = forwardRef((props, ref) => {
         return <Button 
         {...props}
         ref={ref}
-        sx={{ my: 0.5, p : 1, minWidth: 70, height: 40 }}
+        sx={{ my: 0.5, minWidth: 75 }}
         size="small"
         color="warning"
         variant="outlined"
@@ -86,40 +93,51 @@ const ChecklistItem = forwardRef((props, ref) => {
 
     
     useEffect(() => {
+        value ? setHelperText("") : setHelperText(errors.status)
         if (value === "true")
         setBackground(green[100])
         else if (value === "false")
         setBackground(red[100])
-        validate() ? setHelperText("") : setHelperText(errors.status)
-    },[value])
+    },[value, errors])
+    
 
     return(
         <FormControl 
         sx={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}
         >
-            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background }}>
-                <Typography sx={{  }} variant='body1'>{description}</Typography>
-                <FormHelperText error={helperText ? true : false}>{helperText}</FormHelperText>
-            </Container>
-            <RadioGroup
-            sx={{ flexWrap: 'nowrap' }}
-            value={value}
-            onChange={handleRadioChange}
-            row
+            <Container 
+            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background }}
             >
-                <FormControlLabel
-                sx={{ justifyContent: 'center', flexDirection: 'column-reverse', ml: 0 }}
-                value="true" 
-                control={<Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='success'/>} 
-                label="yes"
-                />
-                <FormControlLabel
-                sx={{ justifyContent: 'center', flexDirection: 'column-reverse', ml: 0 }}
-                value="false" 
-                control={<Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='error'/>} 
-                label="no"
-                />
-            </RadioGroup>
+                <Typography variant='body1'>{description}</Typography>
+            </Container>
+            <CustomisedContainer>
+                <RadioGroup
+                sx={{ flexWrap: 'nowrap' }}
+                value={value}
+                onChange={handleRadioChange}
+                row
+                >
+                    <FormControlLabel
+                    sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
+                    value="true" 
+                    control={
+                        <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='success'/>
+                    } 
+                    label="yes"
+                    />
+                    <FormControlLabel
+                    sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
+                    value="false" 
+                    control={
+                        <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='error'/>
+                    } 
+                    label="no"
+                    />
+                </RadioGroup>
+                <FormHelperText error={helperText ? true : false} sx={{ pb: 1, mt: 0 }}>
+                    {helperText}
+                </FormHelperText>
+            </CustomisedContainer>
             <Tooltip TransitionComponent={Zoom} title={!open?comments:""} placement="left" arrow>
                 <MyComponent/>
             </Tooltip>
@@ -151,7 +169,5 @@ const ChecklistItem = forwardRef((props, ref) => {
             </Dialog>
         </FormControl>
     )
-    
-// }
 });
 export default ChecklistItem;

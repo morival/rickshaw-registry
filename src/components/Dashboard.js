@@ -84,7 +84,6 @@ export default function Dashboard({ children, ...rest }) {
                 // console.log(authPassword)
                 // console.log(formData)
                 if (authPassword.status === 401) {
-                    // cleanupForm();
                     setPasswordVerification({password:""})
                     console.log("password verification reset")
                     console.log(passwordVerification)

@@ -5,39 +5,11 @@ import { Link } from 'react-router-dom';
 import Controls from './controls/Controls';
 import { Form, UseForm } from './UseForm';
 import ChecklistItem from './controls/ChecklistItem';
-
-
-const descriptionList= [
-    // "Identification plate fitted",
-    // "Wheels not wobbling",
-    // "Tires with tread pattern clearly visible",
-    // "Tire pressure at 60psi ???",
-    // "Spokes not loose/broken",
-    // "Structure, frame, bolts are ok",
-    // "Wheels guards and shields in place",
-    // "At least one front light working",
-    // "At least two rear lights working",
-    // "Two rear retro reflectors",
-    // "Bell working",
-    // "At least one mirror fitted",
-    // "Seat post adjusted",
-    // "Front and rear chain tight",
-    // "Gears switching properly and not skipping",
-    // "Front brake effective",
-    // "Rear brake effective",
-    // "Seatbelt with EC or BSI mark",
-    // "Handlebar, headset secure",
-    // "High visibility markings on passenger's handles",
-    // "Canopy in fixed position",
-    // "Forks straight",
-    // "Floor covering made of non-slip material",
-    "Clean and presentable",
-    "Repair kit ???"
-]
+import Descriptions from './content/ChecklistDescriptions';
 
 
 const initialValues = []
-descriptionList.forEach((element, i) => {
+Descriptions.forEach((element, i) => {
     const newElement = {id: (i+1).toString(), description: element, status: null, comments: ""}
     initialValues.push(newElement)
 })
@@ -50,16 +22,13 @@ export default function Checklist(params) {
     // Validation
     const validate = ( fieldValues = formData) => {
         let temp = [...errorArr]
-        // console.log(fieldValues)
         fieldValues.forEach((element, i) => {
             const error = element.status != null ? "" : "Field is required";
             temp.length === i ? temp.push(error) : temp[i] = error;
         })
-        // console.log(temp)
         setErrorArr([
             ...temp
         ])
-        // console.log(errorArr)
         if(fieldValues === formData)
             return Object.values(temp).every(x => x === "")
     }
@@ -67,15 +36,12 @@ export default function Checklist(params) {
     const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
     
 
-    // const refSubmit = useRef(null);
     const refs = useRef([])
 
 
     const newFormData = []
     const updatedValues = (data) => {
-        // console.log(data)
         newFormData.push(data)
-        // console.log(newFormData)
     }
 
 
@@ -89,6 +55,7 @@ export default function Checklist(params) {
 
     useEffect(() => {
         console.log(validate())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData])
 
     return(
@@ -96,12 +63,12 @@ export default function Checklist(params) {
             <h1>Checklist</h1>
             <Controls.Button
             text="Home"
-            size="small"
+            // size="small"
             component={Link} to={"/"}
             />
             <Controls.Button
             text="Dashboard"
-            size="small"
+            // size="small"
             color="success"
             component={Link} to={"/dashboard"}
             />
@@ -118,6 +85,7 @@ export default function Checklist(params) {
                         )}
                         <Controls.Button
                         text="Save"
+                        size="small"
                         type="submit"
                         />
                     </Form>
