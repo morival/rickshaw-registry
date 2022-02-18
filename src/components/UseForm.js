@@ -5,6 +5,7 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
 
     const [formData, setFormData] = useState(initialValues);
     const [errors, setErrors] = useState({});
+    const [errorArr, setErrorArr] = useState([]);
 
     const handleInputChange = e => {
         const {name, value} = e.target
@@ -17,14 +18,6 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
         if(validateOnChange)
         validate({ [name]: value })
     };
-    
-    // const handleInputChangeInListOfObjects = e => {
-    //     const {name, value} = e.target
-    //     console.log(e)
-    //     const newObject = formData.map(obj => obj.id === e.target.id ? {...obj, [name]: value} : obj);
-    //     setFormData(newObject)
-    // };
-
 
     useEffect(() => {
         // console.log(formData)
@@ -35,6 +28,8 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
         setFormData,
         errors,
         setErrors,
+        errorArr,
+        setErrorArr,
         handleInputChange
     }
 }

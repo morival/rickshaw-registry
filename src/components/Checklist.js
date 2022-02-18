@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
@@ -8,38 +8,38 @@ import ChecklistItem from './controls/ChecklistItem';
 
 
 const descriptionList= [
-    "Identification plate fitted",
-    "Wheels not wobbling",
-    "Tires with tread pattern clearly visible",
-    "Tire pressure at 60psi ???",
-    "Spokes not loose/broken",
-    "Structure, frame, bolts are ok",
-    "Wheels guards and shields in place",
-    "At least one front light working",
-    "At least two rear lights working",
-    "Two rear retro reflectors",
-    "Bell working",
-    "At least one mirror fitted",
-    "Seat post adjusted",
-    "Front and rear chain tight",
-    "Gears switching properly and not skipping",
-    "Front brake effective",
-    "Rear brake effective",
-    "Seatbelt with EC or BSI mark",
-    "Handlebar, headset secure",
-    "High visibility markings on passenger's handles",
-    "Canopy in fixed position",
-    "Forks straight",
-    "Floor covering made of non-slip material",
+    // "Identification plate fitted",
+    // "Wheels not wobbling",
+    // "Tires with tread pattern clearly visible",
+    // "Tire pressure at 60psi ???",
+    // "Spokes not loose/broken",
+    // "Structure, frame, bolts are ok",
+    // "Wheels guards and shields in place",
+    // "At least one front light working",
+    // "At least two rear lights working",
+    // "Two rear retro reflectors",
+    // "Bell working",
+    // "At least one mirror fitted",
+    // "Seat post adjusted",
+    // "Front and rear chain tight",
+    // "Gears switching properly and not skipping",
+    // "Front brake effective",
+    // "Rear brake effective",
+    // "Seatbelt with EC or BSI mark",
+    // "Handlebar, headset secure",
+    // "High visibility markings on passenger's handles",
+    // "Canopy in fixed position",
+    // "Forks straight",
+    // "Floor covering made of non-slip material",
     "Clean and presentable",
     "Repair kit ???"
 ]
 
 
 const initialValues = []
-descriptionList.forEach((item, i) => {
-    const newItem = {id: (i+1).toString(), description: item, status: null, comments: ""}
-    initialValues.push(newItem)
+descriptionList.forEach((element, i) => {
+    const newElement = {id: (i+1).toString(), description: element, status: null, comments: ""}
+    initialValues.push(newElement)
 })
 
 
@@ -49,16 +49,22 @@ export default function Checklist(params) {
     
     // Validation
     const validate = ( fieldValues = formData) => {
-        let temp = {...errors}
-        
-        setErrors({
-            ...temp
+        let temp = [...errorArr]
+        // console.log(fieldValues)
+        fieldValues.forEach((element, i) => {
+            const error = element.status != null ? "" : "Field is required";
+            temp.length === i ? temp.push(error) : temp[i] = error;
         })
+        // console.log(temp)
+        setErrorArr([
+            ...temp
+        ])
+        // console.log(errorArr)
         if(fieldValues === formData)
-        return Object.values(temp).every(x => x === "")
+            return Object.values(temp).every(x => x === "")
     }
     
-    const { formData, setFormData, errors, setErrors } = UseForm(initialValues, true, validate);
+    const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
     
 
     // const refSubmit = useRef(null);
@@ -66,21 +72,24 @@ export default function Checklist(params) {
 
 
     const newFormData = []
-
     const updatedValues = (data) => {
+        // console.log(data)
         newFormData.push(data)
-        setFormData(newFormData)
         // console.log(newFormData)
-        // console.log(formData)
     }
+
 
     async function handleSubmit(e) {
         e.preventDefault()
         refs.current.forEach(element => {
             element.requestValues()
         });
-        console.log(errors)
+        setFormData(newFormData)
     }
+
+    useEffect(() => {
+        console.log(validate())
+    }, [formData])
 
     return(
         <Box sx={{ p: 2 }}>
@@ -97,16 +106,14 @@ export default function Checklist(params) {
             component={Link} to={"/dashboard"}
             />
             <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-                <Paper sx={{ p: 1, maxWidth: '1000px', width: '100%' }}>
+                <Paper sx={{ p: 1, maxWidth: '550px', width: '100%' }}>
                     <Form onSubmit={handleSubmit}>
                         {formData.map((item, index) => 
                             <ChecklistItem
                             key={index}
                             initialItemValues={item}
                             updatedValues={updatedValues}
-                            // error={errors[index]}
                             ref={(element)=>{refs.current[index]=element}}
-                            // onChange={handleInputChangeInListOfObjects}
                             />
                         )}
                         <Controls.Button

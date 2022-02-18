@@ -1,4 +1,4 @@
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
 import { green, red } from '@mui/material/colors';
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { UseForm } from '../UseForm';
@@ -12,6 +12,8 @@ const ChecklistItem = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         requestValues() {
             updatedValues(formData)
+            validate() ? setHelperText("") : setHelperText(errors.status)
+            console.log(validate())
         }
     }));
 
@@ -19,12 +21,13 @@ const ChecklistItem = forwardRef((props, ref) => {
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('status' in fieldValues)
-        temp.status = fieldValues.status ? "" : "This field is required."
+            temp.status = fieldValues.status ? "" : "This field is required."
         setErrors({
             ...temp
         })
+        // console.log(temp)
         if(fieldValues === formData)
-        return Object.values(temp).every(x => x === "")
+            return Object.values(temp).every(x => x === "")
     }
 
 
@@ -38,11 +41,12 @@ const ChecklistItem = forwardRef((props, ref) => {
     
     // Status
     const [value, setValue] = useState(status);
+    const [helperText, setHelperText] = useState("");
     
     const handleRadioChange = (e) => {
         setValue(e.target.value);
         handleInputChange(e)
-        console.log(e.target.id)
+        // console.log(e.target.id)
     };
     
     // Comments
@@ -56,7 +60,7 @@ const ChecklistItem = forwardRef((props, ref) => {
         return <Button 
         {...props}
         ref={ref}
-        sx={{ my: 0.5, maxWidth: 100 }}
+        sx={{ my: 0.5, p : 1, minWidth: 70, height: 40 }}
         size="small"
         color="warning"
         variant="outlined"
@@ -80,11 +84,6 @@ const ChecklistItem = forwardRef((props, ref) => {
         handleClose();
     }
 
-    // async function handleSubmit() {
-    //     // e.preventDefault()
-    //     return formData
-    // }
-
     
     useEffect(() => {
         if (value === "true")
@@ -96,10 +95,11 @@ const ChecklistItem = forwardRef((props, ref) => {
 
     return(
         <FormControl 
-        sx={{ width: '100%', flexDirection: 'row' }}
+        sx={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}
         >
-            <Container sx={{ display: 'flex', alignItems: 'center', m: 0.5, borderRadius: 2, bgcolor: background }}>
+            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background }}>
                 <Typography sx={{  }} variant='body1'>{description}</Typography>
+                <FormHelperText error={helperText ? true : false}>{helperText}</FormHelperText>
             </Container>
             <RadioGroup
             sx={{ flexWrap: 'nowrap' }}
@@ -110,13 +110,13 @@ const ChecklistItem = forwardRef((props, ref) => {
                 <FormControlLabel
                 sx={{ justifyContent: 'center', flexDirection: 'column-reverse', ml: 0 }}
                 value="true" 
-                control={<Radio name='status' id={id} sx={{ p: 0 }} color='success'/>} 
+                control={<Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='success'/>} 
                 label="yes"
                 />
                 <FormControlLabel
                 sx={{ justifyContent: 'center', flexDirection: 'column-reverse', ml: 0 }}
                 value="false" 
-                control={<Radio name='status' id={id} sx={{ p: 0 }} color='error'/>} 
+                control={<Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='error'/>} 
                 label="no"
                 />
             </RadioGroup>
