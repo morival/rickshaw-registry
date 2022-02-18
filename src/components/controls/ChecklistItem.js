@@ -90,7 +90,7 @@ const ChecklistItem = forwardRef((props, ref) => {
         setBackground(green[100])
         else if (value === "false")
         setBackground(red[100])
-        // console.log(errors)
+        validate() ? setHelperText("") : setHelperText(errors.status)
     },[value])
 
     return(
