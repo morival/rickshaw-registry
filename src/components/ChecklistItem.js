@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'rea
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { green, red } from '@mui/material/colors';
-import { UseForm } from '../UseForm';
+import { UseForm } from './UseForm';
 
 
 const CustomisedContainer = styled(Container)(({ theme }) => ({

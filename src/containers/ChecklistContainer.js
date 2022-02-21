@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
-import Controls from './controls/Controls';
-import { Form, UseForm } from './UseForm';
-import ChecklistItem from './controls/ChecklistItem';
-import Descriptions from './content/ChecklistDescriptions';
+import Controls from '../components/controls/Controls';
+import { Form, UseForm } from '../components/UseForm';
+import ChecklistItem from '../components/ChecklistItem';
+import Descriptions from '../components/content/ChecklistDescriptions';
 
 
 const initialValues = []

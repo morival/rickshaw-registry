@@ -71,7 +71,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     style={label?undefined:{display:"none"}}>
       <ListItemText 
       primary={label}
-      sx={{ maxWidth: 150 }}
+      sx={{ width: 180 }}
       />
       <ListItemText 
       primary={name==="password"?"*****":defaultValue}

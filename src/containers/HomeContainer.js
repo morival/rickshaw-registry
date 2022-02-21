@@ -2,8 +2,8 @@ import { Paper } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
-import Controls from './controls/Controls';
+import { useAuth } from '../components/context/AuthContext';
+import Controls from '../components/controls/Controls';
 
 export default function Home() {
 

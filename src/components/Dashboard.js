@@ -7,7 +7,6 @@ import { List, Paper, Tab } from '@mui/material';
 import { Box } from '@mui/system';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
-// import DashboardItem from './controls/DashboardItem';
 
 
 export default function Dashboard({ children, ...rest }) {
