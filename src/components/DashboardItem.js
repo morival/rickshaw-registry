@@ -1,14 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
-import Controls from './Controls';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { ListItem as MuiListItem, ListItemText, Typography} from '@mui/material';
-import { Form } from '../UseForm';
+import Controls from './controls/Controls';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, Typography} from '@mui/material';
+import { Form } from './UseForm';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -67,13 +60,16 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   return (
     <MuiListItem
+    // sx={{ width: '100%' }}
     // hide component if label is missing
-    style={label?undefined:{display:"none"}}>
+    style={label?undefined:{display:"none"}}
+    >
       <ListItemText 
-      primary={label}
       sx={{ width: 180 }}
+      primary={label}
       />
-      <ListItemText 
+      <ListItemText
+    //   sx={{ width: '100%' }}
       primary={name==="password"?"*****":defaultValue}
       // set error message
       secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}

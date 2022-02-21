@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { AppBar, Toolbar, Typography } from '@mui/material';
-// import MenuIcon from '@mui/icons-material/Menu';
-import { Box } from '@mui/system';
 import { useAuth } from './context/AuthContext';
+import Drawer from './NavbarDrawer';
 import Controls from './controls/Controls';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { makeStyles } from '@mui/styles';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
         container: {
@@ -40,11 +40,10 @@ function Navbar() {
     <Box sx={{ flexGrow: 1 }} className={classes.container}>
         <AppBar position="static">
             <Toolbar>
-                <Controls.Drawer/>
+                <Drawer/>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Rickshaw Registery
                 </Typography>
-                {/* <Button color="inherit"> */}
                 {loggedIn
                 ? <Controls.Button
                     text="Log Out"
@@ -55,7 +54,6 @@ function Navbar() {
                     color="primary"
                     component={Link} to={"/login"}
                     />}
-                {/* </Button> */}
             </Toolbar>
         </AppBar>
     </Box>

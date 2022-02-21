@@ -59,10 +59,10 @@ const Drawer = props => {
                 <List
                 className={classes.drawer}
                 >
-                    {itemsList.map((item, key) => {
+                    {itemsList.map((item, i) => {
                         const {text, icon, onClick} = item;
                         return(
-                            <ListItem button key={text} onClick={onClick}>
+                            <ListItem button key={i} onClick={onClick}>
                                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
                                 <ListItemText primary={text} />
                             </ListItem>

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { useAuth } from '../components/context/AuthContext';
 import UsersServices from '../services/UsersServices';
+import DashboardItem from '../components/DashboardItem';
+import { useAuth } from '../components/context/AuthContext';
 import { UseForm } from '../components/UseForm';
 import Controls from '../components/controls/Controls';
 import ProfileTabs from '../components/content/ProfileDescriptions';
@@ -18,8 +19,10 @@ const CustomisedBox = styled(Box)(({ theme }) => ({
 }))
 
 
+
 export default function DashboardContainer( children, ...rest ) {
     
+
     const theme = useTheme();
 
     const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
@@ -150,10 +153,10 @@ export default function DashboardContainer( children, ...rest ) {
                                     )
                                 })}
                             </TabList>
-                            <Box sx={{ width: '80%' }}>
+                            <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
                                     <List>
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Name"
                                         name="name"
                                         defaultValue={currentUser.name}
@@ -163,7 +166,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
                                         />
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Email"
                                         name="email"
                                         type="email"
@@ -174,7 +177,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
                                         />
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Phone Number"
                                         name="phoneNumber"
                                         type="tel"
@@ -185,7 +188,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
                                         />
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Date of Birth"
                                         name="dOB"
                                         type="date"
@@ -200,7 +203,7 @@ export default function DashboardContainer( children, ...rest ) {
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="1">
                                     <List>
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Address Line 1"
                                         name="line_1"
                                         defaultValue={currentUser.line_1}
@@ -210,7 +213,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
                                         />
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Address Line 2"
                                         name="line_2"
                                         defaultValue={currentUser.line_2}
@@ -220,7 +223,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
                                         />
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Address Line 3"
                                         name="line_3"
                                         defaultValue={currentUser.line_3}
@@ -230,7 +233,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
                                         />
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Town or City"
                                         name="post_town"
                                         defaultValue={currentUser.post_town}
@@ -240,7 +243,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         handleConfirm={handleSubmit}
                                         closeDialog={closeDialog}
                                         />
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Postcode"
                                         name="postcode"
                                         defaultValue={currentUser.postcode}
@@ -255,7 +258,7 @@ export default function DashboardContainer( children, ...rest ) {
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="2">
                                     <List>
-                                        <Controls.Dialog
+                                        <DashboardItem
                                         label="Password"
                                         name="password"
                                         type="password"
@@ -268,7 +271,7 @@ export default function DashboardContainer( children, ...rest ) {
                                         />
                                     </List>
                                 </TabPanel>
-                                <Controls.Dialog
+                                <DashboardItem
                                 dialogTitle="Password Required"
                                 dialogText="Confirm your current password"
                                 name="password"
