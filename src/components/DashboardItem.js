@@ -2,14 +2,8 @@ import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'rea
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, Typography, useMediaQuery} from '@mui/material';
 import Controls from './controls/Controls';
 import { Form } from './UseForm';
-import { styled, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
-
-const CustumisedListItemText = styled(ListItemText)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '0.8rem',
-  }
-}))
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -24,7 +18,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { buttonVariant, dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, handleConfirm, closeDialog } = props;
+  const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, handleConfirm, closeDialog } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -73,30 +67,31 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   return (
     <MuiListItem
-    // sx={{ width: '100%' }}
+    sx={isSmallScreen
+        ? { padding: '8px 0' }
+        : {  }}
     // hide component if label is missing
-    style={label?undefined:{display:"none"}}
+    style={label ? undefined : { display: 'none' }}
     >
-      <CustumisedListItemText 
-      sx={ isSmallScreen
+      <ListItemText
+      sx={isSmallScreen
         ? { minWidth: 100 }
         : { minWidth: 130 }}
       primary={label}
       primaryTypographyProps={isSmallScreen
         ? { fontSize: '0.8rem' }
-        : {}}
+        : { padding: '0 20px' }}
       />
-      <CustumisedListItemText
+      <ListItemText
       sx={{ width: '100%' }}
       primary={name==="password"?"*****":defaultValue}
       primaryTypographyProps={isSmallScreen
-        ? { fontSize: '0.8rem' }
-        : {  }}
+        ? { fontSize: '0.8rem', padding: '0 5px'  }
+        : { padding: '0 20px' }}
       // set error message
       secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />
       <Controls.Button 
-      variant={buttonVariant}
       color={error?"warning":"primary"}
       onClick={handleOpen}
       text={value||name==="password"?"Change":"Add"}

@@ -7,24 +7,24 @@ import Controls from '../components/controls/Controls';
 import ProfileTabs from '../components/content/ProfileDescriptions';
 import { List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { Box } from '@mui/system';
-import { styled, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
 
 
-const CustomisedBox = styled(Box)(({ theme }) => ({
-    [theme.breakpoints.up('md')]: {
-        display: 'flex',
-    }
-}))
+// const CustomisedBox = styled(Box)(({ theme }) => ({
+//     [theme.breakpoints.up('md')]: {
+//         display: 'flex',
+//     }
+// }))
 
-const CustomisedTab = styled(Tab)(({ theme }) => ({
-    [theme.breakpoints.down('sm')]: {
-        fontSize: '0.625rem',
-        padding: '6px 8px',
-        minHeight: '36px',
-    }
-}))
+// const CustomisedTab = styled(Tab)(({ theme }) => ({
+//     [theme.breakpoints.down('sm')]: {
+//         fontSize: '0.625rem',
+//         padding: '6px 8px',
+//         minHeight: '36px',
+//     }
+// }))
 
 
 
@@ -34,6 +34,7 @@ export default function DashboardContainer( children, ...rest ) {
     const theme = useTheme();
 
     const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     // Validation
     const validate = (  fieldValues = formData ) => {
@@ -146,7 +147,11 @@ export default function DashboardContainer( children, ...rest ) {
             />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '800px', width: '100%' }}>
-                    <CustomisedBox>
+                    <Box
+                    sx={isMediumScreen
+                        ? { display: 'flex'}
+                        : {  }}
+                    >
                         <TabContext value={panel}>
                             <TabList 
                             value={panel} 
@@ -158,7 +163,10 @@ export default function DashboardContainer( children, ...rest ) {
                             >
                                 {ProfileTabs.map((element, i) => {
                                     return(
-                                        <CustomisedTab
+                                        <Tab
+                                        sx={isSmallScreen
+                                            ? { fontSize: '0.625rem', padding: '6px 8px', minHeight: '36px', minWidth: '' }
+                                            : {}}
                                         label={element} 
                                         key={i} 
                                         value={i.toString()} 
@@ -296,7 +304,7 @@ export default function DashboardContainer( children, ...rest ) {
                                 />
                             </Box>
                         </TabContext>
-                    </CustomisedBox>
+                    </Box>
                 </Paper>
             </Box>
         </Box>

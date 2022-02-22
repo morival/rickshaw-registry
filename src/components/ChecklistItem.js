@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { green, red } from '@mui/material/colors';
+import { grey, green, red } from '@mui/material/colors';
 import { UseForm } from './UseForm';
 
 
@@ -46,7 +46,7 @@ const ChecklistItem = forwardRef((props, ref) => {
     
 
     // Description
-    const [background, setBackground] = useState(null)
+    const [background, setBackground] = useState(grey[100])
     
     // Status
     const [value, setValue] = useState(status);
