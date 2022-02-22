@@ -80,7 +80,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       primary={label}
       primaryTypographyProps={isSmallScreen
         ? { fontSize: '0.8rem' }
-        : { px: 3 }}
+        : { px: 1 }}
       />
       <ListItemText
       sx={{ width: '100%' }}
@@ -92,6 +92,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />
       <Controls.Button 
+      sx={{ minWidth: 70 }}
       color={error?"warning":"primary"}
       onClick={handleOpen}
       text={value||name==="password"?"Change":"Add"}
