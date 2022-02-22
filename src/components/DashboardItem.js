@@ -1,13 +1,28 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, Typography, useMediaQuery} from '@mui/material';
 import Controls from './controls/Controls';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, Typography} from '@mui/material';
 import { Form } from './UseForm';
+import { styled, useTheme } from '@mui/material/styles';
+
+
+const CustumisedListItemText = styled(ListItemText)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '0.8rem',
+  }
+}))
+
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+
+
 const AlertDialogSlide = forwardRef((props, ref) => {
+  
+  const theme = useTheme();
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { buttonVariant, dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, handleConfirm, closeDialog } = props;
 
@@ -21,8 +36,6 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   const handleOpen = () => {
     setOpen(true);
-    // if (!value)
-    // defineValue(true)
   };
 
   const handleClose = () => {
@@ -64,13 +77,21 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     // hide component if label is missing
     style={label?undefined:{display:"none"}}
     >
-      <ListItemText 
-      sx={{ width: 180 }}
+      <CustumisedListItemText 
+      sx={ isSmallScreen
+        ? { minWidth: 100 }
+        : { minWidth: 130 }}
       primary={label}
+      primaryTypographyProps={isSmallScreen
+        ? { fontSize: '0.8rem' }
+        : {}}
       />
-      <ListItemText
-    //   sx={{ width: '100%' }}
+      <CustumisedListItemText
+      sx={{ width: '100%' }}
       primary={name==="password"?"*****":defaultValue}
+      primaryTypographyProps={isSmallScreen
+        ? { fontSize: '0.8rem' }
+        : {  }}
       // set error message
       secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />

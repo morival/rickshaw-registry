@@ -18,6 +18,14 @@ const CustomisedBox = styled(Box)(({ theme }) => ({
     }
 }))
 
+const CustomisedTab = styled(Tab)(({ theme }) => ({
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '0.625rem',
+        padding: '6px 8px',
+        minHeight: '36px',
+    }
+}))
+
 
 
 export default function DashboardContainer( children, ...rest ) {
@@ -26,7 +34,6 @@ export default function DashboardContainer( children, ...rest ) {
     const theme = useTheme();
 
     const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
-    console.log(isMediumScreen)
 
     // Validation
     const validate = (  fieldValues = formData ) => {
@@ -145,11 +152,17 @@ export default function DashboardContainer( children, ...rest ) {
                             value={panel} 
                             onChange={handleChange}
                             orientation={isMediumScreen ? 'vertical' : 'horizontal'}
-                            sx={isMediumScreen ? { borderRight: 1, borderColor: 'divider' } : { borderBottom: 1, borderColor: 'divider' }}
+                            sx={isMediumScreen 
+                                ? { borderRight: 1, borderColor: 'divider' } 
+                                : { borderBottom: 1, borderColor: 'divider', minHeight: '36px' }}
                             >
                                 {ProfileTabs.map((element, i) => {
                                     return(
-                                        <Tab label={element} key={i} value={i.toString()} />
+                                        <CustomisedTab
+                                        label={element} 
+                                        key={i} 
+                                        value={i.toString()} 
+                                        />
                                     )
                                 })}
                             </TabList>
