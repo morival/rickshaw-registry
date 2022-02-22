@@ -68,7 +68,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
   return (
     <MuiListItem
     sx={isSmallScreen
-        ? { padding: '8px 0' }
+        ? { p: '8px 0' }
         : {  }}
     // hide component if label is missing
     style={label ? undefined : { display: 'none' }}
@@ -80,14 +80,14 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       primary={label}
       primaryTypographyProps={isSmallScreen
         ? { fontSize: '0.8rem' }
-        : { padding: '0 20px' }}
+        : { px: 3 }}
       />
       <ListItemText
       sx={{ width: '100%' }}
       primary={name==="password"?"*****":defaultValue}
       primaryTypographyProps={isSmallScreen
-        ? { fontSize: '0.8rem', padding: '0 5px'  }
-        : { padding: '0 20px' }}
+        ? { fontSize: '0.8rem', p: '0 5px'  }
+        : { px: 3 }}
       // set error message
       secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />

@@ -83,11 +83,11 @@ export default function Signup({handleChange}) {
         <Grid>
             <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Grid align="center">
-                    <Avatar sx={{ bgcolor: "#41a9e1" }}>
+                    <Avatar sx={{ bgcolor: "#41a9e1", mb: 1 }}>
                         <AddBoxOutlinedIcon />
                     </Avatar>
-                    <h2 style={{margin: 10}}>Rickshaw Registry</h2>
-                    <h4 style={{margin: 10}}>Sign Up</h4>
+                    <Typography variant='h5' gutterBottom>Rickshaw Registry</Typography>
+                    <Typography variant='h6' gutterBottom>Sign Up</Typography>
                 </Grid>
 
                 <Form onSubmit={handleSubmit}>

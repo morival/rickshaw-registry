@@ -1,21 +1,27 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, Zoom } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, useMediaQuery, Zoom } from '@mui/material';
 import { grey, green, red } from '@mui/material/colors';
+import CommentIcon from '@mui/icons-material/Comment';
 import { UseForm } from './UseForm';
+import { useTheme } from '@mui/material/styles';
+// import { styled } from '@mui/material/styles';
 
 
-const CustomisedContainer = styled(Container)(({ theme }) => ({
-    padding: 0,
-    width: 80,
-    [theme.breakpoints.up('sm')]: {
-        padding: 0,
-    }
-}));
+// const CustomisedContainer = styled(Container)(({ theme }) => ({
+//     padding: 0,
+//     width: 80,
+//     [theme.breakpoints.up('sm')]: {
+//         padding: 0,
+//     }
+// }));
 
 
 
 const ChecklistItem = forwardRef((props, ref) => {
+
+    const theme = useTheme();
+
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     
     const { initialItemValues, updatedValues } = props;
     
@@ -63,18 +69,18 @@ const ChecklistItem = forwardRef((props, ref) => {
     const [tempValue, setTempValue] = useState(formData)
     
     
-    // Tooltip child component
-    const MyComponent = React.forwardRef(function MyComponent(props, ref) {
+    // Tooltip child Button component
+    const TooltipButton = React.forwardRef(function TooltipButton(props, ref) {
         //  Spread the props to the underlying DOM element.
         return <Button 
         {...props}
         ref={ref}
-        sx={{ my: 0.5, minWidth: 75 }}
-        size="small"
-        color="warning"
-        variant="outlined"
+        sx={isSmallScreen
+            ? { fontSize: '0.6rem', minWidth: 85 }
+            : { fontSize: '0.7rem', minWidth: 105 }}
+        variant="contained"
         onClick={handleClickOpen}
-        // text="comment (optional)"
+        startIcon={<CommentIcon />}
         >comment</Button>
     });
     
@@ -108,11 +114,24 @@ const ChecklistItem = forwardRef((props, ref) => {
         sx={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}
         >
             <Container 
-            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background }}
+            disableGutters
+            sx={isSmallScreen
+                ? { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: 1 }
+                : { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: 2 }}
             >
-                <Typography variant='body1'>{description}</Typography>
+                <Typography
+                sx={isSmallScreen
+                    ? { fontSize: '0.8rem' }
+                    : { px: 1 }}
+                variant='body1'
+                >
+                    {description}
+                </Typography>
             </Container>
-            <CustomisedContainer>
+            <Container
+            disableGutters
+            sx={{ width: 80 }}
+            >
                 <RadioGroup
                 sx={{ flexWrap: 'nowrap' }}
                 value={value}
@@ -139,9 +158,9 @@ const ChecklistItem = forwardRef((props, ref) => {
                 <FormHelperText error={helperText ? true : false} sx={{ pb: 1, mt: 0 }}>
                     {helperText}
                 </FormHelperText>
-            </CustomisedContainer>
+            </Container>
             <Tooltip TransitionComponent={Zoom} title={!open?comments:""} placement="left" arrow>
-                <MyComponent/>
+                <TooltipButton/>
             </Tooltip>
             <Dialog
             sx={{ '& .MuiDialog-paper': { p: 2 } }}

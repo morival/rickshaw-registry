@@ -74,11 +74,11 @@ export default function Login({handleChange}) {
         <Grid>
             <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Grid align="center">
-                    <Avatar sx={{ bgcolor: "#41a9e1" }}>
+                    <Avatar sx={{ bgcolor: "#41a9e1", mb: 1 }}>
                         <LockOpenOutlinedIcon />
                     </Avatar>
-                    <h2 style={{margin: 10}}>Rickshaw Registry</h2>
-                    <h4 style={{margin: 10}}>Log In</h4>
+                    <Typography variant='h5' gutterBottom>Rickshaw Registry</Typography>
+                    <Typography variant='h6' gutterBottom>Log In</Typography>
                 </Grid>
                 <Form onSubmit={handleSubmit}>
                     <Controls.Input

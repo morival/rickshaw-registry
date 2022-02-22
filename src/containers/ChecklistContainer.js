@@ -54,7 +54,7 @@ export default function Checklist(params) {
     }
 
     useEffect(() => {
-        console.log(validate())
+        // console.log(validate())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData])
 
