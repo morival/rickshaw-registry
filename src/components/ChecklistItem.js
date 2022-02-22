@@ -4,16 +4,6 @@ import { grey, green, red } from '@mui/material/colors';
 import CommentIcon from '@mui/icons-material/Comment';
 import { UseForm } from './UseForm';
 import { useTheme } from '@mui/material/styles';
-// import { styled } from '@mui/material/styles';
-
-
-// const CustomisedContainer = styled(Container)(({ theme }) => ({
-//     padding: 0,
-//     width: 80,
-//     [theme.breakpoints.up('sm')]: {
-//         padding: 0,
-//     }
-// }));
 
 
 
@@ -40,7 +30,6 @@ const ChecklistItem = forwardRef((props, ref) => {
         setErrors({
             ...temp
         })
-        // console.log(temp)
         if(fieldValues === formData)
             return Object.values(temp).every(x => x === "")
     }
@@ -61,7 +50,6 @@ const ChecklistItem = forwardRef((props, ref) => {
     const handleRadioChange = (e) => {
         setValue(e.target.value);
         handleInputChange(e)
-        // console.log(e.target.id)
     };
     
     // Comments
