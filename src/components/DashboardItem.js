@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, Typography, useMediaQuery} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, useMediaQuery} from '@mui/material';
 import Controls from './controls/Controls';
 import { Form } from './UseForm';
 import { useTheme } from '@mui/material/styles';
@@ -18,7 +18,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, handleConfirm, closeDialog } = props;
+  const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, onSubmit, onCancel, closeDialog } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -36,11 +36,16 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     setOpen(false);
   };
 
+  const handleCancel = () => {
+    onCancel();
+    handleClose();
+  }
+
   async function handleSubmit(e) {
       e.preventDefault()
       try {
         if (!error) {
-          const res = await handleConfirm(e)
+          const res = await onSubmit(e)
           console.log(name)
           console.log(res)
           if (res && res.status < 300)
@@ -89,17 +94,17 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         ? { fontSize: '0.8rem', p: '0 5px'  }
         : { px: 3 }}
       // set error message
-      secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
+      // secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />
       <Controls.Button 
       sx={{ minWidth: 70 }}
-      color={error?"warning":"primary"}
+      color="primary"
       onClick={handleOpen}
-      text={value||name==="password"?"Change":"Add"}
+      text={defaultValue||name==="password"?"Change":"Add"}
       />
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={handleCancel}
         TransitionComponent={Transition}
         aria-describedby="alert-dialog-slide-description"
       >
@@ -120,7 +125,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
             <Button type="submit" color={error?"error":"primary"}>Confirm</Button>
           </DialogActions>
         </Form>

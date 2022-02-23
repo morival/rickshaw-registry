@@ -75,12 +75,12 @@ export default function Checklist(params) {
             <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                 <Paper sx={{ p: 1, maxWidth: '550px', width: '100%' }}>
                     <Form onSubmit={handleSubmit}>
-                        {formData.map((item, index) => 
+                        {formData.map((element, i) => 
                             <ChecklistItem
-                            key={index}
-                            initialItemValues={item}
+                            key={i}
+                            initialItemValues={element}
                             updatedValues={updatedValues}
-                            ref={(element)=>{refs.current[index]=element}}
+                            ref={(item)=>{refs.current[i]=item}}
                             />
                         )}
                         <Controls.Button

@@ -46,15 +46,39 @@ export default function DashboardContainer( children, ...rest ) {
         return Object.values(temp).every(x => x === "")
     }
     
-    
+    // Current User Details
     const { currentUser, setCurrentUser } = useAuth()
-    
-    const { formData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
-    
-    
+    // Forms
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
+    // refresh Data Form
+    const refreshFormData = () => {
+        setFormData(currentUser);
+        setErrors({});
+    }
+
+    // Password Verification Form
+    const [passwordVerification, setPasswordVerification] = useState({ password: "" });
+    // handle Password Verification Change
+    const handlePasVerChange = (e) => {
+        setPasswordVerification({ password: e.target.value });
+        validate({ password: e.target.value })
+    }
+    // refresh Password Verification Form
+    const refreshPasVer = () => {
+        setPasswordVerification({password: ""});
+        setErrors({});
+    }
+
+    // Dashboard Panels
     const [panel, setPanel] = useState("0");
     
-    const filteredDashboardItems = (names) => (ProfileContent.profileDetails
+    const handleChangePanel = (event, newValue) => {
+        setPanel(newValue);
+    };
+    
+    
+    // Dashboard Components
+    const dashboardItems = (names) => (ProfileContent.profileDetails
         .filter(element => names.includes(element.name))
         .map((element, i) => {
             const elementName = element.name
@@ -67,27 +91,17 @@ export default function DashboardContainer( children, ...rest ) {
             value={formData[elementName]}
             error={errors[elementName]}
             onChange={handleInputChange}
-            handleConfirm={handleSubmit}
+            onSubmit={handleSubmit}
+            onCancel={refreshFormData}
             closeDialog={closeDialog}
             />
         })
     )
 
-
-    const [passwordVerification, setPasswordVerification] = useState({ password: "" });
     
     const [closeDialog, setCloseDialog] = useState(false);
     
-    const handlePassChange = (e) => {
-        setPasswordVerification({ password: e.target.value });
-        validate({ password: e.target.value })
-    }
-    
     const refOpen = useRef(null);
-    
-    const handleChange = (event, newValue) => {
-        setPanel(newValue);
-    };
     
     async function handleSubmit(e) {
         e.preventDefault()
@@ -103,7 +117,7 @@ export default function DashboardContainer( children, ...rest ) {
                 const user = { _id: currentUser._id, password: passwordVerification.password }
                 const authPassword = await UsersServices.authenticateUser(user)
                 if (authPassword.status === 401) {
-                    setPasswordVerification({password:""})
+                    refreshPasVer();
                     console.log("password verification reset")
                     console.log(passwordVerification)
                     setErrors({ password: authPassword.data.message })
@@ -114,7 +128,8 @@ export default function DashboardContainer( children, ...rest ) {
                     if (res && res.status < 300) {
                         setCurrentUser(res.data)
                         setCloseDialog((prevState) => !prevState)
-                        console.log("set res.data and handleClose")
+                        setFormData(res.data)
+                        console.log("set Current User with res.data, refresh formData and handleClose Dialog window")
                     } else if (res && res.status === 409) {
                         setErrors(res.data.code === "email"
                         ?   { email: res.data.message }
@@ -160,7 +175,7 @@ export default function DashboardContainer( children, ...rest ) {
                         <TabContext value={panel}>
                             <TabList 
                             value={panel} 
-                            onChange={handleChange}
+                            onChange={handleChangePanel}
                             orientation={isMediumScreen ? 'vertical' : 'horizontal'}
                             sx={isMediumScreen 
                                 ? { borderRight: 1, borderColor: 'divider' } 
@@ -182,18 +197,18 @@ export default function DashboardContainer( children, ...rest ) {
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
                                     <List>
-                                        {filteredDashboardItems(["name", "email", "phoneNumber", "dOB"])}
+                                        {dashboardItems(["name", "email", "phoneNumber", "dOB"])}
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="1">
                                     <List>
-                                        {filteredDashboardItems(["line_1", "line_2", "line_3", "post_town", "postcode"])}
+                                        {dashboardItems(["line_1", "line_2", "line_3", "post_town", "postcode"])}
                                         
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="2">
                                     <List>
-                                        {filteredDashboardItems(["password"])}
+                                        {dashboardItems(["password"])}
                                     </List>
                                 </TabPanel>
                                 <DashboardItem
@@ -202,8 +217,9 @@ export default function DashboardContainer( children, ...rest ) {
                                 name="password"
                                 type="password"
                                 error={errors.password}
-                                onChange={handlePassChange}
-                                handleConfirm={handleSubmit}
+                                onChange={handlePasVerChange}
+                                onSubmit={handleSubmit}
+                                onCancel={refreshPasVer}
                                 ref={refOpen}
                                 />
                             </Box>
