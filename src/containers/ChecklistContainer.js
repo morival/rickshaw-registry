@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import Controls from '../components/controls/Controls';
 import { Form, UseForm } from '../components/UseForm';
 import ChecklistItem from '../components/ChecklistItem';
-import Descriptions from '../components/content/ChecklistDescriptions';
+import Content from '../components/content/ChecklistDescriptions';
 
 
 const initialValues = []
-Descriptions.forEach((element, i) => {
+Content.forEach((element, i) => {
     const newElement = {id: (i+1).toString(), description: element, status: null, comments: ""}
     initialValues.push(newElement)
 })
@@ -77,10 +77,10 @@ export default function Checklist(params) {
                     <Form onSubmit={handleSubmit}>
                         {formData.map((element, i) => 
                             <ChecklistItem
-                            key={i}
                             initialItemValues={element}
                             updatedValues={updatedValues}
                             ref={(item)=>{refs.current[i]=item}}
+                            key={i}
                             />
                         )}
                         <Controls.Button

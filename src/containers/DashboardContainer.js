@@ -4,7 +4,7 @@ import DashboardItem from '../components/DashboardItem';
 import { useAuth } from '../components/context/AuthContext';
 import { UseForm } from '../components/UseForm';
 import Controls from '../components/controls/Controls';
-import ProfileContent from '../components/content/ProfileDescriptions';
+import Content from '../components/content/ProfileDescriptions';
 import { List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { Box } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
@@ -78,23 +78,25 @@ export default function DashboardContainer( children, ...rest ) {
     
     
     // Dashboard Components
-    const dashboardItems = (names) => (ProfileContent.profileDetails
+    const dashboardComponents = (names) => (Content.profileDetails
         .filter(element => names.includes(element.name))
         .map((element, i) => {
-            const elementName = element.name
-            return <DashboardItem
-            key={i}
-            label={element.label}
-            name={element.name}
-            type={element.type}
-            defaultValue={currentUser[elementName]}
-            value={formData[elementName]}
-            error={errors[elementName]}
-            onChange={handleInputChange}
-            onSubmit={handleSubmit}
-            onCancel={refreshFormData}
-            closeDialog={closeDialog}
-            />
+            const elementName = element.name;
+            return (
+                <DashboardItem
+                label={element.label}
+                name={element.name}
+                type={element.type}
+                defaultValue={currentUser[elementName]}
+                value={formData[elementName]}
+                error={errors[elementName]}
+                onChange={handleInputChange}
+                onSubmit={handleSubmit}
+                onCancel={refreshFormData}
+                closeDialog={closeDialog}
+                key={i}
+                />
+            )
         })
     )
 
@@ -181,7 +183,7 @@ export default function DashboardContainer( children, ...rest ) {
                                 ? { borderRight: 1, borderColor: 'divider' } 
                                 : { borderBottom: 1, borderColor: 'divider', minHeight: '36px' }}
                             >
-                                {ProfileContent.profileTabs.map((element, i) => {
+                                {Content.profileTabs.map((element, i) => {
                                     return(
                                         <Tab
                                         sx={isSmallScreen
@@ -197,18 +199,18 @@ export default function DashboardContainer( children, ...rest ) {
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
                                     <List>
-                                        {dashboardItems(["name", "email", "phoneNumber", "dOB"])}
+                                        {dashboardComponents(["name", "email", "phoneNumber", "dOB"])}
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="1">
                                     <List>
-                                        {dashboardItems(["line_1", "line_2", "line_3", "post_town", "postcode"])}
+                                        {dashboardComponents(["line_1", "line_2", "line_3", "post_town", "postcode"])}
                                         
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="2">
                                     <List>
-                                        {dashboardItems(["password"])}
+                                        {dashboardComponents(["password"])}
                                     </List>
                                 </TabPanel>
                                 <DashboardItem

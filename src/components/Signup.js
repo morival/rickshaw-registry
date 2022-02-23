@@ -94,7 +94,6 @@ export default function Signup({handleChange}) {
                     <Controls.Input
                     name="name"
                     value={formData.name}
-                    key="name"
                     onChange={handleInputChange}
                     error={errors.name}
                     fullWidth
@@ -103,16 +102,14 @@ export default function Signup({handleChange}) {
                     <Controls.Input
                     name="email"
                     value={formData.email}
-                    key="email"
                     onChange={handleInputChange}
                     error={errors.email}
                     fullWidth
                     />
                     <Controls.Input
-                    name="phoneNumber"
                     label="Phone Number"
+                    name="phoneNumber"
                     value={formData.phoneNumber}
-                    key="phoneNumber"
                     type="tel"
                     onChange={handleInputChange}
                     error={errors.phoneNumber}
@@ -121,17 +118,15 @@ export default function Signup({handleChange}) {
                     <Controls.Input
                     name="password"
                     value={formData.password}
-                    key="password"
                     type="password"
                     onChange={handleInputChange}
                     error={errors.password}
                     fullWidth
                     />
                     <Controls.Input
-                    name="confirmPassword"
                     label="Confirm Password"
+                    name="confirmPassword"
                     value={formData.confirmPassword}
-                    key="confirmPassword"
                     type="password"
                     onChange={handleInputChange}
                     error={errors.confirmPassword}

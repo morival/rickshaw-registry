@@ -39,7 +39,7 @@ const profileDetails = [
         label: "Password",
         name: "password",
         type: "password"
-    },
+    }
 ]
 
 const profileContent = {

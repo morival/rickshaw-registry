@@ -1,6 +1,7 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
+import Content from './content/SignupLoginDescriptions';
 import { useAuth } from './context/AuthContext';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
@@ -40,10 +41,12 @@ export default function Login({handleChange}) {
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
 
-    
-
     // const history = useHistory();
     const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
+
+
+    // Login Components
+    // const loginComponents = () =>
 
     async function handleSubmit(e) {
         setLoading(true)
@@ -81,30 +84,25 @@ export default function Login({handleChange}) {
                     <Typography variant='h6' gutterBottom>Log In</Typography>
                 </Grid>
                 <Form onSubmit={handleSubmit}>
-                    <Controls.Input
-                    name="userLogin"
-                    label="Email or Phone"
-                    value={formData.userLogin}
-                    key="userLogin"
-                    onChange={handleInputChange}
-                    error={errors.userLogin}
-                    fullWidth
-                    autoFocus
-                    autoComplete="on"
-                    />
-                    <Controls.Input
-                    name="password"
-                    value={formData.password}
-                    key="password"
-                    type="password"
-                    onChange={handleInputChange}
-                    error={errors.password}
-                    fullWidth
-                    autoComplete="on"
-                    />
+                    {Content.loginContent.map((element, i) => {
+                        const elementName = element.name;
+                        return (
+                            <Controls.Input
+                            label={element.label}
+                            name={element.name}
+                            type={element.type}
+                            value={formData[elementName]}
+                            error={errors[elementName]}
+                            onChange={handleInputChange}
+                            fullWidth
+                            autoFocus={i === 0 ? true : false}
+                            key={i}
+                            />
+                        )
+                    })}
                     <Controls.Checkbox
-                    name="rememberMe"
                     label="Remember me"
+                    name="rememberMe"
                     value={formData.rememberMe}
                     onChange={handleInputChange}
                     />

@@ -1,4 +1,4 @@
-const descriptionList = [
+const ChecklistContent = [
     "Identification plate fitted",
     "Wheels not wobbling",
     "Tires with tread pattern clearly visible",
@@ -26,4 +26,4 @@ const descriptionList = [
     "Repair kit ???"
 ]
 
-export default descriptionList;
+export default ChecklistContent;
