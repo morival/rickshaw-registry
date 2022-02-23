@@ -16,8 +16,6 @@ async function authenticateUser(user) {
     const testedLogins = ["userLogin", "_id"]
     // Find value of first found key in user that matches testedLogins elements
     const userLogin = Object.keys(user).find((val) => testedLogins.includes(val))
-    // console.log(userLogin)
-    // console.log(user.password)
     try {
         const res = (await axios.post(URL+'login', { 
             login: user[userLogin], password: user.password 
