@@ -1,6 +1,7 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
+import Content from './content/SignupLoginDescriptions';
 import { useAuth } from './context/AuthContext';
 import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
@@ -91,49 +92,25 @@ export default function Signup({handleChange}) {
                 </Grid>
 
                 <Form onSubmit={handleSubmit}>
-                    <Controls.Input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    error={errors.name}
-                    fullWidth
-                    autoFocus
-                    />
-                    <Controls.Input
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    error={errors.email}
-                    fullWidth
-                    />
-                    <Controls.Input
-                    label="Phone Number"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    type="tel"
-                    onChange={handleInputChange}
-                    error={errors.phoneNumber}
-                    fullWidth
-                    />
-                    <Controls.Input
-                    name="password"
-                    value={formData.password}
-                    type="password"
-                    onChange={handleInputChange}
-                    error={errors.password}
-                    fullWidth
-                    />
-                    <Controls.Input
-                    label="Confirm Password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    type="password"
-                    onChange={handleInputChange}
-                    error={errors.confirmPassword}
-                    fullWidth
-                    />
-                    <p style={{fontSize: 12}}>By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.</p>
-                    
+                    {Content.signupContent.map((element, i) => {
+                        const elementName = element.name;
+                        return (
+                            <Controls.Input
+                            label={element.label}
+                            name={element.name}
+                            type={element.type}
+                            value={formData[elementName]}
+                            error={errors[elementName]}
+                            onChange={handleInputChange}
+                            fullWidth
+                            autoFocus={i === 0 ? true : false}
+                            key={i}
+                            />
+                        )
+                    })}
+                    <Typography sx={{ fontSize: '0.75rem' }} paragraph>
+                        By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.
+                    </Typography>
                     <Controls.Button
                     text="Create Account"
                     type="submit"

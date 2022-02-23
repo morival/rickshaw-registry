@@ -45,9 +45,6 @@ export default function Login({handleChange}) {
     const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
 
 
-    // Login Components
-    // const loginComponents = () =>
-
     async function handleSubmit(e) {
         setLoading(true)
         e.preventDefault()
@@ -83,6 +80,7 @@ export default function Login({handleChange}) {
                     <Typography variant='h5' gutterBottom>Rickshaw Registry</Typography>
                     <Typography variant='h6' gutterBottom>Log In</Typography>
                 </Grid>
+
                 <Form onSubmit={handleSubmit}>
                     {Content.loginContent.map((element, i) => {
                         const elementName = element.name;
@@ -95,6 +93,7 @@ export default function Login({handleChange}) {
                             error={errors[elementName]}
                             onChange={handleInputChange}
                             fullWidth
+                            autoComplete="on"
                             autoFocus={i === 0 ? true : false}
                             key={i}
                             />
@@ -113,10 +112,12 @@ export default function Login({handleChange}) {
                     fullWidth
                     />
                 </Form>
+
                 <Typography align="center">
                     <Link href="#" underline="none">Forgotten your password?</Link>
                 </Typography>
             </Paper>
+            
             <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                 <Typography align="center">
                     Don't have an account?
