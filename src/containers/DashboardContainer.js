@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import UsersServices from '../services/UsersServices';
 import DashboardItem from '../components/DashboardItem';
+import DashboardDeleteItem from '../components/DashboardItemDeleteAccount'
 import { useAuth } from '../components/context/AuthContext';
 import { UseForm } from '../components/UseForm';
 import Controls from '../components/controls/Controls';
@@ -10,6 +11,7 @@ import { Box } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 
 
@@ -47,7 +49,7 @@ export default function DashboardContainer( children, ...rest ) {
     }
     
     // Current User Details
-    const { currentUser, setCurrentUser } = useAuth()
+    const { currentUser, setCurrentUser, logout } = useAuth()
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
     // refresh Data Form
@@ -102,29 +104,40 @@ export default function DashboardContainer( children, ...rest ) {
 
     
     const [closeDialog, setCloseDialog] = useState(false);
+
+
+    const [action, setAction] = useState();
+
+    const handleAction = (e) => {
+        action === "Submit"
+        ?   handleSubmit(e)
+        : handleDeleteAcc(e)
+    }
     
     const refOpen = useRef(null);
     
     async function handleSubmit(e) {
+        // console.log(e)
         e.preventDefault()
         try {
+            if (!validate()) {
+            return console.log("validation failed")
             // if password was not verified open password verification window
-            if (!passwordVerification.password) {
+            } else if (!passwordVerification.password) {
+                setAction("Submit")
                 console.log("password verification required")
                 refOpen.current.handleOpen();
-            } else if (!validate()) {
-                return console.log("validation failed")
             } else {
                 console.log("password verification and validation passed")
                 const user = { _id: currentUser._id, password: passwordVerification.password }
-                const authPassword = await UsersServices.authenticateUser(user)
-                if (authPassword.status === 401) {
+                const auth = await UsersServices.authenticateUser(user)
+                if (auth.status === 401) {
                     refreshPasVer();
                     console.log("password verification reset")
                     console.log(passwordVerification)
-                    setErrors({ password: authPassword.data.message })
-                    return authPassword
-                } else if (authPassword.status < 300) {
+                    setErrors({ password: auth.data.message })
+                    return auth
+                } else if (auth.status < 300) {
                     const res = await UsersServices.updateUser(formData)
                     console.log(res)
                     if (res && res.status < 300) {
@@ -139,6 +152,47 @@ export default function DashboardContainer( children, ...rest ) {
                         )
                     }
                     return res
+                }
+            }
+        } catch(err) {
+            if(err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+            } else {
+                console.log(`Error: ${err.message}`)
+            }
+        }
+    }
+
+    const history = useHistory();
+
+    function handleLogout() {
+        history.push('/')
+        logout();
+    }
+    
+    async function handleDeleteAcc(e) {
+        e.preventDefault()
+        try {
+            if (!passwordVerification.password) {
+                setAction("Delete")
+                console.log("password verification required")
+                refOpen.current.handleOpen();
+            } else {
+                console.log("password verification passed")
+                const user = { _id: currentUser._id, password: passwordVerification.password }
+                const auth = await UsersServices.authenticateUser(user)
+                if (auth.status === 401) {
+                    refreshPasVer();
+                    console.log("password verification reset")
+                    console.log(passwordVerification)
+                    setErrors({ password: auth.data.message })
+                    return auth
+                } else if (auth.status < 300) {
+                    const res = await UsersServices.deleteUser(auth.data)
+                    if (res.status < 300)
+                        handleLogout();
                 }
             }
         } catch(err) {
@@ -211,17 +265,27 @@ export default function DashboardContainer( children, ...rest ) {
                                 <TabPanel sx={{ p: 0 }} value="2">
                                     <List>
                                         {dashboardComponents(["password"])}
+                                        <DashboardDeleteItem
+                                        label="Delete Account"
+                                        checkboxLabel="check this box to confirm you want to delete your account"
+                                        name="delete"
+                                        dialogTitle="Delete Account"
+                                        dialogText="When you delete your account, you won't be able to retrieve the content that you stored "
+                                        defaultValue="Permanently delete your Rickshaw account"
+                                        onSubmit={handleDeleteAcc}
+                                        />
                                     </List>
                                 </TabPanel>
                                 <DashboardItem
-                                dialogTitle="Password Required"
-                                dialogText="Confirm your current password"
                                 name="password"
                                 type="password"
+                                dialogTitle="Password Required"
+                                dialogText="Confirm your current password"
                                 error={errors.password}
                                 onChange={handlePasVerChange}
-                                onSubmit={handleSubmit}
+                                onSubmit={handleAction}
                                 onCancel={refreshPasVer}
+                                closeDialog={closeDialog}
                                 ref={refOpen}
                                 />
                             </Box>

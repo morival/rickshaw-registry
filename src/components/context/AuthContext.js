@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import { useLocalStorage } from '../UseLocalStorage';
 
 
+
 const AuthContext = createContext()
 
 export function useAuth() {
@@ -15,6 +16,14 @@ export function AuthProvider({children}) {
     const [loading, setLoading] = useLocalStorage('loading', false);
 
 
+    function logout() {
+        setLoading(true)
+        localStorage.clear()
+        setCurrentUser(null)
+        setLoggedIn(false)
+        setLoading(false)
+    }
+
     const value = {
         currentUser,
         setCurrentUser,
@@ -22,6 +31,7 @@ export function AuthProvider({children}) {
         setLoggedIn,
         loading,
         setLoading,
+        logout,
     }
 
     return (

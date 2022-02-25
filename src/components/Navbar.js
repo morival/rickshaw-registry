@@ -16,17 +16,13 @@ const useStyles = makeStyles({
 
 function Navbar() {
 
-    const { setCurrentUser, loggedIn, setLoggedIn, setLoading }  = useAuth()
+    const { loggedIn, logout }  = useAuth()
 
     const history = useHistory();
 
-    function logout() {
-        setLoading(true)
-        localStorage.clear()
-        setCurrentUser(null)
-        setLoggedIn(false)
-        setLoading(false)
+    function handleLogout() {
         history.push('/')
+        logout();
     }
 
     useEffect(() => {
@@ -47,7 +43,7 @@ function Navbar() {
                 {loggedIn
                 ? <Controls.Button
                     text="Log Out"
-                    onClick={logout}
+                    onClick={handleLogout}
                     />
                 : <Controls.Button
                     text="Log in / Sign up"

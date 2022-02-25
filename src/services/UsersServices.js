@@ -34,9 +34,9 @@ async function authenticateUser(user) {
 }
 
 
-async function getUser(id) {
+async function getUser(user) {
     try {
-        const res = (await axios.get(URL+id , config))
+        const res = (await axios.get(URL+user.id , config))
         // delete res.data.password
         console.log(res)
         return res
@@ -109,23 +109,28 @@ async function updateUser(user) {
     }
 }
     
-                
-// TO BE TESTED
 
-// async deleteUser(user) {
-//     try {
-//         const res = (await axios.delete(URL+user.id))
-//         console.log(res)
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
+async function deleteUser(user) {
+    try {
+        const res = (await axios.delete(URL+user.id))
+        return res;
+    } catch (err) {
+        if(err.response){
+         console.log(err.response.data)
+            console.log(err.response.status)
+            console.log(err.response.headers)
+        } else {
+            console.log(`Error: ${err.message}`)
+        }
+    }
+}
 
 const UsersServices = {
     authenticateUser,
     getUser,
     getAllUsers,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 }
 export default UsersServices;

@@ -18,7 +18,7 @@ export default function Checkbox(props) {
             <FormControlLabel
                 control={<MuiCheckbox
                     name={name}
-                    label={label || ""}
+                    // label={label || ""}
                     color={color || "primary"}
                     checked={value}
                     onChange={e=>onChange(handleCheckboxChange(name,e.target.checked))}

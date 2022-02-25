@@ -53,7 +53,7 @@ export default function Login({handleChange}) {
                 const auth = await UsersServices.authenticateUser(formData)
                 console.log(auth)
                 if (auth && auth.status < 300) {
-                    const res = await UsersServices.getUser(auth.data.id)
+                    const res = await UsersServices.getUser(auth.data)
                     setCurrentUser(res.data)
                     setLoggedIn(true)
                     console.log("remember me: "+formData.rememberMe)

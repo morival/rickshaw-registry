@@ -78,6 +78,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     // hide component if label is missing
     style={label ? undefined : { display: 'none' }}
     >
+      {/* Item Label */}
       <ListItemText
       sx={isSmallScreen
         ? { minWidth: 100 }
@@ -87,6 +88,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         ? { fontSize: '0.8rem' }
         : { px: 1 }}
       />
+      {/* Item Value */}
       <ListItemText
       sx={{ width: '100%' }}
       primary={name==="password"?"*****":defaultValue}
@@ -96,12 +98,15 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       // set error message
       // secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />
+      {/* Item Change/Add Button */}
       <Controls.Button 
       sx={{ minWidth: 70 }}
       color="primary"
       onClick={handleOpen}
       text={defaultValue||name==="password"?"Change":"Add"}
       />
+
+      {/* Dialog Window */}
       <Dialog
         open={open}
         onClose={handleCancel}
@@ -109,11 +114,14 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         aria-describedby="alert-dialog-slide-description"
       >
         <Form onSubmit={handleSubmit}>
+          {/* Dialog Title */}
           <DialogTitle>{dialogTitle?dialogTitle:"Update "+label}</DialogTitle>
           <DialogContent sx={{ maxWidth: 260 }}>
+            {/* Dialog Message */}
             <DialogContentText id="alert-dialog-slide-description">
               {dialogText}
             </DialogContentText>
+            {/* Dialog Input */}
             <Controls.Input
             autoFocus
             label={label}
@@ -124,6 +132,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
             onChange={onChange}
             />
           </DialogContent>
+          {/* Dialog Confirm/Cancel Buttons */}
           <DialogActions>
             <Button onClick={handleCancel}>Cancel</Button>
             <Button type="submit" color={error?"error":"primary"}>Confirm</Button>
