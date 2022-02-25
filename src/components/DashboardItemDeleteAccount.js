@@ -67,14 +67,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       }
   }
 
-//   useEffect(() => {
-//     const handleClose = () => {
-//       setOpen(false);
-//     };
-//     handleClose();
-//   },[closeDialog])
-
-
+  
   return (
     <MuiListItem
     sx={isSmallScreen
@@ -84,20 +77,20 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         {/* Item Label */}
         <ListItemText
         sx={isSmallScreen
-        ? { minWidth: 100 }
-        : { minWidth: 130 }}
+            ? { minWidth: 100 }
+            : { minWidth: 135 }}
         primary={label}
         primaryTypographyProps={isSmallScreen
-        ? { fontSize: '0.8rem' }
-        : { px: 1 }}
+            ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
+            : { fontWeight: 'bold', align: 'right', px: 1 }}
         />
         {/* Item Value */}
         <ListItemText
         sx={{ width: '100%' }}
         primary={defaultValue}
         primaryTypographyProps={isSmallScreen
-        ? { fontSize: '0.8rem', p: '0 5px'  }
-        : { px: 3 }}
+            ? { fontSize: '0.8rem', p: '0 5px'  }
+            : { px: 3 }}
         />
         {/* Item Delete Button */}
         <Controls.Button 

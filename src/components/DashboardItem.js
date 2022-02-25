@@ -82,11 +82,11 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       <ListItemText
       sx={isSmallScreen
         ? { minWidth: 100 }
-        : { minWidth: 130 }}
+        : { minWidth: 135 }}
       primary={label}
       primaryTypographyProps={isSmallScreen
-        ? { fontSize: '0.8rem' }
-        : { px: 1 }}
+        ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
+        : { fontWeight: 'bold', align: 'right', px: 1 }}
       />
       {/* Item Value */}
       <ListItemText
