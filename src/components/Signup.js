@@ -72,7 +72,7 @@ export default function Signup({handleChange}) {
             } else {
                 return console.log("validation failed")
             }
-        } catch(err){
+        } catch (err){
             console.log(err)
         } finally {
             setLoading(false)

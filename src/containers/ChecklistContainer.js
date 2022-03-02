@@ -3,14 +3,16 @@ import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
 import Controls from '../components/controls/Controls';
+import { useAuth } from '../components/context/AuthContext';
 import { Form, UseForm } from '../components/UseForm';
 import ChecklistItem from '../components/ChecklistItem';
 import Content from '../components/content/ChecklistDescriptions';
+import RecordsServices from '../services/RecordsServices';
 
 
 const initialValues = []
 Content.forEach((element, i) => {
-    const newElement = {id: (i+1).toString(), description: element, status: null, comments: ""}
+    const newElement = {id: (i+1).toString(), description: element, status: true, comments: ""}
     initialValues.push(newElement)
 })
 
@@ -35,6 +37,7 @@ export default function Checklist(params) {
     
     const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
     
+    const { currentUser, loggedIn } = useAuth();
 
     const refs = useRef([])
 
@@ -51,6 +54,16 @@ export default function Checklist(params) {
             element.requestValues()
         });
         setFormData(newFormData)
+        const user_id = currentUser._id
+        const record = {user_id: user_id, checklist: formData}
+        try {
+            if (validate() && loggedIn) {
+                const res = await RecordsServices.createRecord(record)
+                console.log(res)
+            }
+        } catch (err){
+            console.log(err)
+        }
     }
 
     useEffect(() => {

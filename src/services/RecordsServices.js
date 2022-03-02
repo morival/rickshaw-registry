@@ -13,12 +13,12 @@ let config = {
 
 
 // CREATE Record
-
 async function createRecord(record) {
     try {
+        console.log(record)
         const res = await axios.post(URL, record, config);
         console.log(res);
-        return res;
+        // return res;
     } catch (err) {
         if(err.response){
             console.log(err.response.data)
@@ -29,3 +29,9 @@ async function createRecord(record) {
         }
     }
 }
+
+const RecordsServices = {
+    createRecord
+}
+
+export default RecordsServices;
