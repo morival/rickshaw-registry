@@ -162,16 +162,12 @@ export default function DashboardContainer( children, ...rest ) {
         try {
             if (!passwordVerification.password) {
                 setAction("Delete")
-                console.log("password verification required")
                 refOpen.current.handleOpen();
             } else {
-                console.log("password verification passed")
                 const user = { _id: currentUser._id, password: passwordVerification.password }
                 const auth = await UsersServices.authenticateUser(user)
                 if (auth.status === 401) {
                     refreshPasVer();
-                    console.log("password verification reset")
-                    console.log(passwordVerification)
                     setErrors({ password: auth.data.message })
                     return auth
                 } else if (auth.status < 300) {

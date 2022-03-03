@@ -45,9 +45,21 @@ async function getRecord(record) {
     }   
 }
 
+
+// DELETE Record
+async function deleteUser(record) {
+    try {
+        const res = await axios.delete(URL+record.id);
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
 const RecordsServices = {
     createRecord,
-    getRecord
+    getRecord,
+    deleteUser
 }
 
 export default RecordsServices;

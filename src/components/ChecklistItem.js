@@ -90,6 +90,7 @@ const ChecklistItem = forwardRef((props, ref) => {
     
     useEffect(() => {
         value ? setHelperText("") : setHelperText(errors.status)
+        console.log(value)
         if (value === "true")
         setBackground(green[100])
         else if (value === "false")
@@ -128,7 +129,7 @@ const ChecklistItem = forwardRef((props, ref) => {
                 >
                     <FormControlLabel
                     sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
-                    value="true" 
+                    value={true}
                     control={
                         <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='success'/>
                     } 
@@ -136,7 +137,7 @@ const ChecklistItem = forwardRef((props, ref) => {
                     />
                     <FormControlLabel
                     sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
-                    value="false" 
+                    value={false}
                     control={
                         <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='error'/>
                     } 

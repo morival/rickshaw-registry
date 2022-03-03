@@ -12,7 +12,7 @@ import RecordsServices from '../services/RecordsServices';
 
 const initialValues = []
 Content.forEach((element, i) => {
-    const newElement = {id: (i+1).toString(), description: element, status: true, comments: ""}
+    const newElement = {id: (i+1).toString(), description: element, status: "false", comments: ""}
     initialValues.push(newElement)
 })
 
@@ -54,20 +54,30 @@ export default function Checklist(params) {
             element.requestValues()
         });
         setFormData(newFormData)
-        const user_id = currentUser._id
-        const record = {user_id: user_id, checklist: formData}
-        try {
-            if (validate() && loggedIn) {
-                const res = await RecordsServices.createRecord(record)
-                console.log(res.statusText)
-            }
-        } catch (err){
-            console.log(err)
-        }
     }
-
+    
+    // Ref to block useEffect from fireing at first render
+    const isFirstRender = useRef(true)
     useEffect(() => {
-        // console.log(validate())
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+        async function saveRecord() {
+            const user_id = currentUser._id
+            const record_date = new Date()
+            const record = {user_id: user_id, record_date: record_date, checklist: formData}
+            try {
+                if (validate() && loggedIn) {
+                    console.log(record)
+                    const res = await RecordsServices.createRecord(record)
+                    console.log(res.statusText)
+                }
+            } catch (err){
+                console.log(err)
+            }
+        }
+        saveRecord();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData])
 
