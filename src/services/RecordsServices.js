@@ -46,6 +46,18 @@ async function getRecord(record) {
 }
 
 
+// READ ALL Records
+async function getAllRecords() {
+    try {
+        const res = await axios.get(URL, config)
+        // console.log(res);
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
+
 // DELETE Record
 async function deleteUser(record) {
     try {
@@ -59,6 +71,7 @@ async function deleteUser(record) {
 const RecordsServices = {
     createRecord,
     getRecord,
+    getAllRecords,
     deleteUser
 }
 

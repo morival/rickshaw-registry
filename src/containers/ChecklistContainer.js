@@ -90,6 +90,12 @@ export default function Checklist(params) {
             component={Link} to={"/"}
             />
             <Controls.Button
+            text="Records"
+            // size="small"
+            color="error"
+            component={Link} to={"/records"}
+            />
+            <Controls.Button
             text="Dashboard"
             // size="small"
             color="success"

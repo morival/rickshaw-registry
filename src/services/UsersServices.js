@@ -29,12 +29,11 @@ async function authenticateUser(user) {
     const testedLogins = ["userLogin", "_id"]
     // Find value of first found key in user that matches testedLogins elements
     const userLogin = Object.keys(user).find((val) => testedLogins.includes(val))
-    console.log(URL)
     try {
         const res = (await axios.post(URL+'login', { 
             login: user[userLogin], password: user.password 
         } , config))
-        console.log(res)
+        // console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
@@ -82,7 +81,7 @@ async function getAllUsers() {
 async function updateUser(user) {
     try {
         const res = await axios.put(URL+user._id, user, config);
-        console.log(res)
+        // console.log(res)
         return res;
     } catch (err) {
         catchErr(err)

@@ -6,8 +6,7 @@ import { useAuth } from '../components/context/AuthContext';
 import { UseForm } from '../components/UseForm';
 import Controls from '../components/controls/Controls';
 import Content from '../components/content/ProfileDescriptions';
-import { List, Paper, Tab, useMediaQuery } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
@@ -78,24 +77,21 @@ export default function DashboardContainer( children, ...rest ) {
     // Dashboard Components
     const dashboardComponents = (names) => (Content.profileDetails
         .filter(element => names.includes(element.name))
-        .map((element, i) => {
-            const elementName = element.name;
-            return (
-                <DashboardItem
-                label={element.label}
-                name={element.name}
-                type={element.type}
-                defaultValue={currentUser[elementName]}
-                value={formData[elementName]}
-                error={errors[elementName]}
-                onChange={handleInputChange}
-                onSubmit={handleSubmit}
-                onCancel={refreshFormData}
-                closeDialog={closeDialog}
-                key={i}
-                />
-            )
-        })
+        .map((element, i) => 
+            <DashboardItem
+            label={element.label}
+            name={element.name}
+            type={element.type}
+            defaultValue={currentUser[element.name]}
+            value={formData[element.name]}
+            error={errors[element.name]}
+            onChange={handleInputChange}
+            onSubmit={handleSubmit}
+            onCancel={refreshFormData}
+            closeDialog={closeDialog}
+            key={i}
+            /> 
+        )
     )
 
     
@@ -192,15 +188,20 @@ export default function DashboardContainer( children, ...rest ) {
             <h1>Dashboard</h1>
             <Controls.Button
             text="Home"
-            size="small"
-            color="success"
+            // size="small"
             component={Link} to={"/"}
             />
             <Controls.Button
             text="Checklist"
-            size="small"
+            // size="small"
             color="warning"
             component={Link} to={"/checklist"}
+            />
+            <Controls.Button
+            text="Records"
+            // size="small"
+            color="error"
+            component={Link} to={"/records"}
             />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '800px', width: '100%' }}>

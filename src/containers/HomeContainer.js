@@ -1,5 +1,5 @@
-import { Paper } from '@mui/material';
 import React from 'react';
+import { Box, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 import { useAuth } from '../components/context/AuthContext';
@@ -19,28 +19,36 @@ export default function Home() {
     // // console.log(currentUser)
     
     return (
-        <Paper>
+        <Box sx={{ p: 2 }}>
             <h1>Home</h1>
-            {loggedIn
-            ?   <>
-                    <h3>Hi {currentUser && currentUser.name}!<br/>You are logged in</h3>
-                    <Controls.Button
-                    text="Checklist"
-                    size="small"
-                    color="warning"
-                    component={Link} to={"/checklist"}
-                    />
-                    <Controls.Button
-                    text="Dashboard"
-                    size="small"
-                    color="success"
-                    component={Link} to={"/dashboard"}
-                    />
-                </>
-            :   <>
-                    <h3>Welcome to the home page of Rickshaw Registery!</h3>
-                </>
-            }
-        </Paper>
+                {loggedIn
+                ?   <>
+                        <Controls.Button
+                        text="Checklist"
+                        // size="small"
+                        color="warning"
+                        component={Link} to={"/checklist"}
+                        />
+                        <Controls.Button
+                        text="Records"
+                        // size="small"
+                        color="error"
+                        component={Link} to={"/records"}
+                        />
+                        <Controls.Button
+                        text="Dashboard"
+                        // size="small"
+                        color="success"
+                        component={Link} to={"/dashboard"}
+                        />
+                        <Paper>
+                            <h3>Hi {currentUser && currentUser.name}!<br/>You are logged in</h3>
+                        </Paper>
+                    </>
+                :   <Paper>
+                        <h3>Welcome to the home page of Rickshaw Registery!</h3>
+                    </Paper>
+                }
+        </Box>
     );
 }
