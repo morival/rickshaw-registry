@@ -11,27 +11,43 @@ let config = {
     }, validateStatus: (status) => status
 }
 
+function catchErr(err) {
+    if(err.response){
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+    } else {
+        console.log(`Error: ${err.message}`)
+    }
+}
+
 
 // CREATE Record
 async function createRecord(record) {
     try {
-        console.log(record)
         const res = await axios.post(URL, record, config);
         console.log(res);
-        // return res;
+        return res;
     } catch (err) {
-        if(err.response){
-            console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
-        } else {
-            console.log(`Error: ${err.message}`)
-        }
+        catchErr(err)
     }
 }
 
+
+// READ Record
+async function getRecord(record) {
+    try {
+        const res = await axios.get(URL+record.id, config);
+        console.log(res)
+        return res;
+    } catch (err) {
+        catchErr(err)  
+    }   
+}
+
 const RecordsServices = {
-    createRecord
+    createRecord,
+    getRecord
 }
 
 export default RecordsServices;

@@ -31,10 +31,6 @@ export default function DashboardContainer( children, ...rest ) {
         const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if('name' in fieldValues)
         temp.name = fieldValues.name ? "" : "This field is required."
-        // if('address' in fieldValues)
-        //     temp.address = fieldValues.address ? "" : "This field is required."
-        // if('dOB' in fieldValues)
-        //     temp.dOB = fieldValues.dOB ? "" : "This field is required."
         if('email' in fieldValues)
         temp.email = testEmail.test(fieldValues.email) ? "" : "Invalid email"
         if('phoneNumber' in fieldValues)
@@ -117,51 +113,40 @@ export default function DashboardContainer( children, ...rest ) {
     const refOpen = useRef(null);
     
     async function handleSubmit(e) {
-        // console.log(e)
         e.preventDefault()
         try {
-            if (!validate()) {
-            return console.log("validation failed")
+            const data = await UsersServices.getAllUsers();
+            const users = data.data
+            // Check if the email is already used by another user
+            if (users.some((element) => element.email === formData.email && element._id !== formData._id))
+                setErrors({ email: "Email already exists" })
+            // Check if the phone number is already used by another user
+            else if (users.some((element) => element.phoneNumber === formData.phoneNumber && element._id !== formData._id))
+                setErrors({ phoneNumber: "Phone number already exists" })
             // if password was not verified open password verification window
-            } else if (!passwordVerification.password) {
+            else if (!passwordVerification.password) {
                 setAction("Submit")
-                console.log("password verification required")
                 refOpen.current.handleOpen();
             } else {
-                console.log("password verification and validation passed")
                 const user = { _id: currentUser._id, password: passwordVerification.password }
                 const auth = await UsersServices.authenticateUser(user)
                 if (auth.status === 401) {
                     refreshPasVer();
-                    console.log("password verification reset")
-                    console.log(passwordVerification)
                     setErrors({ password: auth.data.message })
                     return auth
                 } else if (auth.status < 300) {
                     const res = await UsersServices.updateUser(formData)
-                    console.log(res)
                     if (res && res.status < 300) {
                         setCurrentUser(res.data)
                         setCloseDialog((prevState) => !prevState)
                         setFormData(res.data)
-                        console.log("set Current User with res.data, refresh formData and handleClose Dialog window")
-                    } else if (res && res.status === 409) {
-                        setErrors(res.data.code === "email"
-                        ?   { email: res.data.message }
-                        :   { phoneNumber: res.data.message }
-                        )
+                        console.log("Update completed")
                     }
                     return res
                 }
             }
         } catch(err) {
-            if(err.response){
-                console.log(err.response.data)
-                console.log(err.response.status)
-                console.log(err.response.headers)
-            } else {
-                console.log(`Error: ${err.message}`)
-            }
+            console.log(err)
         }
     }
 

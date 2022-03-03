@@ -59,7 +59,7 @@ export default function Checklist(params) {
         try {
             if (validate() && loggedIn) {
                 const res = await RecordsServices.createRecord(record)
-                console.log(res)
+                console.log(res.statusText)
             }
         } catch (err){
             console.log(err)

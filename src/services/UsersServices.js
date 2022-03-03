@@ -13,6 +13,16 @@ let config = {
     }, validateStatus: (status) => status
 }
 
+function catchErr(err) {
+    if(err.response){
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+    } else {
+        console.log(`Error: ${err.message}`)
+    }
+}
+
 
 // AUTH User
 async function authenticateUser(user) {
@@ -27,13 +37,7 @@ async function authenticateUser(user) {
         console.log(res)
         return res;
     } catch (err) {
-        if(err.response){
-            console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
-        } else {
-            console.log(`Error: ${err.message}`)
-        }
+        catchErr(err)
     }
 }
 
@@ -42,16 +46,10 @@ async function authenticateUser(user) {
 async function createUser(user) {
     try {
         const res = await axios.post(URL, user, config);
-        console.log(res)
+        // console.log(res)
         return res;
     } catch (err) {
-        if(err.response){
-            console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
-        } else {
-            console.log(`Error: ${err.message}`)
-        }
+        catchErr(err)
     }
 }
 
@@ -60,16 +58,10 @@ async function createUser(user) {
 async function getUser(user) {
     try {
         const res = await axios.get(URL+user.id , config);
-        console.log(res)
-        return res
+        // console.log(res)
+        return res;
     } catch (err) {
-        if(err.response){
-            console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
-        } else {
-            console.log(`Error: ${err.message}`)
-        }    
+        catchErr(err)  
     }        
 }        
 
@@ -78,15 +70,10 @@ async function getUser(user) {
 async function getAllUsers() {
     try {
         const res = await axios.get(URL, config);
-        console.log(res.data);
+        // console.log(res.data);
+        return res;
     } catch (err) {
-        if(err.response){
-            console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
-        } else {
-            console.log(`Error: ${err.message}`)
-        }    
+        catchErr(err)  
     }    
 }    
 
@@ -98,13 +85,7 @@ async function updateUser(user) {
         console.log(res)
         return res;
     } catch (err) {
-        if(err.response){
-            console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
-        } else {
-            console.log(`Error: ${err.message}`)
-        }
+        catchErr(err)
     }
 }
     
@@ -115,13 +96,7 @@ async function deleteUser(user) {
         const res = await axios.delete(URL+user.id);
         return res;
     } catch (err) {
-        if(err.response){
-         console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
-        } else {
-            console.log(`Error: ${err.message}`)
-        }
+        catchErr(err)
     }
 }
 

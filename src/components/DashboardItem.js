@@ -46,8 +46,8 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       try {
         if (!error) {
           const res = await onSubmit(e)
-          console.log(name)
-          console.log(res)
+          // console.log(name)
+          // console.log(res)
           if (res && res.status < 300)
           handleClose()
         }
