@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react';
+import RecordItem from '../components/RecordItem';
 import RecordsServices from '../services/RecordsServices';
 import { useAuth } from '../components/context/AuthContext';
 import Controls from '../components/controls/Controls';
-import { Box, List, ListItem, Paper, Typography } from '@mui/material';
+import { Box, List, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 
 
 export default function RecordsContainer(params) {
     
-
-    // Formating Time & Date
-    function formatTD(date) {
-        const newDate = new Date(date);
-        return `recorded on ${newDate.getDate()}/${newDate.getMonth()+1}/${newDate.getFullYear()} 
-        at ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
-    } 
-
 
     // Auth
     const { currentUser, records, setRecords } = useAuth()
@@ -60,14 +53,10 @@ export default function RecordsContainer(params) {
                     <Typography variant='h6'>Your previous records</Typography>
                     <List>
                         {records.map((element, i) => 
-                            <ListItem key={i}>
-                                <Controls.Button
-                                // text={element.record_date}
-                                text={formatTD(element.record_date)}
-                                fullWidth
-                                
-                                />
-                            </ListItem>
+                            <RecordItem
+                            record={element}
+                            key={i}
+                            />
                         )}
                     </List>
                 </Paper>

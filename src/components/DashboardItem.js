@@ -72,38 +72,38 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   return (
     <MuiListItem
-    sx={isSmallScreen
+      sx={isSmallScreen
         ? { p: '8px 0' }
         : {  }}
-    // hide component if label is missing
-    style={label ? undefined : { display: 'none' }}
+      // hide component if label is missing
+      style={label ? undefined : { display: 'none' }}
     >
       {/* Item Label */}
       <ListItemText
-      sx={isSmallScreen
-        ? { minWidth: 100 }
-        : { minWidth: 135 }}
-      primary={label}
-      primaryTypographyProps={isSmallScreen
-        ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
-        : { fontWeight: 'bold', align: 'right', px: 1 }}
+        sx={isSmallScreen
+          ? { minWidth: 100 }
+          : { minWidth: 135 }}
+        primary={label}
+        primaryTypographyProps={isSmallScreen
+          ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
+          : { fontWeight: 'bold', align: 'right', px: 1 }}
       />
       {/* Item Value */}
       <ListItemText
-      sx={{ width: '100%' }}
-      primary={name==="password"?"*****":defaultValue}
-      primaryTypographyProps={isSmallScreen
-        ? { fontSize: '0.8rem', p: '0 5px'  }
-        : { px: 3 }}
+        sx={{ width: '100%' }}
+        primary={name==="password"?"*****":defaultValue}
+        primaryTypographyProps={isSmallScreen
+          ? { fontSize: '0.8rem', p: '0 5px'  }
+          : { px: 3 }}
       // set error message
       // secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       />
       {/* Item Change/Add Button */}
       <Controls.Button 
-      sx={{ minWidth: 70 }}
-      color="primary"
-      onClick={handleOpen}
-      text={defaultValue||name==="password"?"Change":"Add"}
+        sx={{ minWidth: 70 }}
+        text={defaultValue||name==="password"?"Change":"Add"}
+        color="primary"
+        onClick={handleOpen}
       />
 
       {/* Dialog Window */}
@@ -123,13 +123,13 @@ const AlertDialogSlide = forwardRef((props, ref) => {
             </DialogContentText>
             {/* Dialog Input */}
             <Controls.Input
-            autoFocus
-            label={label}
-            name={name}
-            type={type}
-            value={value}
-            error={error}
-            onChange={onChange}
+              autoFocus
+              label={label}
+              name={name}
+              type={type}
+              value={value}
+              error={error}
+              onChange={onChange}
             />
           </DialogContent>
           {/* Dialog Confirm/Cancel Buttons */}

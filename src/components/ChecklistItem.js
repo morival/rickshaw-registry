@@ -98,7 +98,7 @@ const ChecklistItem = forwardRef((props, ref) => {
     },[value, errors])
     
 
-    return(
+    return (
         <FormControl 
         sx={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}
         >
