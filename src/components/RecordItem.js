@@ -1,6 +1,7 @@
 import React, { forwardRef, useState } from 'react';
-import { Box, Container, Dialog, DialogContent, DialogContentText, DialogTitle, ListItem, Paper, Slide, Typography } from '@mui/material';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem, Paper, Slide, Typography } from '@mui/material';
 import Controls from './controls/Controls';
+// import RecordsServices from '../services/RecordsServices';
 import { useAuth } from './context/AuthContext';
 
 
@@ -10,32 +11,67 @@ const Transition = forwardRef(function Transition(props, ref) {
   });
   
 
+  // Formating Time & Date
+  function recordDate(data) {
+      const newDate = new Date(data.record_date);
+      return `recorded on ${newDate.getDate()}/${newDate.getMonth()+1}/${newDate.getFullYear()} 
+      at ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
+  } 
+  
 
-export default function RecordItem({ record }) {
+
+export default function RecordItem({ record, onDelete }) {
     
     const { currentUser } = useAuth();
 
-    // Formating Time & Date
-    function recordDate() {
-        const newDate = new Date(record.record_date);
-        return `recorded on ${newDate.getDate()}/${newDate.getMonth()+1}/${newDate.getFullYear()} 
-        at ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
-    } 
-
+    // Dialog Window State
     const [open, setOpen] = useState(false);
+
+    // Checkbox State for Record deletion
+    const [checked, setChecked] = useState(false)
+
 
     const handleOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
+        setChecked(false)
         setOpen(false);
     };
+
+    const handleChange = (e) => {
+        setChecked(e.target.value)
+    }
+
+    async function handleDelete(e) {
+        try {
+            if (checked) {
+                const callDelete = await onDelete(e)
+                callDelete.status === 200
+                ?   handleClose()
+                :   console.log(callDelete)
+            }
+        } catch (err) {
+            if (err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+            } else {
+            console.log(`Error: ${err.message}`)
+            }
+        }
+    }
+
+
+    // useEffect(() => {
+    //     console.log(records)
+    // }, [record])
 
     return (
         <ListItem>
             <Controls.Button
-                text={recordDate()}
+                text={recordDate(record)}
                 onClick={handleOpen}
                 fullWidth
             />
@@ -52,7 +88,7 @@ export default function RecordItem({ record }) {
                 </DialogTitle>
                 <DialogContent dividers sx={{ textAlign: 'center' }}>
                     <Typography variant='h6'>{currentUser.name}</Typography>
-                    <Typography variant='p'>{recordDate()}</Typography>
+                    <Typography variant='p'>{recordDate(record)}</Typography>
                     <DialogContentText id='record-dialog-description'>
                     </DialogContentText>
                     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
@@ -66,8 +102,18 @@ export default function RecordItem({ record }) {
                             )}
                         </Paper>
                     </Box>
+                    <Controls.Checkbox
+                        label="check this box to confirm you want to delete this record"
+                        name="name"
+                        value={checked}
+                        onChange={handleChange}
+                    />
                 </DialogContent>
+                <DialogActions>
+                    <Button id={record._id} color={checked ? "primary" : "error"} onClick={handleDelete}>Delete</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                </DialogActions>
             </Dialog>
         </ListItem>
-    )
+    );
 };

@@ -12,16 +12,16 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 
 
-const AlertDialogSlide = forwardRef((props, ref) => {
+const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
   
   const theme = useTheme();
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { dialogTitle, dialogText, checkboxLabel, label, name, defaultValue, onSubmit } = props;
-
+  // Dialog Window State
   const [open, setOpen] = useState(false);
 
+  // Checkbox State for Account deletion
   const [checked, setChecked] = useState(false)
 
   useImperativeHandle(ref, () => {
@@ -35,12 +35,8 @@ const AlertDialogSlide = forwardRef((props, ref) => {
   };
 
   const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleCancel = () => {
     setChecked(false)
-    handleClose();
+    setOpen(false);
   }
 
   const handleChange = (e) => {
@@ -53,11 +49,9 @@ const AlertDialogSlide = forwardRef((props, ref) => {
         if (checked) {
           const res = await onSubmit(e)
           console.log(res)
-        //   if (res && res.status < 300)
-        //   handleClose()
         }
-      } catch(err) {
-        if(err.response){
+      } catch (err) {
+        if (err.response){
           console.log(err.response.data)
           console.log(err.response.status)
           console.log(err.response.headers)
@@ -76,53 +70,52 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     >
         {/* Item Label */}
         <ListItemText
-        sx={isSmallScreen
+          sx={isSmallScreen
             ? { minWidth: 100 }
             : { minWidth: 135 }}
-        primary={label}
-        primaryTypographyProps={isSmallScreen
+          primary="Delete Account"
+          primaryTypographyProps={isSmallScreen
             ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
             : { fontWeight: 'bold', align: 'right', px: 1 }}
         />
         {/* Item Value */}
         <ListItemText
-        sx={{ width: '100%' }}
-        primary={defaultValue}
-        primaryTypographyProps={isSmallScreen
+          sx={{ width: '100%' }}
+          primary="Permanently delete your Rickshaw account"
+          primaryTypographyProps={isSmallScreen
             ? { fontSize: '0.8rem', p: '0 5px'  }
             : { px: 3 }}
         />
         {/* Item Delete Button */}
         <Controls.Button 
-        sx={{ minWidth: 70 }}
-        color="error"
-        onClick={handleOpen}
-        text="Delete"
+          sx={{ minWidth: 70 }}
+          color="error"
+          onClick={handleOpen}
+          text="Delete"
         />
 
         {/* Dialog Window */}
         <Dialog
-        open={open}
-        onClose={handleCancel}
-        TransitionComponent={Transition}
-        aria-describedby="alert-dialog-slide-description"
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+          aria-describedby="alert-dialog-slide-description"
         >
             <Form onSubmit={handleSubmit}>
-                <DialogTitle>{dialogTitle?dialogTitle:"Update "+label}</DialogTitle>
+                <DialogTitle>Delete Account</DialogTitle>
                 <DialogContent sx={{ maxWidth: 260 }}>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {dialogText}
+                    When you delete your account, you won't be able to retrieve the content that you stored
                     </DialogContentText>
                     <Controls.Checkbox
-                    label={checkboxLabel}
-                    name={name}
-                    value={checked}
-                    onChange={handleChange}
+                      label="check this box to confirm you want to delete your account"
+                      name="delete"
+                      value={checked}
+                      onChange={handleChange}
                     />
                 </DialogContent>
-                {/* Dialog Confirm/Cancel Buttons */}
                 <DialogActions>
-                    <Button onClick={handleCancel}>Cancel</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
                     <Button type="submit" color={checked ? "primary" : "error"}>Confirm</Button>
                 </DialogActions>
             </Form>

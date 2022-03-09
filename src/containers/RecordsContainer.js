@@ -13,17 +13,31 @@ export default function RecordsContainer(params) {
 
     // Auth
     const { currentUser, records, setRecords } = useAuth()
+    
+    
+    async function findRecords(user) {
+        const allRecords = await RecordsServices.getAllRecords()
+        const filteredRecords = allRecords.data.filter(element => element.user_id === user._id)
+        setRecords(filteredRecords)
+    }
+
+
+    async function handleDelete(e) {
+        const id = e.target.id
+        try {
+            const record = records.find(element => element._id === id)
+            return await RecordsServices.deleteRecord(record)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            findRecords(currentUser)
+        }
+    }
 
 
     useEffect(() => {
-        async function findRecords(user) {
-            const allRecords = await RecordsServices.getAllRecords()
-            const filteredRecords = allRecords.data.filter(element => element.user_id === user._id)
-            setRecords(filteredRecords)
-        }
         findRecords(currentUser)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[currentUser])
+    })
 
     return (
         <Box sx={{ p: 2 }}>
@@ -52,12 +66,16 @@ export default function RecordsContainer(params) {
                 >
                     <Typography variant='h6'>Your previous records</Typography>
                     <List>
-                        {records.map((element, i) => 
-                            <RecordItem
-                            record={element}
-                            key={i}
-                            />
-                        )}
+                        {records && records.length
+                        ?   records.map((element, i) => 
+                                <RecordItem
+                                    record={element}
+                                    onDelete={handleDelete}
+                                    key={i}
+                                />
+                            )
+                        :   <Typography paragraph>No records</Typography>
+                        }
                     </List>
                 </Paper>
             </Box>

@@ -59,9 +59,10 @@ async function getAllRecords() {
 
 
 // DELETE Record
-async function deleteUser(record) {
+async function deleteRecord(record) {
     try {
-        const res = await axios.delete(URL+record.id);
+        const res = await axios.delete(URL+record._id);
+        // console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
@@ -72,7 +73,7 @@ const RecordsServices = {
     createRecord,
     getRecord,
     getAllRecords,
-    deleteUser
+    deleteRecord
 }
 
 export default RecordsServices;

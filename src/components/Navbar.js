@@ -36,16 +36,18 @@ function Navbar() {
     <Box sx={{ flexGrow: 1 }} className={classes.container}>
         <AppBar position="static">
             <Toolbar>
-                <Drawer/>
+                {loggedIn
+                ?   <Drawer/>
+                :   null}
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Rickshaw Registery
                 </Typography>
                 {loggedIn
-                ? <Controls.Button
+                ?   <Controls.Button
                     text="Log Out"
                     onClick={handleLogout}
                     />
-                : <Controls.Button
+                :   <Controls.Button
                     text="Log in / Sign up"
                     color="primary"
                     component={Link} to={"/login"}

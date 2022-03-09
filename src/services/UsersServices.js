@@ -33,7 +33,7 @@ async function authenticateUser(user) {
         const res = (await axios.post(URL+'login', { 
             login: user[userLogin], password: user.password 
         } , config))
-        // console.log(res)
+        console.log(res)
         return res;
     } catch (err) {
         catchErr(err)

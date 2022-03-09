@@ -15,7 +15,7 @@ const PublicRoute = ({component: Component, restricted, ...rest}) => {
             ?   <Redirect to="/" />
             :   <Box>
                     {restricted
-                    ?   ""
+                    ?   null
                     :   <Navbar />}
                     <Component {...props} />
                 </Box>

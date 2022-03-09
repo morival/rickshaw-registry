@@ -8,11 +8,12 @@ import { Form, UseForm } from '../components/UseForm';
 import ChecklistItem from '../components/ChecklistItem';
 import Content from '../components/content/ChecklistDescriptions';
 import RecordsServices from '../services/RecordsServices';
+import { useHistory } from "react-router-dom";
 
 
 const initialValues = []
 Content.forEach((element, i) => {
-    const newElement = {id: (i+1).toString(), description: element, status: "false", comments: ""}
+    const newElement = {id: (i+1).toString(), description: element, status: null, comments: ""}
     initialValues.push(newElement)
 })
 
@@ -39,7 +40,9 @@ export default function Checklist(params) {
     
     const { currentUser, loggedIn } = useAuth();
 
-    const refs = useRef([])
+    const refs = useRef([]);
+
+    let history = useHistory();
 
 
     const newFormData = []
@@ -72,6 +75,8 @@ export default function Checklist(params) {
                     console.log(record)
                     const res = await RecordsServices.createRecord(record)
                     console.log(res.statusText)
+                    if (res.status===201)
+                        history.push('/records')
                 }
             } catch (err){
                 console.log(err)

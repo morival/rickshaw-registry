@@ -79,17 +79,17 @@ export default function DashboardContainer( children, ...rest ) {
         .filter(element => names.includes(element.name))
         .map((element, i) => 
             <DashboardItem
-            label={element.label}
-            name={element.name}
-            type={element.type}
-            defaultValue={currentUser[element.name]}
-            value={formData[element.name]}
-            error={errors[element.name]}
-            onChange={handleInputChange}
-            onSubmit={handleSubmit}
-            onCancel={refreshFormData}
-            closeDialog={closeDialog}
-            key={i}
+                label={element.label}
+                name={element.name}
+                type={element.type}
+                defaultValue={currentUser[element.name]}
+                value={formData[element.name]}
+                error={errors[element.name]}
+                onChange={handleInputChange}
+                onSubmit={handleSubmit}
+                onCancel={refreshFormData}
+                closeDialog={closeDialog}
+                key={i}
             /> 
         )
     )
@@ -123,6 +123,7 @@ export default function DashboardContainer( children, ...rest ) {
             else if (!passwordVerification.password) {
                 setAction("Submit")
                 refOpen.current.handleOpen();
+            // else run authentification
             } else {
                 const user = { _id: currentUser._id, password: passwordVerification.password }
                 const auth = await UsersServices.authenticateUser(user)
@@ -141,7 +142,7 @@ export default function DashboardContainer( children, ...rest ) {
                     return res
                 }
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -172,7 +173,7 @@ export default function DashboardContainer( children, ...rest ) {
                         handleLogout();
                 }
             }
-        } catch(err) {
+        } catch (err) {
             if(err.response){
                 console.log(err.response.data)
                 console.log(err.response.status)
@@ -187,50 +188,47 @@ export default function DashboardContainer( children, ...rest ) {
         <Box sx={isSmallScreen ? { p: 1 } : { p: 2 }}>
             <h1>Dashboard</h1>
             <Controls.Button
-            text="Home"
-            // size="small"
-            component={Link} to={"/"}
+                text="Home"
+                component={Link} to={"/"}
             />
             <Controls.Button
-            text="Checklist"
-            // size="small"
-            color="warning"
-            component={Link} to={"/checklist"}
+                text="Checklist"
+                color="warning"
+                component={Link} to={"/checklist"}
             />
             <Controls.Button
-            text="Records"
-            // size="small"
-            color="error"
-            component={Link} to={"/records"}
+                text="Records"
+                color="error"
+                component={Link} to={"/records"}
             />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '800px', width: '100%' }}>
                     <Box
-                    sx={isMediumScreen
-                        ? { display: 'flex'}
-                        : {  }}
-                        >
+                        sx={isMediumScreen
+                          ? { display: 'flex'}
+                          : {  }}
+                    >
                         <TabContext value={panel}>
                             <TabList 
-                            value={panel} 
-                            onChange={handleChangePanel}
-                            orientation={isMediumScreen ? 'vertical' : 'horizontal'}
-                            sx={isMediumScreen 
-                                ? { borderRight: 1, borderColor: 'divider' } 
-                                : { borderBottom: 1, borderColor: 'divider', minHeight: '36px' }}
+                                value={panel} 
+                                onChange={handleChangePanel}
+                                orientation={isMediumScreen ? 'vertical' : 'horizontal'}
+                                sx={isMediumScreen 
+                                  ? { borderRight: 1, borderColor: 'divider' } 
+                                  : { borderBottom: 1, borderColor: 'divider', minHeight: '36px' }}
                             >
-                                {Content.profileTabs.map((element, i) => {
-                                    return(
-                                        <Tab
+                            {Content.profileTabs.map((element, i) => {
+                                return(
+                                    <Tab
                                         sx={isSmallScreen
                                             ? { fontSize: '0.625rem', padding: '6px 8px', minHeight: '36px', minWidth: '' }
                                             : {}}
                                         label={element} 
                                         key={i} 
                                         value={i.toString()} 
-                                        />
-                                    )
-                                })}
+                                    />
+                                )
+                            })}
                             </TabList>
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
@@ -248,27 +246,21 @@ export default function DashboardContainer( children, ...rest ) {
                                     <List>
                                         {dashboardComponents(["password"])}
                                         <DashboardDeleteItem
-                                        label="Delete Account"
-                                        checkboxLabel="check this box to confirm you want to delete your account"
-                                        name="delete"
-                                        dialogTitle="Delete Account"
-                                        dialogText="When you delete your account, you won't be able to retrieve the content that you stored "
-                                        defaultValue="Permanently delete your Rickshaw account"
-                                        onSubmit={handleDeleteAcc}
+                                            onSubmit={handleDeleteAcc}
                                         />
                                     </List>
                                 </TabPanel>
                                 <DashboardItem
-                                name="password"
-                                type="password"
-                                dialogTitle="Password Required"
-                                dialogText="Confirm your current password"
-                                error={errors.password}
-                                onChange={handlePasVerChange}
-                                onSubmit={handleAction}
-                                onCancel={refreshPasVer}
-                                closeDialog={closeDialog}
-                                ref={refOpen}
+                                    name="password"
+                                    type="password"
+                                    dialogTitle="Password Required"
+                                    dialogText="Confirm your current password"
+                                    error={errors.password}
+                                    onChange={handlePasVerChange}
+                                    onSubmit={handleAction}
+                                    onCancel={refreshPasVer}
+                                    closeDialog={closeDialog}
+                                    ref={refOpen}
                                 />
                             </Box>
                         </TabContext>

@@ -91,9 +91,9 @@ const ChecklistItem = forwardRef((props, ref) => {
     useEffect(() => {
         value ? setHelperText("") : setHelperText(errors.status)
         console.log(value)
-        if (value === "true")
+        if (value === "passed")
         setBackground(green[100])
-        else if (value === "false")
+        else if (value === "failed")
         setBackground(red[100])
     },[value, errors])
     
@@ -129,7 +129,7 @@ const ChecklistItem = forwardRef((props, ref) => {
                 >
                     <FormControlLabel
                     sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
-                    value={true}
+                    value="passed"
                     control={
                         <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='success'/>
                     } 
@@ -137,7 +137,7 @@ const ChecklistItem = forwardRef((props, ref) => {
                     />
                     <FormControlLabel
                     sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
-                    value={false}
+                    value="failed"
                     control={
                         <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='error'/>
                     } 
@@ -152,13 +152,13 @@ const ChecklistItem = forwardRef((props, ref) => {
                 <TooltipButton/>
             </Tooltip>
             <Dialog
-            sx={{ '& .MuiDialog-paper': { p: 2 } }}
+            sx={{ '& .MuiDialog-paper': { px: 2 } }}
             fullWidth
             maxWidth='md'
             open={open} 
             onClose={handleCancel}
             >
-                <DialogTitle sx={{ p: 0 }}>Add comment on:</DialogTitle>
+                <DialogTitle sx={{ px: 0 }}>Add comment on:</DialogTitle>
                 <DialogContent sx={{ p: 0 }}>
                     <DialogContentText>{description}</DialogContentText>
                 </DialogContent>
