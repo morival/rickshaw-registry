@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, useMediaQuery} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery} from '@mui/material';
 import Controls from './controls/Controls';
 import { Form } from './UseForm';
 import { useTheme } from '@mui/material/styles';
@@ -14,10 +14,12 @@ const Transition = forwardRef((props, ref) =>
 
 const AlertDialogSlide = forwardRef((props, ref) => {
   
+
+  // Theme Media Query
   const theme = useTheme();
+  const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+  
   const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, onSubmit, onCancel, closeDialog } = props;
 
   // Dialog Window State
@@ -72,28 +74,22 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   return (
     <MuiListItem
-      sx={isSmallScreen
-        ? { p: '8px 0' }
-        : {  }}
+      sx={{ p: isSS ? '8px 0' : null }}
       // hide component if label is missing
       style={label ? undefined : { display: 'none' }}
     >
       {/* Item Label */}
       <ListItemText
-        sx={isSmallScreen
-          ? { minWidth: 100 }
-          : { minWidth: 135 }}
+        sx={{ minWidth: isSS ? 100 : 135 }}
         primary={label}
-        primaryTypographyProps={isSmallScreen
-          ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
-          : { fontWeight: 'bold', align: 'right', px: 1 }}
+        primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
       />
       {/* Item Value */}
       <ListItemText
         sx={{ width: '100%' }}
-        primary={name==="password"?"*****":defaultValue}
-        primaryTypographyProps={isSmallScreen
-          ? { fontSize: '0.8rem', p: '0 5px'  }
+        primary={name === "password" ? "*****" : defaultValue}
+        primaryTypographyProps={isSS
+          ? { fontSize: '0.8rem', p: '0 5px' }
           : { px: 3 }}
       // set error message
       // secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
@@ -101,7 +97,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       {/* Item Change/Add Button */}
       <Controls.Button 
         sx={{ minWidth: 70 }}
-        text={defaultValue||name==="password"?"Change":"Add"}
+        text={defaultValue || name === "password" ? "Change" : "Add"}
         color="primary"
         onClick={handleOpen}
       />
@@ -115,27 +111,29 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       >
         <Form onSubmit={handleSubmit}>
           {/* Dialog Title */}
-          <DialogTitle>{dialogTitle?dialogTitle:"Update "+label}</DialogTitle>
-          <DialogContent sx={{ maxWidth: 260 }}>
-            {/* Dialog Message */}
-            <DialogContentText id="alert-dialog-slide-description">
-              {dialogText}
-            </DialogContentText>
-            {/* Dialog Input */}
-            <Controls.Input
-              autoFocus
-              label={label}
-              name={name}
-              type={type}
-              value={value}
-              error={error}
-              onChange={onChange}
-            />
+          <DialogTitle>{dialogTitle ? dialogTitle : "Update " + label}</DialogTitle>
+          <DialogContent sx={{ px: 2, py: 0.2, maxWidth: 260 }}>
+            <Paper sx={{ p: 1 }}>
+              {/* Dialog Message */}
+              <DialogContentText id="alert-dialog-slide-description">
+                {dialogText}
+              </DialogContentText>
+              {/* Dialog Input */}
+              <Controls.Input
+                autoFocus
+                label={label}
+                name={name}
+                type={type}
+                value={value}
+                error={error}
+                onChange={onChange}
+              />
+            </Paper>
           </DialogContent>
           {/* Dialog Confirm/Cancel Buttons */}
           <DialogActions>
             <Button onClick={handleCancel}>Cancel</Button>
-            <Button type="submit" color={error?"error":"primary"}>Confirm</Button>
+            <Button type="submit" color={error ? "error" : "primary"}>Confirm</Button>
           </DialogActions>
         </Form>
       </Dialog>

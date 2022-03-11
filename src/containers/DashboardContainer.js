@@ -17,10 +17,10 @@ import { useHistory } from 'react-router';
 export default function DashboardContainer( children, ...rest ) {
     
     
+    // Theme Media Query
     const theme = useTheme();
-    
-    const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMS = useMediaQuery(theme.breakpoints.up('md'));
+    const isSS = useMediaQuery(theme.breakpoints.down('sm'));
     
     // Validation
     const validate = (  fieldValues = formData ) => {
@@ -185,7 +185,7 @@ export default function DashboardContainer( children, ...rest ) {
     }
         
     return (
-        <Box sx={isSmallScreen ? { p: 1 } : { p: 2 }}>
+        <Box sx={{ p: isSS ? 1 : 2 }}>
             <h1>Dashboard</h1>
             <Controls.Button
                 text="Home"
@@ -202,9 +202,9 @@ export default function DashboardContainer( children, ...rest ) {
                 component={Link} to={"/records"}
             />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
-                <Paper sx={{ p: 1, maxWidth: '800px', width: '100%' }}>
+                <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     <Box
-                        sx={isMediumScreen
+                        sx={!isSS
                           ? { display: 'flex'}
                           : {  }}
                     >
@@ -212,15 +212,13 @@ export default function DashboardContainer( children, ...rest ) {
                             <TabList 
                                 value={panel} 
                                 onChange={handleChangePanel}
-                                orientation={isMediumScreen ? 'vertical' : 'horizontal'}
-                                sx={isMediumScreen 
-                                  ? { borderRight: 1, borderColor: 'divider' } 
-                                  : { borderBottom: 1, borderColor: 'divider', minHeight: '36px' }}
+                                orientation={!isSS ? 'vertical' : 'horizontal'}
+                                sx={{ borderRight: 1, borderColor: 'divider', minHeight: !isSS ? null : '36px' }}
                             >
                                 {Content.profileTabs.map((element, i) => {
                                     return(
                                         <Tab
-                                            sx={isSmallScreen
+                                            sx={isSS
                                                 ? { fontSize: '0.625rem', padding: '6px 8px', minHeight: '36px', minWidth: '' }
                                                 : {}}
                                             label={element} 
@@ -232,18 +230,18 @@ export default function DashboardContainer( children, ...rest ) {
                             </TabList>
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
-                                    <List>
+                                    <List sx={{ pb: 0 }}>
                                         {dashboardComponents(["name", "email", "phoneNumber", "dOB"])}
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="1">
-                                    <List>
+                                    <List sx={{ pb: 0 }}>
                                         {dashboardComponents(["line_1", "line_2", "line_3", "post_town", "postcode"])}
                                         
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="2">
-                                    <List>
+                                    <List sx={{ pb: 0 }}>
                                         {dashboardComponents(["password"])}
                                         <DashboardDeleteItem
                                             onSubmit={handleDeleteAcc}

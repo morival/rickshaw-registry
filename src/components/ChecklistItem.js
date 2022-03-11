@@ -9,9 +9,10 @@ import { useTheme } from '@mui/material/styles';
 
 const ChecklistItem = forwardRef((props, ref) => {
 
-    const theme = useTheme();
 
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    // Theme Media Query
+    const theme = useTheme();
+    const isSS = useMediaQuery(theme.breakpoints.down('sm'));
     
     const { initialItemValues, updatedValues } = props;
     
@@ -65,7 +66,7 @@ const ChecklistItem = forwardRef((props, ref) => {
         //  Spread the props to the underlying DOM element.
         {...props}
         ref={ref}
-        sx={isSmallScreen
+        sx={isSS
             ? { fontSize: '0.6rem', minWidth: 85 }
             : { fontSize: '0.7rem', minWidth: 105 }}
         variant="contained"
@@ -106,12 +107,10 @@ const ChecklistItem = forwardRef((props, ref) => {
         >
             <Container 
             disableGutters
-            sx={isSmallScreen
-                ? { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: 1 }
-                : { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: 2 }}
+            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: isSS ? 1 : 2 }}
             >
                 <Typography
-                sx={isSmallScreen
+                sx={isSS
                     ? { fontSize: '0.8rem' }
                     : { px: 1 }}
                 variant='body1'

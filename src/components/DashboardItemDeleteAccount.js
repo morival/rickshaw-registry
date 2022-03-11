@@ -1,6 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Slide, useMediaQuery} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery} from '@mui/material';
 import Controls from './controls/Controls';
+import { red } from '@mui/material/colors';
 import { Form } from './UseForm';
 import { useTheme } from '@mui/material/styles';
 
@@ -14,9 +15,11 @@ const Transition = forwardRef((props, ref) =>
 
 const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
   
+  
+  // Theme Media Query
   const theme = useTheme();
+  const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Dialog Window State
   const [open, setOpen] = useState(false);
@@ -64,17 +67,17 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
   
   return (
     <MuiListItem
-    sx={isSmallScreen
+    sx={isSS
         ? { p: '8px 0' }
         : {  }}
     >
         {/* Item Label */}
         <ListItemText
-          sx={isSmallScreen
+          sx={isSS
             ? { minWidth: 100 }
             : { minWidth: 135 }}
           primary="Delete Account"
-          primaryTypographyProps={isSmallScreen
+          primaryTypographyProps={isSS
             ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
             : { fontWeight: 'bold', align: 'right', px: 1 }}
         />
@@ -82,7 +85,7 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
         <ListItemText
           sx={{ width: '100%' }}
           primary="Permanently delete your Rickshaw account"
-          primaryTypographyProps={isSmallScreen
+          primaryTypographyProps={isSS
             ? { fontSize: '0.8rem', p: '0 5px'  }
             : { px: 3 }}
         />
@@ -103,16 +106,22 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
         >
             <Form onSubmit={handleSubmit}>
                 <DialogTitle>Delete Account</DialogTitle>
-                <DialogContent sx={{ maxWidth: 260 }}>
-                    <DialogContentText id="alert-dialog-slide-description">
-                    When you delete your account, you won't be able to retrieve the content that you stored
+                <DialogContent sx={{ px: 2, py: 0.2, maxWidth: 260 }}>
+                  <Paper sx={{ p: 1 }}>
+                    <DialogContentText 
+                      sx={{ color: red[800] }}
+                      id="alert-dialog-slide-description"
+                    >
+                      When you delete your account, you won't be able to retrieve the content that you stored
                     </DialogContentText>
-                    <Controls.Checkbox
-                      label="check this box to confirm you want to delete your account"
-                      name="delete"
-                      value={checked}
-                      onChange={handleChange}
-                    />
+                  </Paper>
+                  <Controls.Checkbox
+                    sx={{ pt: 1 }}
+                    labelSX={{ fontSize: '12px' }}
+                    label="check this box to confirm you want to delete your account"
+                    value={checked}
+                    onChange={handleChange}
+                  />
                 </DialogContent>
                 <DialogActions>
                     {checked ? <Button type="submit">Confirm</Button> : null}

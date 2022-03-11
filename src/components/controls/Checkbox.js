@@ -1,10 +1,10 @@
-import { FormControl, FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
+import { FormControl, FormControlLabel, Checkbox as MuiCheckbox, Typography } from '@mui/material';
 import React from 'react';
 
 
 export default function Checkbox(props) {
 
-    const {name, label, color, value, onChange, ...other} = props;
+    const {name, label, labelSX, color, value, onChange, sx, ...other} = props;
 
     const handleCheckboxChange = (name, value) => ({
         target:{
@@ -14,7 +14,9 @@ export default function Checkbox(props) {
 
     
     return(
-        <FormControl>
+        <FormControl
+            sx={sx}
+        >
             <FormControlLabel
                 control={<MuiCheckbox
                     name={name}
@@ -24,7 +26,9 @@ export default function Checkbox(props) {
                     onChange={e=>onChange(handleCheckboxChange(name,e.target.checked))}
                     {...other}
                 />}
-                label={label || ""}
+                label={<Typography sx={labelSX}>{label}</Typography> || ""}
+                sx={{ mr: 0 }}
+                
             />
         </FormControl>
     )

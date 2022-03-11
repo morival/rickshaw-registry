@@ -60,7 +60,7 @@ export default function RecordsContainer(params) {
             />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper 
-                    sx={{ p: 1, maxWidth: '800px', width: '100%' }}
+                    sx={{ p: 1, maxWidth: '700px', width: '100%' }}
                     align="center"
                 >
                     <Typography variant='h6'>Your previous records</Typography>

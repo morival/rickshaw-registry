@@ -75,7 +75,6 @@ export default function Checklist(params) {
                     console.log(record)
                     const res = await RecordsServices.createRecord(record)
                     const newRecordId = res.data._id
-                    console.log(newRecordId)
                     if (res.status===201) {
                         setCurrentRecordId(newRecordId)
                         history.push('/records')
@@ -107,7 +106,7 @@ export default function Checklist(params) {
                 component={Link} to={"/dashboard"}
             />
             <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-                <Paper sx={{ p: 1, maxWidth: '550px', width: '100%' }}>
+                <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     <Form onSubmit={handleSubmit}>
                         {formData.map((element, i) => 
                             <ChecklistItem
