@@ -25,19 +25,16 @@ export default function Home() {
                 ?   <>
                         <Controls.Button
                         text="Checklist"
-                        // size="small"
                         color="warning"
                         component={Link} to={"/checklist"}
                         />
                         <Controls.Button
                         text="Records"
-                        // size="small"
                         color="error"
                         component={Link} to={"/records"}
                         />
                         <Controls.Button
                         text="Dashboard"
-                        // size="small"
                         color="success"
                         component={Link} to={"/dashboard"}
                         />

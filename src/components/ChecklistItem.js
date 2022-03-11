@@ -53,14 +53,16 @@ const ChecklistItem = forwardRef((props, ref) => {
     };
     
     // Comments
+    // Window State
     const [open, setOpen] = useState(false);
+    // Temporary Value
     const [tempValue, setTempValue] = useState(formData)
     
     
     // Tooltip child Button component
-    const TooltipButton = React.forwardRef(function TooltipButton(props, ref) {
+    const TooltipButton = forwardRef((props, ref) => 
+        <Button 
         //  Spread the props to the underlying DOM element.
-        return <Button 
         {...props}
         ref={ref}
         sx={isSmallScreen
@@ -70,7 +72,7 @@ const ChecklistItem = forwardRef((props, ref) => {
         onClick={handleClickOpen}
         startIcon={<CommentIcon />}
         >comment</Button>
-    });
+    );
     
     
     const handleClickOpen = () => {

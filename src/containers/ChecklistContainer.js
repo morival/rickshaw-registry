@@ -38,7 +38,7 @@ export default function Checklist(params) {
     
     const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
     
-    const { currentUser, loggedIn } = useAuth();
+    const { currentUser, setCurrentRecordId, loggedIn } = useAuth();
 
     const refs = useRef([]);
 
@@ -74,9 +74,12 @@ export default function Checklist(params) {
                 if (validate() && loggedIn) {
                     console.log(record)
                     const res = await RecordsServices.createRecord(record)
-                    console.log(res.statusText)
-                    if (res.status===201)
+                    const newRecordId = res.data._id
+                    console.log(newRecordId)
+                    if (res.status===201) {
+                        setCurrentRecordId(newRecordId)
                         history.push('/records')
+                    }
                 }
             } catch (err){
                 console.log(err)
@@ -90,37 +93,34 @@ export default function Checklist(params) {
         <Box sx={{ p: 2 }}>
             <h1>Checklist</h1>
             <Controls.Button
-            text="Home"
-            // size="small"
-            component={Link} to={"/"}
+                text="Home"
+                component={Link} to={"/"}
             />
             <Controls.Button
-            text="Records"
-            // size="small"
-            color="error"
-            component={Link} to={"/records"}
+                text="Records"
+                color="error"
+                component={Link} to={"/records"}
             />
             <Controls.Button
-            text="Dashboard"
-            // size="small"
-            color="success"
-            component={Link} to={"/dashboard"}
+                text="Dashboard"
+                color="success"
+                component={Link} to={"/dashboard"}
             />
             <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                 <Paper sx={{ p: 1, maxWidth: '550px', width: '100%' }}>
                     <Form onSubmit={handleSubmit}>
                         {formData.map((element, i) => 
                             <ChecklistItem
-                            initialItemValues={element}
-                            updatedValues={updatedValues}
-                            ref={(item)=>{refs.current[i]=item}}
-                            key={i}
+                                initialItemValues={element}
+                                updatedValues={updatedValues}
+                                ref={(item)=>{refs.current[i]=item}}
+                                key={i}
                             />
                         )}
                         <Controls.Button
-                        text="Save"
-                        size="small"
-                        type="submit"
+                            text="Save"
+                            size="small"
+                            type="submit"
                         />
                     </Form>
                 </Paper>

@@ -217,18 +217,18 @@ export default function DashboardContainer( children, ...rest ) {
                                   ? { borderRight: 1, borderColor: 'divider' } 
                                   : { borderBottom: 1, borderColor: 'divider', minHeight: '36px' }}
                             >
-                            {Content.profileTabs.map((element, i) => {
-                                return(
-                                    <Tab
-                                        sx={isSmallScreen
-                                            ? { fontSize: '0.625rem', padding: '6px 8px', minHeight: '36px', minWidth: '' }
-                                            : {}}
-                                        label={element} 
-                                        key={i} 
-                                        value={i.toString()} 
-                                    />
-                                )
-                            })}
+                                {Content.profileTabs.map((element, i) => {
+                                    return(
+                                        <Tab
+                                            sx={isSmallScreen
+                                                ? { fontSize: '0.625rem', padding: '6px 8px', minHeight: '36px', minWidth: '' }
+                                                : {}}
+                                            label={element} 
+                                            key={i} 
+                                            value={i.toString()} 
+                                        />
+                                    )
+                                })}
                             </TabList>
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">

@@ -6,9 +6,9 @@ import { useTheme } from '@mui/material/styles';
 
 
 
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = forwardRef((props, ref) =>
+   <Slide direction="up" ref={ref} {...props} />
+);
 
 
 
@@ -20,8 +20,10 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, onSubmit, onCancel, closeDialog } = props;
 
+  // Dialog Window State
   const [open, setOpen] = useState(false);
 
+  // Ref Open Dialog Window from Parent Component
   useImperativeHandle(ref, () => {
     return {
       handleOpen: handleOpen
@@ -46,8 +48,6 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       try {
         if (!error) {
           const res = await onSubmit(e)
-          // console.log(name)
-          // console.log(res)
           if (res && res.status < 300)
           handleClose()
         }

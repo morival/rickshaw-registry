@@ -37,32 +37,31 @@ export default function RecordsContainer(params) {
 
     useEffect(() => {
         findRecords(currentUser)
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
 
     return (
         <Box sx={{ p: 2 }}>
             <h1>Records</h1>
             <Controls.Button
-            text="Home"
-            // size="small"
-            component={Link} to={"/"}
+                text="Home"
+                component={Link} to={"/"}
             />
             <Controls.Button
-            text="Checklist"
-            // size="small"
-            color="warning"
-            component={Link} to={"/checklist"}
+                text="Checklist"
+                color="warning"
+                component={Link} to={"/checklist"}
             />
             <Controls.Button
-            text="Dashboard"
-            // size="small"
-            color="success"
-            component={Link} to={"/dashboard"}
+                text="Dashboard"
+                color="success"
+                component={Link} to={"/dashboard"}
             />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper 
-                sx={{ p: 1, maxWidth: '800px', width: '100%' }}
-                align="center"
+                    sx={{ p: 1, maxWidth: '800px', width: '100%' }}
+                    align="center"
                 >
                     <Typography variant='h6'>Your previous records</Typography>
                     <List>

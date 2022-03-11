@@ -12,6 +12,7 @@ export function useAuth() {
 export function AuthProvider({children}) {
 
     const [currentUser, setCurrentUser] = useLocalStorage('currentUser', null);
+    const [currentRecordId, setCurrentRecordId] = useLocalStorage('currentRecordId', null);
     const [records, setRecords] = useLocalStorage('records', null)
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn', false);
     const [loading, setLoading] = useLocalStorage('loading', false);
@@ -21,6 +22,7 @@ export function AuthProvider({children}) {
         setLoading(true)
         localStorage.clear()
         setCurrentUser(null)
+        setCurrentRecordId(null)
         setLoggedIn(false)
         setLoading(false)
     }
@@ -28,6 +30,8 @@ export function AuthProvider({children}) {
     const value = {
         currentUser,
         setCurrentUser,
+        currentRecordId,
+        setCurrentRecordId,
         records,
         setRecords,
         loggedIn,

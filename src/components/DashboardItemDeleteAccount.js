@@ -6,9 +6,9 @@ import { useTheme } from '@mui/material/styles';
 
 
 
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = forwardRef((props, ref) =>
+  <Slide direction="up" ref={ref} {...props} />
+);
 
 
 
@@ -115,8 +115,8 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
                     />
                 </DialogContent>
                 <DialogActions>
+                    {checked ? <Button type="submit">Confirm</Button> : null}
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" color={checked ? "primary" : "error"}>Confirm</Button>
                 </DialogActions>
             </Form>
         </Dialog>

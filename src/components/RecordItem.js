@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem, Paper, Slide, Typography } from '@mui/material';
 import Controls from './controls/Controls';
 // import RecordsServices from '../services/RecordsServices';
@@ -6,9 +6,9 @@ import { useAuth } from './context/AuthContext';
 
 
 
-const Transition = forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
+const Transition = forwardRef((props, ref) =>
+   <Slide direction="up" ref={ref} {...props} />
+);
   
 
   // Formating Time & Date
@@ -22,7 +22,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function RecordItem({ record, onDelete }) {
     
-    const { currentUser } = useAuth();
+    const { currentUser, currentRecordId, setCurrentRecordId } = useAuth();
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
@@ -64,9 +64,15 @@ export default function RecordItem({ record, onDelete }) {
     }
 
 
-    // useEffect(() => {
-    //     console.log(records)
-    // }, [record])
+    useEffect(() => {
+        if (currentRecordId === record._id) {
+            handleOpen();
+            setCurrentRecordId(null)
+            console.log('yes')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
 
     return (
         <ListItem>
@@ -110,7 +116,7 @@ export default function RecordItem({ record, onDelete }) {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button id={record._id} color={checked ? "primary" : "error"} onClick={handleDelete}>Delete</Button>
+                    {checked ? <Button id={record._id} onClick={handleDelete}>Delete</Button> : null}
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
             </Dialog>
