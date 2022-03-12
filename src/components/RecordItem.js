@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, ListItem, Paper, Slide, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, ListItem, Paper, Slide, Typography, useMediaQuery } from '@mui/material';
 import Controls from './controls/Controls';
 import { grey, green, red } from '@mui/material/colors';
 import { useAuth } from './context/AuthContext';
@@ -100,10 +100,8 @@ export default function RecordItem({ record, onDelete }) {
                     Rickshaw Safety Checklist
                 </DialogTitle>
                 <DialogContent sx={{ px: isSS ? 2 : 3, py: 0.2 }}>
-                    <DialogContentText id='record-dialog-description'>
                         <Typography variant='h6' align='center'>{currentUser.name}</Typography>
                         <Typography paragraph align='center'>{recordDate(record)}</Typography>
-                    </DialogContentText>
                     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                         <Paper sx={{ p: 1, maxWidth: '750px', width: '100%' }}>
                             <Grid container columnSpacing={0} sx={{ my: 0.5, alignItems: 'center', fontWeight: 'bold', fontSize: isSS ? '13px' : '18px' }}>

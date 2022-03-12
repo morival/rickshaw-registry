@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, useMediaQuery, Zoom } from '@mui/material';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Paper, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, useMediaQuery, Zoom } from '@mui/material';
 import { grey, green, red } from '@mui/material/colors';
 import CommentIcon from '@mui/icons-material/Comment';
 import { UseForm } from './UseForm';
@@ -160,19 +160,24 @@ const ChecklistItem = forwardRef((props, ref) => {
             onClose={handleCancel}
             >
                 <DialogTitle sx={{ px: 0 }}>Add comment on:</DialogTitle>
-                <DialogContent sx={{ p: 0 }}>
-                    <DialogContentText>{description}</DialogContentText>
-                </DialogContent>
-                <TextareaAutosize
-                autoFocus
-                id={id}
-                name="comments"
-                value={comments}
-                onChange={handleInputChange}
-                minRows={4}
-                maxLength={300}
-                placeholder="write your comment here"
-                />
+                <Box sx={{ justifyContent: 'center', display: 'flex' }}>
+                    <Paper sx={{ p: 1, width: isSS ? '100%' : '80%' }}>
+                        <DialogContent sx={{ p: 0 }}>
+                            <DialogContentText gutterBottom>{description}</DialogContentText>
+                        </DialogContent>
+                        <TextareaAutosize
+                        style={{ width: '100%' }}
+                        autoFocus
+                        id={id}
+                        name="comments"
+                        value={comments}
+                        onChange={handleInputChange}
+                        minRows={4}
+                        maxLength={300}
+                        placeholder="write your comment here"
+                        />
+                    </Paper>
+                </Box>
                 <DialogActions>
                     <Button onClick={handleCancel}>Cancel</Button>
                     <Button onClick={handleClose}>Save</Button>

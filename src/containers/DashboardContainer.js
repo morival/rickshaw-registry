@@ -19,8 +19,8 @@ export default function DashboardContainer( children, ...rest ) {
     
     // Theme Media Query
     const theme = useTheme();
-    const isMS = useMediaQuery(theme.breakpoints.up('md'));
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
+    // const isMS = useMediaQuery(theme.breakpoints.up('md'));
     
     // Validation
     const validate = (  fieldValues = formData ) => {
@@ -203,24 +203,20 @@ export default function DashboardContainer( children, ...rest ) {
             />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
-                    <Box
-                        sx={!isSS
-                          ? { display: 'flex'}
-                          : {  }}
-                    >
+                    <Box sx={{ display: isSS ? null : 'flex'}}>
                         <TabContext value={panel}>
                             <TabList 
                                 value={panel} 
                                 onChange={handleChangePanel}
-                                orientation={!isSS ? 'vertical' : 'horizontal'}
-                                sx={{ borderRight: 1, borderColor: 'divider', minHeight: !isSS ? null : '36px' }}
+                                orientation={isSS ? 'horizontal' : 'vertical'}
+                                sx={{ borderRight: 1, borderColor: 'divider', minHeight: isSS ? '36px' : null }}
                             >
                                 {Content.profileTabs.map((element, i) => {
                                     return(
                                         <Tab
                                             sx={isSS
-                                                ? { fontSize: '0.625rem', padding: '6px 8px', minHeight: '36px', minWidth: '' }
-                                                : {}}
+                                                ? { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
+                                                : { p: 0 }}
                                             label={element} 
                                             key={i} 
                                             value={i.toString()} 

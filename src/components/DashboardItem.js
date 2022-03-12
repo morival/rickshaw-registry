@@ -18,6 +18,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
   // Theme Media Query
   const theme = useTheme();
   const isSS = useMediaQuery(theme.breakpoints.down('sm'));
+  // const isMS = useMediaQuery(theme.breakpoints.up('md'));
 
   
   const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, onSubmit, onCancel, closeDialog } = props;
@@ -74,7 +75,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
 
   return (
     <MuiListItem
-      sx={{ p: isSS ? '8px 0' : null }}
+      sx={{ p: isSS ? '8px 0' : '8px 8px' }}
       // hide component if label is missing
       style={label ? undefined : { display: 'none' }}
     >

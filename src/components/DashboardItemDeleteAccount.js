@@ -67,19 +67,13 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
   
   return (
     <MuiListItem
-    sx={isSS
-        ? { p: '8px 0' }
-        : {  }}
+    sx={{ p: isSS ? '8px 0' : '8px 8px' }}
     >
         {/* Item Label */}
         <ListItemText
-          sx={isSS
-            ? { minWidth: 100 }
-            : { minWidth: 135 }}
+          sx={{ minWidth: isSS ? 100 : 135 }}
           primary="Delete Account"
-          primaryTypographyProps={isSS
-            ? { fontWeight: 'bold', align: 'right', fontSize: '0.8rem' }
-            : { fontWeight: 'bold', align: 'right', px: 1 }}
+          primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
         />
         {/* Item Value */}
         <ListItemText
