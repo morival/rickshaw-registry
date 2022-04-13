@@ -45,7 +45,7 @@ async function authenticateUser(data) {
 async function createUser(data) {
     try {
         const res = await axios.post(URL, data, config);
-        // console.log(res)
+        console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
@@ -57,7 +57,7 @@ async function createUser(data) {
 async function getUser(data) {
     try {
         const res = await axios.get(URL+data.id , config);
-        // console.log(res)
+        console.log(res)
         return res;
     } catch (err) {
         catchErr(err)  
@@ -69,7 +69,7 @@ async function getUser(data) {
 async function getAllUsers() {
     try {
         const res = await axios.get(URL, config);
-        // console.log(res.data);
+        console.log(res.data);
         return res;
     } catch (err) {
         catchErr(err)  
@@ -81,7 +81,7 @@ async function getAllUsers() {
 async function updateUser(data) {
     try {
         const res = await axios.put(URL+data._id, data, config);
-        // console.log(res)
+        console.log(res)
         return res;
     } catch (err) {
         catchErr(err)

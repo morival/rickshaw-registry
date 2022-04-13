@@ -1,6 +1,7 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import UsersServices from '../../services/UsersServices';
-import { useLocalStorage } from '../UseLocalStorage';
+// import { useLocalStorage } from '../UseLocalStorage';
+import { useCookies } from 'react-cookie';
 
 
 
@@ -12,14 +13,19 @@ export function useAuth() {
 
 export function AuthProvider({children}) {
 
-    const [user, setUser] = useLocalStorage('user', null);
-    const [recordId, setRecordId] = useLocalStorage('recordId', null);
-    const [records, setRecords] = useLocalStorage('records', null)
-    const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn', false);
-    const [loading, setLoading] = useLocalStorage('loading', false);
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
+    const [user, setUser] = useState(cookies.user);
+    const [rememberMe, setRememberMe] = useState();
+    const [recordId, setRecordId] = useState();
+    const [records, setRecords] = useState();
+    const [loggedIn, setLoggedIn] = useState(cookies.loggedIn);
+    const [loading, setLoading] = useState();
+
 
 
     async function authenticate(data) {
+        setRememberMe(data.rememberMe)
         return await UsersServices.authenticateUser(data)
     }
 
@@ -34,7 +40,9 @@ export function AuthProvider({children}) {
 
     function logout() {
         setLoading(true)
-        localStorage.clear()
+        // localStorage.clear()
+        removeCookie('user')
+        removeCookie('loggedIn')
         setUser(null)
         setRecordId(null)
         setLoggedIn(false)
@@ -57,6 +65,22 @@ export function AuthProvider({children}) {
         login,
         logout,
     }
+
+    useEffect(() => {
+        if (rememberMe && user) {
+            console.log(user)
+            setCookie('user', user, { path:'/' })
+            setCookie('loggedIn', true, { path:'/' })
+        }
+    }, [user, rememberMe, setCookie])
+
+    // useEffect(() => {
+    //     console.log(cookies.user)
+    //     if (cookies.user)
+    //         setUser(cookies.user)
+    //     else
+    //         setLoggedIn(false)
+    // }, [cookies.user, setLoggedIn])
 
     return (
         <AuthContext.Provider value={value}>
