@@ -11,8 +11,8 @@ export function useAuth() {
 
 export function AuthProvider({children}) {
 
-    const [currentUser, setCurrentUser] = useLocalStorage('currentUser', null);
-    const [currentRecordId, setCurrentRecordId] = useLocalStorage('currentRecordId', null);
+    const [user, setUser] = useLocalStorage('user', null);
+    const [recordId, setRecordId] = useLocalStorage('recordId', null);
     const [records, setRecords] = useLocalStorage('records', null)
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn', false);
     const [loading, setLoading] = useLocalStorage('loading', false);
@@ -21,17 +21,17 @@ export function AuthProvider({children}) {
     function logout() {
         setLoading(true)
         localStorage.clear()
-        setCurrentUser(null)
-        setCurrentRecordId(null)
+        setUser(null)
+        setRecordId(null)
         setLoggedIn(false)
         setLoading(false)
     }
 
     const value = {
-        currentUser,
-        setCurrentUser,
-        currentRecordId,
-        setCurrentRecordId,
+        user,
+        setUser,
+        recordId,
+        setRecordId,
         records,
         setRecords,
         loggedIn,

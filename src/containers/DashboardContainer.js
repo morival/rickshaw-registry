@@ -44,12 +44,12 @@ export default function DashboardContainer( children, ...rest ) {
     }
     
     // Current User Details
-    const { currentUser, setCurrentUser, logout } = useAuth()
+    const { user, setUser, logout } = useAuth()
     // Forms
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(currentUser, true, validate)
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
     // refresh Data Form
     const refreshFormData = () => {
-        setFormData(currentUser);
+        setFormData(user);
         setErrors({});
     }
 
@@ -82,7 +82,7 @@ export default function DashboardContainer( children, ...rest ) {
                 label={element.label}
                 name={element.name}
                 type={element.type}
-                defaultValue={currentUser[element.name]}
+                defaultValue={user[element.name]}
                 value={formData[element.name]}
                 error={errors[element.name]}
                 onChange={handleInputChange}
@@ -125,8 +125,8 @@ export default function DashboardContainer( children, ...rest ) {
                 refOpen.current.handleOpen();
             // else run authentification
             } else {
-                const user = { _id: currentUser._id, password: passwordVerification.password }
-                const auth = await UsersServices.authenticateUser(user)
+                const userCredentials = { _id: user._id, password: passwordVerification.password }
+                const auth = await UsersServices.authenticateUser(userCredentials)
                 if (auth.status === 401) {
                     refreshPasVer();
                     setErrors({ password: auth.data.message })
@@ -134,7 +134,7 @@ export default function DashboardContainer( children, ...rest ) {
                 } else if (auth.status < 300) {
                     const res = await UsersServices.updateUser(formData)
                     if (res && res.status < 300) {
-                        setCurrentUser(res.data)
+                        setUser(res.data)
                         setCloseDialog((prevState) => !prevState)
                         setFormData(res.data)
                         console.log("Update completed")
@@ -161,8 +161,8 @@ export default function DashboardContainer( children, ...rest ) {
                 setAction("Delete")
                 refOpen.current.handleOpen();
             } else {
-                const user = { _id: currentUser._id, password: passwordVerification.password }
-                const auth = await UsersServices.authenticateUser(user)
+                const userCredentials = { _id: user._id, password: passwordVerification.password }
+                const auth = await UsersServices.authenticateUser(userCredentials)
                 if (auth.status === 401) {
                     refreshPasVer();
                     setErrors({ password: auth.data.message })

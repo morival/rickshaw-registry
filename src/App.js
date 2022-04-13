@@ -13,11 +13,11 @@ import Home from './containers/HomeContainer';
 function App() {
 
 
-  const { currentUser }  = useAuth()
+  const { user }  = useAuth()
 
   useEffect(() => {
-    // console.log(currentUser)
-  }, [currentUser])
+    // console.log(user)
+  }, [user])
 
   return (
 

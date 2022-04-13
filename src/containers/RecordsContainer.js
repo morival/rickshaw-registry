@@ -12,12 +12,12 @@ export default function RecordsContainer(params) {
     
 
     // Auth
-    const { currentUser, records, setRecords } = useAuth()
+    const { user, records, setRecords } = useAuth()
     
     
-    async function findRecords(user) {
+    async function findRecords(data) {
         const allRecords = await RecordsServices.getAllRecords()
-        const filteredRecords = allRecords.data.filter(element => element.user_id === user._id)
+        const filteredRecords = allRecords.data.filter(element => element.user_id === data._id)
         setRecords(filteredRecords)
     }
 
@@ -30,13 +30,13 @@ export default function RecordsContainer(params) {
         } catch (err) {
             console.log(err)
         } finally {
-            findRecords(currentUser)
+            findRecords(user)
         }
     }
 
 
     useEffect(() => {
-        findRecords(currentUser)
+        findRecords(user)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 

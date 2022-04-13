@@ -6,7 +6,7 @@ import Controls from '../components/controls/Controls';
 
 export default function Home() {
 
-    const { currentUser, loggedIn }  = useAuth()
+    const { user, loggedIn }  = useAuth()
     return (
         <Box sx={{ p: 2 }}>
             <h1>Home</h1>
@@ -32,7 +32,7 @@ export default function Home() {
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     {loggedIn
-                    ?   <Typography variant='h6'>Hi {currentUser && currentUser.name}!<br/>You are logged in</Typography>
+                    ?   <Typography variant='h6'>Hi {user && user.name}!<br/>You are logged in</Typography>
                     :   <Typography variant='h6'>Welcome to the home page of Rickshaw Registery!</Typography>}
                 </Paper>
             </Box>

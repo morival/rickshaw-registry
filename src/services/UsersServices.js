@@ -25,13 +25,13 @@ function catchErr(err) {
 
 
 // AUTH User
-async function authenticateUser(user) {
+async function authenticateUser(data) {
     const testedLogins = ["userLogin", "_id"]
     // Find value of first found key in user that matches testedLogins elements
-    const userLogin = Object.keys(user).find((val) => testedLogins.includes(val))
+    const userLogin = Object.keys(data).find((val) => testedLogins.includes(val))
     try {
         const res = (await axios.post(URL+'login', { 
-            login: user[userLogin], password: user.password 
+            login: data[userLogin], password: data.password 
         } , config))
         console.log(res)
         return res;
@@ -42,9 +42,9 @@ async function authenticateUser(user) {
 
 
 // CREATE User
-async function createUser(user) {
+async function createUser(data) {
     try {
-        const res = await axios.post(URL, user, config);
+        const res = await axios.post(URL, data, config);
         // console.log(res)
         return res;
     } catch (err) {
@@ -54,9 +54,9 @@ async function createUser(user) {
 
 
 // READ User 
-async function getUser(user) {
+async function getUser(data) {
     try {
-        const res = await axios.get(URL+user.id , config);
+        const res = await axios.get(URL+data.id , config);
         // console.log(res)
         return res;
     } catch (err) {
@@ -78,9 +78,9 @@ async function getAllUsers() {
 
 
 // UPDATE User
-async function updateUser(user) {
+async function updateUser(data) {
     try {
-        const res = await axios.put(URL+user._id, user, config);
+        const res = await axios.put(URL+data._id, data, config);
         // console.log(res)
         return res;
     } catch (err) {
@@ -90,9 +90,9 @@ async function updateUser(user) {
     
 
 // DELETE User
-async function deleteUser(user) {
+async function deleteUser(data) {
     try {
-        const res = await axios.delete(URL+user.id);
+        const res = await axios.delete(URL+data.id);
         return res;
     } catch (err) {
         catchErr(err)

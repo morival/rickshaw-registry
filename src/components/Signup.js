@@ -51,7 +51,7 @@ export default function Signup({handleChange}) {
 
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
-    const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
+    const { setUser, setLoggedIn, setLoading } = useAuth();
     
     async function handleSubmit(e) {
         setLoading(true)
@@ -61,7 +61,7 @@ export default function Signup({handleChange}) {
                 const res = await UsersServices.createUser(formData)
                 console.log(res)
                 if (res && res.status < 300) {
-                    setCurrentUser(res.data)
+                    setUser(res.data)
                     setLoggedIn(true)
                 } else if (res && res.status === 409) {
                     setErrors(res.data.code === "email"

@@ -42,7 +42,7 @@ export default function Login({handleChange}) {
 
 
     // const history = useHistory();
-    const { setCurrentUser, setLoggedIn, setLoading } = useAuth();
+    const { setUser, setLoggedIn, setLoading } = useAuth();
 
 
     async function handleSubmit(e) {
@@ -54,7 +54,7 @@ export default function Login({handleChange}) {
                 console.log(auth)
                 if (auth && auth.status < 300) {
                     const res = await UsersServices.getUser(auth.data)
-                    setCurrentUser(res.data)
+                    setUser(res.data)
                     setLoggedIn(true)
                     console.log("remember me: "+formData.rememberMe)
                 } else if (auth && auth.status === 404) {

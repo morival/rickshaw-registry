@@ -38,7 +38,7 @@ export default function Checklist(params) {
     
     const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
     
-    const { currentUser, setCurrentRecordId, loggedIn } = useAuth();
+    const { user, setRecordId, loggedIn } = useAuth();
 
     const refs = useRef([]);
 
@@ -67,7 +67,7 @@ export default function Checklist(params) {
             return;
         }
         async function saveRecord() {
-            const user_id = currentUser._id
+            const user_id = user._id
             const record_date = new Date()
             const record = {user_id: user_id, record_date: record_date, checklist: formData}
             try {
@@ -76,7 +76,7 @@ export default function Checklist(params) {
                     const res = await RecordsServices.createRecord(record)
                     const newRecordId = res.data._id
                     if (res.status===201) {
-                        setCurrentRecordId(newRecordId)
+                        setRecordId(newRecordId)
                         history.push('/records')
                     }
                 }

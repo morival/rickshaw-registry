@@ -29,7 +29,7 @@ export default function RecordItem({ record, onDelete }) {
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
     
-    const { currentUser, currentRecordId, setCurrentRecordId } = useAuth();
+    const { user, recordId, setRecordId } = useAuth();
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
@@ -72,9 +72,9 @@ export default function RecordItem({ record, onDelete }) {
 
 
     useEffect(() => {
-        if (currentRecordId === record._id) {
+        if (recordId === record._id) {
             handleOpen();
-            setCurrentRecordId(null)
+            setRecordId(null)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
@@ -100,7 +100,7 @@ export default function RecordItem({ record, onDelete }) {
                     Rickshaw Safety Checklist
                 </DialogTitle>
                 <DialogContent sx={{ px: isSS ? 2 : 3, py: 0.2 }}>
-                        <Typography variant='h6' align='center'>{currentUser.name}</Typography>
+                        <Typography variant='h6' align='center'>{user.name}</Typography>
                         <Typography paragraph align='center'>{recordDate(record)}</Typography>
                     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                         <Paper sx={{ p: 1, maxWidth: '750px', width: '100%' }}>
