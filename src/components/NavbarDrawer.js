@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { SwipeableDrawer as MuiDrawer, List, ListItem, ListItemText, IconButton, ListItemIcon } from '@mui/material';
-import { Menu as MenuIcon, FactCheck as ChecklistIcon, Restore as HistoryIcon, AccountCircle as ProfileIcon, NotInterested } from '@mui/icons-material'
+import { Menu as MenuIcon, FactCheck as ChecklistIcon, Restore as HistoryIcon, AccountCircle as ProfileIcon, NotInterested as NotInterestedIcon, Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { makeStyles } from '@mui/styles';
 import { withRouter } from 'react-router';
+import { useAuth } from './context/AuthContext';
 
 
 const useStyles = makeStyles({
@@ -13,32 +14,54 @@ const useStyles = makeStyles({
 
 
 const Drawer = props => {
-
-    const { history } = props;
     
 
+    // Style
+    const classes = useStyles();
+
+    // Drawer Window Statel
     const [open, setOpen] = useState(false);
+    
+    const { loggedIn, logout }  = useAuth()
+    
+    const { history } = props;
+
+    function handleLogout() {
+        history.push('/')
+        logout();
+    }
+
 
     const itemsList = [{
-        text: 'Safety Checklist',
+        text: "Safety Checklist",
         icon: <ChecklistIcon/>,
         onClick: () => history.push('/checklist')
     }, {
-        text: 'Previous Records',
+        text: "Previous Records",
         icon: <HistoryIcon/>,
         onClick: () => history.push('/')
     }, {
-        text: 'My Profile',
+        text: "My Profile",
         icon: <ProfileIcon/>,
         onClick: () => history.push('/dashboard')
     }, {
-        text: 'Drafts',
-        icon: <NotInterested/>,
+        text: "Drafts",
+        icon: <NotInterestedIcon/>,
         onClick: () => history.push('/')
-    }];
+    }, loggedIn 
+    ?   {
+            text: "Log Out",
+            icon: <LogoutIcon/>,
+            onClick: () => handleLogout()
+        }
+    :   {
+            text: "Log in / Sign up",
+            icon: <LoginIcon/>,
+            onClick: () => history.push('/login')
+        }
+    ];
 
 
-    const classes = useStyles();
 
     return(
         <>
