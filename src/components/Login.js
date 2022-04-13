@@ -3,10 +3,8 @@ import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import Content from './content/SignupLoginDescriptions';
 import { useAuth } from './context/AuthContext';
-import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-// import { useHistory } from 'react-router';
 
 
 const initialValues = {
@@ -41,8 +39,7 @@ export default function Login({handleChange}) {
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
 
-    // const history = useHistory();
-    const { setUser, setLoggedIn, setLoading } = useAuth();
+    const { setLoading, authenticate, getUser, login } = useAuth();
 
 
     async function handleSubmit(e) {
@@ -50,13 +47,12 @@ export default function Login({handleChange}) {
         e.preventDefault()
         try {
             if (validate()) {
-                const auth = await UsersServices.authenticateUser(formData)
+                const auth = await authenticate(formData)
                 console.log(auth)
                 if (auth && auth.status < 300) {
-                    const res = await UsersServices.getUser(auth.data)
-                    setUser(res.data)
-                    setLoggedIn(true)
-                    console.log("remember me: "+formData.rememberMe)
+                    const res = await getUser(auth.data)
+                    console.log(res)
+                    login(res.data)
                 } else if (auth && auth.status === 404) {
                     setErrors({ userLogin: auth.data.message })
                 } else if (auth && auth.status === 401) {

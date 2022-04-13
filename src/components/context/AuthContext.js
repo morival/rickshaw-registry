@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import UsersServices from '../../services/UsersServices';
 import { useLocalStorage } from '../UseLocalStorage';
 
 
@@ -17,6 +18,19 @@ export function AuthProvider({children}) {
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn', false);
     const [loading, setLoading] = useLocalStorage('loading', false);
 
+
+    async function authenticate(data) {
+        return await UsersServices.authenticateUser(data)
+    }
+
+    async function getUser(data) {
+        return await UsersServices.getUser(data)
+    }
+    
+    function login(data) {
+        setUser(data)
+        setLoggedIn(true)
+    }
 
     function logout() {
         setLoading(true)
@@ -38,6 +52,9 @@ export function AuthProvider({children}) {
         setLoggedIn,
         loading,
         setLoading,
+        authenticate,
+        getUser,
+        login,
         logout,
     }
 
