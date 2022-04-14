@@ -5,6 +5,7 @@ import Content from './content/SignupLoginDescriptions';
 import { useAuth } from './context/AuthContext';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
+import ForgotPassword from './ForgotPassword';
 
 
 const initialValues = {
@@ -109,9 +110,10 @@ export default function Login({handleChange}) {
                     />
                 </Form>
 
-                <Typography align="center">
-                    <Link href="#" underline="none">Forgotten your password?</Link>
-                </Typography>
+                {/* <Typography align="center">
+                    <Link href="#" onClick={()=>handleOpen()} underline="none">Forgotten your password?</Link>
+                </Typography> */}
+                <ForgotPassword />
             </Paper>
             
             <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>

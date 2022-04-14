@@ -95,15 +95,15 @@ export default function Signup({handleChange}) {
                         const elementName = element.name;
                         return (
                             <Controls.Input
-                            label={element.label}
-                            name={element.name}
-                            type={element.type}
-                            value={formData[elementName]}
-                            error={errors[elementName]}
-                            onChange={handleInputChange}
-                            fullWidth
-                            autoFocus={i === 0 ? true : false}
-                            key={i}
+                                label={element.label}
+                                name={element.name}
+                                type={element.type}
+                                value={formData[elementName]}
+                                error={errors[elementName]}
+                                onChange={handleInputChange}
+                                fullWidth
+                                autoFocus={i === 0 ? true : false}
+                                key={i}
                             />
                         )
                     })}
@@ -111,9 +111,9 @@ export default function Signup({handleChange}) {
                         By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.
                     </Typography>
                     <Controls.Button
-                    text="Create Account"
-                    type="submit"
-                    fullWidth
+                        text="Create Account"
+                        type="submit"
+                        fullWidth
                     />
                 </Form>
             </Paper>

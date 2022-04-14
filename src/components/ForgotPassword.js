@@ -1,0 +1,137 @@
+import React, { forwardRef, useState } from 'react';
+import { Box, Dialog, DialogContent, DialogTitle, Link, Paper, Slide, Typography, useMediaQuery } from '@mui/material';
+import Controls from './controls/Controls';
+import { useTheme } from '@mui/material/styles';
+import { Form, UseForm } from './UseForm';
+
+
+
+const Transition = forwardRef((props, ref) =>
+   <Slide direction="up" ref={ref} {...props} />
+);
+
+
+// const initialValues = {
+//     userLogin: "",
+//     password: "",
+//     rememberMe: true
+// }
+
+
+export default function ForgotPassword() {
+    
+
+    // Theme Media Query
+    const theme = useTheme();
+    const isSS = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+
+    // Validation
+    const validate = ( fieldValues = formData) => {
+        let temp = {...errors}
+        if ('email' in fieldValues)
+            temp.email = (/.+@.+..+/).test(fieldValues.email) ? "" : "Invalid email"
+        if ('confirmEmail' in fieldValues)
+            temp.confirmEmail = formData.email===fieldValues.confirmEmail ? "" : "Email do not match"
+        setErrors({
+            ...temp
+        })
+        if (fieldValues === formData)
+            return Object.values(temp).every(x => x === "")
+    }
+
+
+    const { formData, errors, setErrors, handleInputChange } = UseForm({email: "", confirmEmail: ""}, true, validate);
+
+
+    // Dialog Window State
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        try {
+            if (validate()) {
+                console.log(formData)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    return (
+        <>
+            <Typography align="center" sx={{ my: 1 }}>
+                <Link href="#" onClick={()=>handleOpen()} underline="none">Forgotten your password?</Link>
+            </Typography>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                PaperProps={{sx: { width: '100%', maxWidth: '400px', m: isSS ? 0 : null }}}
+                TransitionComponent={Transition}
+                aria-labelledby='forgot-dialog-title'
+                aria-describedby='forgot-dialog-description'
+            >
+                <DialogTitle sx={{ textAlign: 'center' }} id='forgot-dialog-title'>
+                    Reset your password
+                </DialogTitle>
+                <DialogContent sx={{ textAlign: 'center', px: isSS ? 2 : 3, py: 0.2 }}>
+                    <Box sx={{ alignItems: 'center' }}>
+                        <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
+                            <Typography variant='h6'>
+                                Enter the email address
+                            </Typography>
+                            <Typography variant='p'>
+                                We will then email you a link to a secure page where you can create a new password.
+                            </Typography>
+                            <Form onSubmit={handleSubmit}>
+                                <Controls.Input
+                                    label='Your email address'
+                                    name='email'
+                                    type='email'
+                                    value={formData.email}
+                                    error={errors.email}
+                                    onChange={handleInputChange}
+                                    fullWidth
+                                    autoFocus
+                                />
+                                <Controls.Input
+                                    label='Confirm email address'
+                                    name='confirmEmail'
+                                    type='email'
+                                    value={formData.confirmEmail}
+                                    error={errors.confirmEmail}
+                                    onChange={handleInputChange}
+                                    fullWidth
+                                />
+                                <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1 }}>
+                                    <Controls.Button
+                                        text="Confirm"
+                                        type="submit"
+                                        fullWidth
+                                    />
+                                    <Controls.Button
+                                        text="Cancel"
+                                        variant="outlined"
+                                        onClick={handleClose}
+                                        fullWidth
+                                    />
+                                </Box>
+                            </Form>
+                        </Paper>
+                    </Box>
+                </DialogContent>
+            </Dialog>
+        </>
+    )
+};
