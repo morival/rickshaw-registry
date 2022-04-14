@@ -69,7 +69,7 @@ export default function ForgotPassword() {
     return (
         <>
             <Typography align="center" sx={{ my: 1 }}>
-                <Link href="#" onClick={()=>handleOpen()} underline="none">Forgotten your password?</Link>
+                <Link href="#" onClick={()=>handleOpen()} underline="none">Forgot your password?</Link>
             </Typography>
             <Dialog
                 open={open}

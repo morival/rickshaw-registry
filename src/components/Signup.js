@@ -3,7 +3,6 @@ import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
 import Content from './content/SignupLoginDescriptions';
 import { useAuth } from './context/AuthContext';
-import UsersServices from '../services/UsersServices';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
@@ -51,14 +50,14 @@ export default function Signup({handleChange}) {
 
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
-    const { setLoading, login } = useAuth();
+    const { setLoading, createUser, login } = useAuth();
     
     async function handleSubmit(e) {
         setLoading(true)
         e.preventDefault()
         try {
             if (validate()) {
-                const res = await UsersServices.createUser(formData)
+                const res = await createUser(formData)
                 console.log(res)
                 if (res && res.status < 300) {
                     login(res.data)

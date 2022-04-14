@@ -23,14 +23,11 @@ export function AuthProvider({children}) {
     const [loading, setLoading] = useState();
 
 
+    const { authenticateUser, createUser, getUser } = UsersServices
 
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
-        return await UsersServices.authenticateUser(data)
-    }
-
-    async function getUser(data) {
-        return await UsersServices.getUser(data)
+        return await authenticateUser(data)
     }
     
     function login(data) {
@@ -61,6 +58,7 @@ export function AuthProvider({children}) {
         loading,
         setLoading,
         authenticate,
+        createUser,
         getUser,
         login,
         logout,
@@ -73,14 +71,6 @@ export function AuthProvider({children}) {
             setCookie('loggedIn', true, { path:'/' })
         }
     }, [user, rememberMe, setCookie])
-
-    // useEffect(() => {
-    //     console.log(cookies.user)
-    //     if (cookies.user)
-    //         setUser(cookies.user)
-    //     else
-    //         setLoggedIn(false)
-    // }, [cookies.user, setLoggedIn])
 
     return (
         <AuthContext.Provider value={value}>
