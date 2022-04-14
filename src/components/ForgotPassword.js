@@ -1,7 +1,6 @@
 import React, { forwardRef, useState } from 'react';
-import { Box, Dialog, DialogContent, DialogTitle, Link, Paper, Slide, Typography, useMediaQuery } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, Link, Paper, Slide, Typography } from '@mui/material';
 import Controls from './controls/Controls';
-import { useTheme } from '@mui/material/styles';
 import { Form, UseForm } from './UseForm';
 
 
@@ -11,20 +10,13 @@ const Transition = forwardRef((props, ref) =>
 );
 
 
-// const initialValues = {
-//     userLogin: "",
-//     password: "",
-//     rememberMe: true
-// }
+const initialValues = {
+    email: "",
+    confirmEmail: "",
+}
 
 
 export default function ForgotPassword() {
-    
-
-    // Theme Media Query
-    const theme = useTheme();
-    const isSS = useMediaQuery(theme.breakpoints.down('sm'));
-
 
 
     // Validation
@@ -42,7 +34,7 @@ export default function ForgotPassword() {
     }
 
 
-    const { formData, errors, setErrors, handleInputChange } = UseForm({email: "", confirmEmail: ""}, true, validate);
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
 
     // Dialog Window State
@@ -56,6 +48,11 @@ export default function ForgotPassword() {
         setOpen(false);
     };
 
+    const handleCancel = () => {
+        setFormData(initialValues);
+        setErrors("");
+        handleClose();
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -76,8 +73,8 @@ export default function ForgotPassword() {
             </Typography>
             <Dialog
                 open={open}
-                onClose={handleClose}
-                PaperProps={{sx: { width: '100%', maxWidth: '400px', m: isSS ? 0 : null }}}
+                onClose={handleCancel}
+                PaperProps={{sx: { width: '100%', maxWidth: '320px' }}}
                 TransitionComponent={Transition}
                 aria-labelledby='forgot-dialog-title'
                 aria-describedby='forgot-dialog-description'
@@ -85,7 +82,7 @@ export default function ForgotPassword() {
                 <DialogTitle sx={{ textAlign: 'center' }} id='forgot-dialog-title'>
                     Reset your password
                 </DialogTitle>
-                <DialogContent sx={{ textAlign: 'center', px: isSS ? 2 : 3, py: 0.2 }}>
+                <DialogContent sx={{ textAlign: 'center', px: 2, py: 0.2 }}>
                     <Box sx={{ alignItems: 'center' }}>
                         <Paper elevation={10} sx={{ p: 2.5, mb: 2.5 }}>
                             <Typography variant='h6'>
@@ -114,7 +111,7 @@ export default function ForgotPassword() {
                                     onChange={handleInputChange}
                                     fullWidth
                                 />
-                                <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1 }}>
+                                <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1, mt: 2 }}>
                                     <Controls.Button
                                         text="Confirm"
                                         type="submit"
@@ -123,7 +120,7 @@ export default function ForgotPassword() {
                                     <Controls.Button
                                         text="Cancel"
                                         variant="outlined"
-                                        onClick={handleClose}
+                                        onClick={handleCancel}
                                         fullWidth
                                     />
                                 </Box>

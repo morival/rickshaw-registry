@@ -109,10 +109,6 @@ export default function Login({handleChange}) {
                     fullWidth
                     />
                 </Form>
-
-                {/* <Typography align="center">
-                    <Link href="#" onClick={()=>handleOpen()} underline="none">Forgotten your password?</Link>
-                </Typography> */}
                 <ForgotPassword />
             </Paper>
             
