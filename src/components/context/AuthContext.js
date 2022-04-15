@@ -23,11 +23,23 @@ export function AuthProvider({children}) {
     const [loading, setLoading] = useState();
 
 
-    const { authenticateUser, createUser, getUser, includesEmailOrPhoneNo, updateUser, deleteUser } = UsersServices
+    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, updateUser, deleteUser } = UsersServices
 
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
         return await authenticateUser(data)
+    }
+
+    async function testEmailAndPhoneNo(data) {
+        console.log("checking if email or phone number exists")
+        const resEmail = await testEmail(data)
+        const resPhoneNo = await testPhoneNo(data)
+        if (resEmail.status === 200)
+            return resEmail
+        else if (resPhoneNo.status === 200)
+            return resPhoneNo
+        else
+            return undefined
     }
     
     function login(data) {
@@ -60,7 +72,9 @@ export function AuthProvider({children}) {
         authenticate,
         createUser,
         getUser,
-        includesEmailOrPhoneNo,
+        testEmail,
+        testPhoneNo,
+        testEmailAndPhoneNo,
         updateUser,
         deleteUser,
         login,

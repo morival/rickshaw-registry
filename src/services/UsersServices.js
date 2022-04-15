@@ -65,16 +65,40 @@ async function getUser(data) {
 }
 
 
-// Includes User
-async function includesEmailOrPhoneNo(data) {
+// Test Email if already exists
+async function testEmail(data) {
     try {
-        const res = await axios.post(URL+'includes', data, config);
+        const res = await axios.post(URL+'email', data, config);
         console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
     }
 }
+
+
+// Test Email if already exists
+async function testPhoneNo(data) {
+    try {
+        const res = await axios.post(URL+'phoneNumber', data, config);
+        console.log(res)
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
+
+// // Test User (email and phone number)
+// async function testEmailAndPhoneNo(data) {
+//     try {
+//         const res = await axios.post(URL+'includes', data, config);
+//         console.log(res)
+//         return res;
+//     } catch (err) {
+//         catchErr(err)
+//     }
+// }
 
 
 // READ ALL Users
@@ -115,7 +139,9 @@ const UsersServices = {
     authenticateUser,
     createUser,
     getUser,
-    includesEmailOrPhoneNo,
+    testEmail,
+    testPhoneNo,
+    // testEmailAndPhoneNo,
     getAllUsers,
     updateUser,
     deleteUser

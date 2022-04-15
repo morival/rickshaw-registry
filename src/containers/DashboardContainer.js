@@ -23,17 +23,17 @@ export default function DashboardContainer( children, ...rest ) {
     // Validation
     const validate = (  fieldValues = formData ) => {
         let temp = {...errors}
-        const testEmail = /.+@.+..+/;
-        const testNumber = /^\d+.{10,20}$/;
-        const testPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        const validEmail = /.+@.+..+/;
+        const validNumber = /^\d+.{10,20}$/;
+        const validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if('name' in fieldValues)
         temp.name = fieldValues.name ? "" : "This field is required."
         if('email' in fieldValues)
-        temp.email = testEmail.test(fieldValues.email) ? "" : "Invalid email"
+        temp.email = validEmail.test(fieldValues.email) ? "" : "Invalid email"
         if('phoneNumber' in fieldValues)
-        temp.phoneNumber = testNumber.test(fieldValues.phoneNumber) ? "" : "This number is too short"
+        temp.phoneNumber = validNumber.test(fieldValues.phoneNumber) ? "" : "This number is too short"
         if('password' in fieldValues)
-        temp.password = testPassword.test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
+        temp.password = validPassword.test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         setErrors({
             ...temp
         })
@@ -42,7 +42,7 @@ export default function DashboardContainer( children, ...rest ) {
     }
     
     // Auth Context
-    const { user, setUser, includesEmailOrPhoneNo, authenticate, updateUser, deleteUser, logout, rememberMe, setCookie } = useAuth()
+    const { user, setUser, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, logout, rememberMe, setCookie } = useAuth()
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
     // refresh Data Form
@@ -112,15 +112,12 @@ export default function DashboardContainer( children, ...rest ) {
             // validate entry
             if (validate()) {
                 // check for duplicate email or phone number in DB
-                const res = await includesEmailOrPhoneNo(formData)
+                const res = await testEmailAndPhoneNo(formData)
+                console.log(res)
                 // if duplicate, set errors
-                if (res && res.status === 409) {
-                    setErrors(res.data.code === "email"
-                    ?   { email: res.data.message }
-                    :   { phoneNumber: res.data.message }
-                    )
-                } else if (res && res.status < 300) {
-                    console.log(res.status)
+                if (res && res.status === 200) {
+                    setErrors(res.data.code === "email" ? { email: res.data.message } : { phoneNumber: res.data.message })
+                } else {
                     // request password verification if not done before
                     if (!passwordVerification.password) {
                         setAction("Submit");
@@ -132,14 +129,13 @@ export default function DashboardContainer( children, ...rest ) {
                         if (auth.status === 401) {
                             refreshPasVer();
                             setErrors({ password: auth.data.message })
-                            return auth
                         // else request to update DB with formData
                         } else if (auth.status < 300) {
                             const res = await updateUser(formData)
                             if (res && res.status < 300) {
                                 setUser(res.data)
                                 setCloseDialog((prevState) => !prevState)
-                                setFormData(res.data)
+                                // setFormData(res.data)
                                 // if rememeberMe is on, save user details to Cookies
                                 if (rememberMe) 
                                     setCookie('user', res.data, { path:'/' })
