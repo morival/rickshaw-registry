@@ -65,11 +65,9 @@ export default function ForgotPassword() {
                 // check if email exists
                 console.log(formData)
                 const res = await testEmail(formData)
-                if (res.status === 202)
-                    setErrors({ email: res.data.message })
-                else
-                    // 
-                    console.log(res)
+                console.log(res)
+                // if (res.status === 202)
+                //     setErrors({ email: res.data.message })
             }
         } catch (err) {
             console.log(err)
