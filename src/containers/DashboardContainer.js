@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import UsersServices from '../services/UsersServices';
 import DashboardItem from '../components/DashboardItem';
 import DashboardDeleteItem from '../components/DashboardItemDeleteAccount'
 import { useAuth } from '../components/context/AuthContext';
@@ -20,7 +19,6 @@ export default function DashboardContainer( children, ...rest ) {
     // Theme Media Query
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
-    // const isMS = useMediaQuery(theme.breakpoints.up('md'));
     
     // Validation
     const validate = (  fieldValues = formData ) => {
@@ -43,8 +41,8 @@ export default function DashboardContainer( children, ...rest ) {
         return Object.values(temp).every(x => x === "")
     }
     
-    // Current User Details
-    const { user, setUser, logout } = useAuth()
+    // Auth Context
+    const { user, setUser, includesEmailOrPhoneNo, authenticate, updateUser, deleteUser, logout, rememberMe, setCookie } = useAuth()
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
     // refresh Data Form
@@ -111,35 +109,45 @@ export default function DashboardContainer( children, ...rest ) {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            const data = await UsersServices.getAllUsers();
-            const users = data.data
-            // Check if the email is already used by another user
-            if (users.some((element) => element.email === formData.email && element._id !== formData._id))
-                setErrors({ email: "Email already exists" })
-            // Check if the phone number is already used by another user
-            else if (users.some((element) => element.phoneNumber === formData.phoneNumber && element._id !== formData._id))
-                setErrors({ phoneNumber: "Phone number already exists" })
-            // if password was not verified open password verification window
-            else if (!passwordVerification.password) {
-                setAction("Submit")
-                refOpen.current.handleOpen();
-            // else run authentification
-            } else {
-                const userCredentials = { _id: user._id, password: passwordVerification.password }
-                const auth = await UsersServices.authenticateUser(userCredentials)
-                if (auth.status === 401) {
-                    refreshPasVer();
-                    setErrors({ password: auth.data.message })
-                    return auth
-                } else if (auth.status < 300) {
-                    const res = await UsersServices.updateUser(formData)
-                    if (res && res.status < 300) {
-                        setUser(res.data)
-                        setCloseDialog((prevState) => !prevState)
-                        setFormData(res.data)
-                        console.log("Update completed")
+            // validate entry
+            if (validate()) {
+                // check for duplicate email or phone number in DB
+                const res = await includesEmailOrPhoneNo(formData)
+                // if duplicate, set errors
+                if (res && res.status === 409) {
+                    setErrors(res.data.code === "email"
+                    ?   { email: res.data.message }
+                    :   { phoneNumber: res.data.message }
+                    )
+                } else if (res && res.status < 300) {
+                    console.log(res.status)
+                    // request password verification if not done before
+                    if (!passwordVerification.password) {
+                        setAction("Submit");
+                        refOpen.current.handleOpen();
+                    } else {
+                        const userCredentials = { _id: user._id, password: passwordVerification.password }
+                        const auth = await authenticate(userCredentials)
+                        // if password verification failed, set errors
+                        if (auth.status === 401) {
+                            refreshPasVer();
+                            setErrors({ password: auth.data.message })
+                            return auth
+                        // else request to update DB with formData
+                        } else if (auth.status < 300) {
+                            const res = await updateUser(formData)
+                            if (res && res.status < 300) {
+                                setUser(res.data)
+                                setCloseDialog((prevState) => !prevState)
+                                setFormData(res.data)
+                                // if rememeberMe is on, save user details to Cookies
+                                if (rememberMe) 
+                                    setCookie('user', res.data, { path:'/' })
+                                console.log("Update completed")
+                            }
+                            return res
+                        }
                     }
-                    return res
                 }
             }
         } catch (err) {
@@ -162,13 +170,13 @@ export default function DashboardContainer( children, ...rest ) {
                 refOpen.current.handleOpen();
             } else {
                 const userCredentials = { _id: user._id, password: passwordVerification.password }
-                const auth = await UsersServices.authenticateUser(userCredentials)
+                const auth = await authenticate(userCredentials)
                 if (auth.status === 401) {
                     refreshPasVer();
                     setErrors({ password: auth.data.message })
                     return auth
                 } else if (auth.status < 300) {
-                    const res = await UsersServices.deleteUser(auth.data)
+                    const res = await deleteUser(auth.data)
                     if (res.status < 300)
                         handleLogout();
                 }

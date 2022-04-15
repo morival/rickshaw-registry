@@ -28,7 +28,7 @@ export default function RecordItem({ record, onDelete }) {
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
-    
+    // Auth Context
     const { user, recordId, setRecordId } = useAuth();
 
     // Dialog Window State

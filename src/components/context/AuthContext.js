@@ -16,14 +16,14 @@ export function AuthProvider({children}) {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
     const [user, setUser] = useState(cookies.user);
-    const [rememberMe, setRememberMe] = useState();
+    const [rememberMe, setRememberMe] = useState(cookies.rememberMe==="true"?true:false);
     const [recordId, setRecordId] = useState();
     const [records, setRecords] = useState();
     const [loggedIn, setLoggedIn] = useState(cookies.loggedIn);
     const [loading, setLoading] = useState();
 
 
-    const { authenticateUser, createUser, getUser } = UsersServices
+    const { authenticateUser, createUser, getUser, includesEmailOrPhoneNo, updateUser, deleteUser } = UsersServices
 
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
@@ -37,9 +37,9 @@ export function AuthProvider({children}) {
 
     function logout() {
         setLoading(true)
-        // localStorage.clear()
         removeCookie('user')
         removeCookie('loggedIn')
+        removeCookie('rememberMe')
         setUser(null)
         setRecordId(null)
         setLoggedIn(false)
@@ -60,8 +60,13 @@ export function AuthProvider({children}) {
         authenticate,
         createUser,
         getUser,
+        includesEmailOrPhoneNo,
+        updateUser,
+        deleteUser,
         login,
         logout,
+        rememberMe,
+        setCookie
     }
 
     useEffect(() => {
@@ -69,6 +74,7 @@ export function AuthProvider({children}) {
             console.log(user)
             setCookie('user', user, { path:'/' })
             setCookie('loggedIn', true, { path:'/' })
+            setCookie('rememberMe', rememberMe, { path:'/' })
         }
     }, [user, rememberMe, setCookie])
 

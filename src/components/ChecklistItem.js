@@ -35,7 +35,7 @@ const ChecklistItem = forwardRef((props, ref) => {
             return Object.values(temp).every(x => x === "")
     }
 
-
+    // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
     
     const { id, description, status, comments } = formData;

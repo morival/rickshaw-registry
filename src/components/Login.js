@@ -37,9 +37,9 @@ export default function Login({handleChange}) {
             return Object.values(temp).every(x => x === "")
     }
     
+    // Forms
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
-
-
+    // Auth Context
     const { setLoading, authenticate, getUser, login } = useAuth();
 
 

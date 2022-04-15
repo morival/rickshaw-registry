@@ -25,7 +25,7 @@ export default function Navbar() {
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
-
+    // Auth Context
     const { loggedIn, logout }  = useAuth()
 
     const history = useHistory();

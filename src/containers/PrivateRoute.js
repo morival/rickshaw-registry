@@ -7,8 +7,11 @@ import Navbar from '../components/Navbar';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
     
+
+    // Auth Context
     const {loggedIn}  = useAuth()
 
+    
     return (
         <Route {...rest} render={props => (
             loggedIn

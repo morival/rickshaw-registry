@@ -62,7 +62,19 @@ async function getUser(data) {
     } catch (err) {
         catchErr(err)  
     }        
-}        
+}
+
+
+// Includes User
+async function includesEmailOrPhoneNo(data) {
+    try {
+        const res = await axios.post(URL+'includes', data, config);
+        console.log(res)
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
 
 
 // READ ALL Users
@@ -103,6 +115,7 @@ const UsersServices = {
     authenticateUser,
     createUser,
     getUser,
+    includesEmailOrPhoneNo,
     getAllUsers,
     updateUser,
     deleteUser

@@ -36,8 +36,10 @@ export default function Checklist(params) {
             return Object.values(temp).every(x => x === "")
     }
     
+
+    // Forms
     const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
-    
+    // Auth Context
     const { user, setRecordId, loggedIn } = useAuth();
 
     const refs = useRef([]);

@@ -47,11 +47,13 @@ export default function Signup({handleChange}) {
             return Object.values(temp).every(x => x === "")
     }
     
-
+    
+    // Forms
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
-
+    // Auth Context
     const { setLoading, createUser, login } = useAuth();
     
+
     async function handleSubmit(e) {
         setLoading(true)
         e.preventDefault()

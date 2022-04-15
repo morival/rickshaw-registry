@@ -6,7 +6,11 @@ import Controls from '../components/controls/Controls';
 
 export default function Home() {
 
+    
+    // Auth Context
     const { user, loggedIn }  = useAuth()
+
+
     return (
         <Box sx={{ p: 2 }}>
             <h1>Home</h1>

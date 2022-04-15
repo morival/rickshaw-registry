@@ -22,6 +22,7 @@ const Drawer = props => {
     // Drawer Window Statel
     const [open, setOpen] = useState(false);
     
+    // Auth Context
     const { loggedIn, logout }  = useAuth()
     
     const { history } = props;

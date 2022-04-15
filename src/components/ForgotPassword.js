@@ -33,7 +33,7 @@ export default function ForgotPassword() {
             return Object.values(temp).every(x => x === "")
     }
 
-
+    // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
 
@@ -50,7 +50,7 @@ export default function ForgotPassword() {
 
     const handleCancel = () => {
         setFormData(initialValues);
-        setErrors("");
+        setErrors({});
         handleClose();
     }
 
