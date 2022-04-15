@@ -2,6 +2,7 @@ import React, { forwardRef, useState } from 'react';
 import { Box, Dialog, DialogContent, DialogTitle, Link, Paper, Slide, Typography } from '@mui/material';
 import Controls from './controls/Controls';
 import { Form, UseForm } from './UseForm';
+import { useAuth } from './context/AuthContext';
 
 
 
@@ -33,6 +34,9 @@ export default function ForgotPassword() {
             return Object.values(temp).every(x => x === "")
     }
 
+
+    // Auth Context
+    const { testEmail } = useAuth();
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
@@ -58,7 +62,14 @@ export default function ForgotPassword() {
         e.preventDefault();
         try {
             if (validate()) {
+                // check if email exists
                 console.log(formData)
+                const res = await testEmail(formData)
+                if (res.status === 202)
+                    setErrors({ email: res.data.message })
+                else
+                    // 
+                    console.log(res)
             }
         } catch (err) {
             console.log(err)

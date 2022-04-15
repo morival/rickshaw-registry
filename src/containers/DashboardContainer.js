@@ -42,7 +42,7 @@ export default function DashboardContainer( children, ...rest ) {
     }
     
     // Auth Context
-    const { user, setUser, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, logout, rememberMe, setCookie } = useAuth()
+    const { user, setUser, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, logout, rememberMe, setCookie } = useAuth();
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
     // refresh Data Form
