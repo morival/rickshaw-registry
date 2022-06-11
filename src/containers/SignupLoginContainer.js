@@ -15,7 +15,7 @@ export default function SignupLoginContainer() {
     };
 
     return (
-        <Paper sx={{ width: 320, my: 2.5, mx: "auto" }}>
+        <Paper sx={{ width: "100%", maxWidth: 320, my: 2.5, mx: "auto" }}>
             <TabContext value={value}>
             <TabList value={value} onChange={handleChange} variant="fullWidth">
                 <Tab label="Log In" value="0" />

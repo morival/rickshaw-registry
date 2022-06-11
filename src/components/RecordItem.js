@@ -47,6 +47,10 @@ export default function RecordItem({ record, onDelete }) {
         setOpen(false);
     };
 
+    const handlePrint = () => {
+        
+    }
+
     const handleChange = (e) => {
         setChecked(e.target.value)
     }
@@ -135,6 +139,7 @@ export default function RecordItem({ record, onDelete }) {
                     />
                 </DialogContent>
                 <DialogActions sx={{}}>
+                    <Button onClick={handlePrint}>Print</Button>
                     {checked ? <Button id={record._id} onClick={handleDelete}>Delete</Button> : null}
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>

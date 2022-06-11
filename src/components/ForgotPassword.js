@@ -83,7 +83,7 @@ export default function ForgotPassword() {
             <Dialog
                 open={open}
                 onClose={handleCancel}
-                PaperProps={{sx: { width: '100%', maxWidth: '320px' }}}
+                PaperProps={{sx: { width: '100%', maxWidth: 320, mx: 0 }}}
                 TransitionComponent={Transition}
                 aria-labelledby='forgot-dialog-title'
                 aria-describedby='forgot-dialog-description'
