@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, ListItem, Paper, Slide, Typography, useMediaQuery } from '@mui/material';
+import RecordItemPDF from './RecordItemPDF';
 import Controls from './controls/Controls';
 import { grey, green, red } from '@mui/material/colors';
 import { useAuth } from './context/AuthContext';
@@ -12,49 +13,50 @@ const Transition = forwardRef((props, ref) =>
 );
   
 
-  // Formating Time & Date
-  function recordDate(data) {
-      const newDate = new Date(data.record_date);
-      return `recorded on ${newDate.getDate()}/${newDate.getMonth()+1}/${newDate.getFullYear()} 
-      at ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
-  } 
-  
+
 
 
 export default function RecordItem({ record, onDelete }) {
-
-
+    
+    
     // Theme Media Query
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
-
+    
     // Auth Context
     const { user, recordId, setRecordId } = useAuth();
-
+    
     // Dialog Window State
     const [open, setOpen] = useState(false);
-
+    
+    // Dialog Window PDF
+    const [openPDF, setOpenPDF] = useState(false);
+    
     // Checkbox State for Record deletion
     const [checked, setChecked] = useState(false)
+    
 
-
+    // Handlers
     const handleOpen = () => {
         setOpen(true);
     };
-
+    
     const handleClose = () => {
-        setChecked(false)
+        setChecked(false);
         setOpen(false);
+        setOpenPDF(false)
     };
-
+    
     const handlePrint = () => {
-        
+        setChecked(false);
+        setOpen(false);
+        setOpenPDF(true);
     }
-
+    
     const handleChange = (e) => {
-        setChecked(e.target.value)
+        setChecked(e.target.value);
     }
-
+    
     async function handleDelete(e) {
         try {
             if (checked) {
@@ -69,11 +71,18 @@ export default function RecordItem({ record, onDelete }) {
                 console.log(err.response.status)
                 console.log(err.response.headers)
             } else {
-            console.log(`Error: ${err.message}`)
+                console.log(`Error: ${err.message}`)
             }
         }
     }
+    
 
+    // Formating Time & Date
+    function recordDate(data) {
+        const newDate = new Date(data.record_date);
+        return `recorded on ${newDate.getDate()}/${newDate.getMonth()+1}/${newDate.getFullYear()} at ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
+    } 
+    const recordedOnDate = recordDate(record)
 
     useEffect(() => {
         if (recordId === record._id) {
@@ -87,7 +96,7 @@ export default function RecordItem({ record, onDelete }) {
     return (
         <ListItem sx={{ px: isSS ? 0 : 4 }}>
             <Controls.Button
-                text={recordDate(record)}
+                text={recordedOnDate}
                 onClick={handleOpen}
                 fullWidth
             />
@@ -105,7 +114,7 @@ export default function RecordItem({ record, onDelete }) {
                 </DialogTitle>
                 <DialogContent sx={{ px: isSS ? 2 : 3, py: 0.2 }}>
                         <Typography variant='h6' align='center'>{user.name}</Typography>
-                        <Typography paragraph align='center'>{recordDate(record)}</Typography>
+                        <Typography paragraph align='center'>{recordedOnDate}</Typography>
                     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                         <Paper sx={{ p: 1, maxWidth: '750px', width: '100%' }}>
                             <Grid container columnSpacing={0} sx={{ my: 0.5, alignItems: 'center', fontWeight: 'bold', fontSize: isSS ? '13px' : '18px' }}>
@@ -141,6 +150,18 @@ export default function RecordItem({ record, onDelete }) {
                 <DialogActions sx={{}}>
                     <Button onClick={handlePrint}>Print</Button>
                     {checked ? <Button id={record._id} onClick={handleDelete}>Delete</Button> : null}
+                    <Button onClick={handleClose}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openPDF}
+                onClose={handleClose}
+                PaperProps={{sx: { height: '100%', width: '100%', maxWidth: 'lg', m: isSS ? 0 : null }}}
+                TransitionComponent={Transition}
+                scroll='paper'
+            >
+                <RecordItemPDF checklist={record.checklist} recordedOnDate={recordedOnDate} user={user}/>
+                <DialogActions sx={{}}>
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
             </Dialog>

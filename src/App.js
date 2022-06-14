@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import { useAuth } from './components/context/AuthContext';
 import PublicRoute from './containers/PublicRoute';
 import PrivateRoute from './containers/PrivateRoute';
+import Home from './containers/HomeContainer';
 import SignupLogin from './containers/SignupLoginContainer';
 import Checklist from './containers/ChecklistContainer';
 import Records from './containers/RecordsContainer';
 import Dashboard from './containers/DashboardContainer';
-import Home from './containers/HomeContainer';
 
 
 function App() {
