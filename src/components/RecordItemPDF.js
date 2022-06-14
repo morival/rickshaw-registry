@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     body: {
         paddingTop: 35,
         paddingBottom: 65,
-        paddingHorizontal: 35
+        paddingHorizontal: 30
     },
     title: {
         fontSize: 24,
@@ -53,10 +53,10 @@ const RecordItemPDF = ({ checklist, recordedOnDate, user }) => {
                     </Text>
                     <View style={styles.table}>
                         <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 6 }}>
+                            <View style={{ flex: 6.5 }}>
                                 <Text style={styles.th}>Description</Text>
                             </View>
-                            <View style={{ flex: 1.5 }}>
+                            <View style={{ flex: 1.2 }}>
                                 <Text style={styles.th}>Status</Text>
                             </View>
                             <View style={{ flex: 5 }}>
@@ -65,10 +65,10 @@ const RecordItemPDF = ({ checklist, recordedOnDate, user }) => {
                         </View>
                         {checklist.map((element, i) => 
                         <View style={{ flexDirection: 'row' }} key={i}>
-                            <View style={{ flex: 6 }}>
+                            <View style={{ flex: 6.5 }}>
                                 <Text style={styles.tr}>{element.description}</Text>
                             </View>
-                            <View style={{ flex: 1.5 }}>
+                            <View style={{ flex: 1.2 }}>
                                 <Text style={styles.tr}>{element.status}</Text>
                             </View>
                             <View style={{ flex: 5 }}>
