@@ -69,10 +69,12 @@ const RecordItemPDF = ({ checklist, recordedOnDate, user }) => {
                                 <Text style={styles.tr}>{element.description}</Text>
                             </View>
                             <View style={{ flex: 1.2 }}>
-                                <Text style={styles.tr}>{element.status}</Text>
+                                <Text style={[styles.tr, { color: element.status === "passed" ? 'green' : 'red' }]}>
+                                    {element.status}
+                                </Text>
                             </View>
                             <View style={{ flex: 5 }}>
-                                <Text style={styles.tr}>{element.comments}</Text>
+                                {element.comments ? <Text style={styles.tr}>({element.comments})</Text> : null}
                             </View>
                         </View>
                         )}

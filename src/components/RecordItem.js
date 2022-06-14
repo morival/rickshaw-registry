@@ -133,7 +133,7 @@ export default function RecordItem({ record, onDelete }) {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={5.6}>
-                                    {element.comments?<Typography variant='p' sx={{ fontStyle: 'oblique' }}>({element.comments})</Typography>:null}
+                                    {element.comments ? <Typography variant='p' sx={{ fontStyle: 'oblique' }}>({element.comments})</Typography> : null}
                                 </Grid>
                             </Grid>
                             )}
