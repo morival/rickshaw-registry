@@ -60,6 +60,10 @@ const profileDetails = [
         label: "Password",
         name: "password",
         type: "password"
+    },{
+        label: "Confirm Password",
+        name: "confirmPassword",
+        type: "password"
     }
 ]
 

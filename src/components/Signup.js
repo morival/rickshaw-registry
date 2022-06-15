@@ -1,33 +1,21 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-import Content from './content/SignupLoginDescriptions';
+import Content from './content/ProfileDescriptions';
 import { useAuth } from './context/AuthContext';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 
-const initialValues = {
-    id: 0,
-    name: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-    dOB: "",
-    line_1: "",
-    line_2: "",
-    line_3: "",
-    post_town: "",
-    postcode: "",
-    lic_type: "",
-    lic_no: "",
-    lic_name: "",
-    lic_isb: "",
-    lic_iso: "",
-    lic_exp: "",
-    registerDate: new Date()
+const assignedValues = () => {
+    const newObject = {};
+    Content.profileDetails.forEach(detail => {
+        newObject[detail.name] = "";
+    })
+    newObject["registerDate"] = new Date();
+    return newObject
 }
+const initialValues = assignedValues()
 
 
 export default function Signup({handleChange}) {
@@ -98,7 +86,9 @@ export default function Signup({handleChange}) {
                 </Grid>
 
                 <Form onSubmit={handleSubmit}>
-                    {Content.signupContent.map((element, i) => {
+                    {Content.profileDetails
+                    .filter(element => (["name", "email", "phoneNumber", "password", "confirmPassword"]).includes(element.name))
+                    .map((element, i) => {
                         const elementName = element.name;
                         return (
                             <Controls.Input
@@ -114,6 +104,22 @@ export default function Signup({handleChange}) {
                             />
                         )
                     })}
+                    {/* {Content.signupContent.map((element, i) => {
+                        const elementName = element.name;
+                        return (
+                            <Controls.Input
+                                label={element.label}
+                                name={element.name}
+                                type={element.type}
+                                value={formData[elementName]}
+                                error={errors[elementName]}
+                                onChange={handleInputChange}
+                                fullWidth
+                                autoFocus={i === 0 ? true : false}
+                                key={i}
+                            />
+                        )
+                    })} */}
                     <Typography sx={{ fontSize: '0.75rem' }} paragraph>
                         By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.
                     </Typography>
