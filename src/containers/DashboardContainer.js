@@ -242,6 +242,12 @@ export default function DashboardContainer( children, ...rest ) {
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="2">
                                     <List sx={{ pb: 0 }}>
+                                        {dashboardComponents(["lic_type", "lic_no", "lic_name", "lic_isb", "lic_iso", "lic_exp"])}
+                                        
+                                    </List>
+                                </TabPanel>
+                                <TabPanel sx={{ p: 0 }} value="3">
+                                    <List sx={{ pb: 0 }}>
                                         {dashboardComponents(["password"])}
                                         <DashboardDeleteItem
                                             onSubmit={handleDeleteAcc}

@@ -1,6 +1,7 @@
 const profileTabs = [
     "Contact and basic info",
     "Address details",
+    "Licence",
     "Security"
 ]
 
@@ -35,6 +36,26 @@ const profileDetails = [
     },{
         label: "Postcode",
         name: "postcode"
+    },{
+        label: "Licence Type",
+        name: "lic_type"
+    },{
+        label: "Licence Number",
+        name: "lic_no"
+    },{
+        label: "Name on the Licence",
+        name: "lic_name"
+    },{
+        label: "Issued by",
+        name: "lic_isb"
+    },{
+        label: "Issued on",
+        name: "lic_iso",
+        type: "date"
+    },{
+        label: "Expires on",
+        name: "lic_exp",
+        type: "date"
     },{
         label: "Password",
         name: "password",
