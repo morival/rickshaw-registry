@@ -20,6 +20,12 @@ const initialValues = {
     line_3: "",
     post_town: "",
     postcode: "",
+    lic_type: "",
+    lic_no: "",
+    lic_name: "",
+    lic_isb: "",
+    lic_iso: "",
+    lic_exp: "",
     registerDate: new Date()
 }
 
