@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import RecordItem from '../components/RecordItem';
-import RecordsServices from '../services/RecordsServices';
 import { useAuth } from '../components/context/AuthContext';
 import Controls from '../components/controls/Controls';
 import { Box, List, Paper, Typography } from '@mui/material';
@@ -12,13 +11,12 @@ export default function RecordsContainer(params) {
     
 
     // Auth
-    const { user, records, setRecords } = useAuth()
+    const { user, records, setRecords, getUserRecords, deleteRecord } = useAuth()
     
     
-    async function findRecords(data) {
-        const allRecords = await RecordsServices.getAllRecords()
-        const filteredRecords = allRecords.data.filter(element => element.user_id === data._id)
-        setRecords(filteredRecords)
+    async function findRecords() {
+        const filteredRecords = await getUserRecords(user)
+        setRecords(filteredRecords.data)
     }
 
 
@@ -26,17 +24,17 @@ export default function RecordsContainer(params) {
         const id = e.target.id
         try {
             const record = records.find(element => element._id === id)
-            return await RecordsServices.deleteRecord(record)
+            return await deleteRecord(record)
         } catch (err) {
             console.log(err)
         } finally {
-            findRecords(user)
+            findRecords()
         }
     }
 
 
     useEffect(() => {
-        findRecords(user)
+        findRecords()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 

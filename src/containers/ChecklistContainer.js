@@ -7,7 +7,6 @@ import { useAuth } from '../components/context/AuthContext';
 import { Form, UseForm } from '../components/UseForm';
 import ChecklistItem from '../components/ChecklistItem';
 import Content from '../components/content/ChecklistDescriptions';
-import RecordsServices from '../services/RecordsServices';
 import { useHistory } from "react-router-dom";
 
 
@@ -40,7 +39,7 @@ export default function Checklist(params) {
     // Forms
     const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
     // Auth Context
-    const { user, setRecordId, loggedIn } = useAuth();
+    const { user, setRecordId, loggedIn, createRecord } = useAuth();
 
     const refs = useRef([]);
 
@@ -75,7 +74,7 @@ export default function Checklist(params) {
             try {
                 if (validate() && loggedIn) {
                     console.log(record)
-                    const res = await RecordsServices.createRecord(record)
+                    const res = await createRecord(record)
                     const newRecordId = res.data._id
                     if (res.status===201) {
                         setRecordId(newRecordId)

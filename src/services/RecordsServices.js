@@ -57,6 +57,17 @@ async function getAllRecords() {
     }
 }
 
+// READ User Records
+async function getUserRecords(user) {
+    try {
+        const res = await axios.get(URL+"user/"+user._id, config)
+        // console.log(res);
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
 
 // DELETE Record
 async function deleteRecord(record) {
@@ -69,11 +80,26 @@ async function deleteRecord(record) {
     }
 }
 
+
+// DELETE User Records
+async function deleteUserRecord(record) {
+    try {
+        const res = await axios.delete(URL+record._id);
+        // console.log(res)
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
+
 const RecordsServices = {
     createRecord,
     getRecord,
     getAllRecords,
-    deleteRecord
+    getUserRecords,
+    deleteRecord,
+    deleteUserRecord
 }
 
 export default RecordsServices;

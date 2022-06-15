@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import UsersServices from '../../services/UsersServices';
-// import { useLocalStorage } from '../UseLocalStorage';
+import RecordsServices from '../../services/RecordsServices';
 import { useCookies } from 'react-cookie';
 
 
@@ -23,7 +23,9 @@ export function AuthProvider({children}) {
     const [loading, setLoading] = useState();
 
 
-    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, updateUser, deleteUser } = UsersServices
+    // Services
+    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, getAllUsers, updateUser, deleteUser } = UsersServices
+    const { createRecord, getRecord, getAllRecords, getUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
 
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
@@ -75,8 +77,15 @@ export function AuthProvider({children}) {
         testEmail,
         testPhoneNo,
         testEmailAndPhoneNo,
+        getAllUsers,
         updateUser,
         deleteUser,
+        createRecord,
+        getRecord,
+        getAllRecords,
+        getUserRecords,
+        deleteRecord,
+        deleteUserRecord,
         login,
         logout,
         rememberMe,
