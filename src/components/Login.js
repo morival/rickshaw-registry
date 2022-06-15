@@ -1,12 +1,16 @@
 import React from 'react';
 import {UseForm, Form} from './UseForm';
 import Controls from './controls/Controls';
-import Content from './content/SignupLoginDescriptions';
 import { useAuth } from './context/AuthContext';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import ForgotPassword from './ForgotPassword';
 
+
+const loginContent = [
+    { label: "Email or Phone", name: "userLogin" },
+    { name: "password", type: "password" }
+]
 
 const initialValues = {
     userLogin: "",
@@ -79,7 +83,7 @@ export default function Login({handleChange}) {
                 </Grid>
 
                 <Form onSubmit={handleSubmit}>
-                    {Content.loginContent.map((element, i) => {
+                    {loginContent.map((element, i) => {
                         const elementName = element.name;
                         return (
                             <Controls.Input
