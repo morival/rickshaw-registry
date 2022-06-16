@@ -82,9 +82,9 @@ async function deleteRecord(record) {
 
 
 // DELETE User Records
-async function deleteUserRecord(record) {
+async function deleteUserRecord(user) {
     try {
-        const res = await axios.delete(URL+record._id);
+        const res = await axios.delete(URL+"user/"+user._id);
         // console.log(res)
         return res;
     } catch (err) {

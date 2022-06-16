@@ -42,7 +42,7 @@ export default function DashboardContainer( children, ...rest ) {
     }
     
     // Auth Context
-    const { user, setUser, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, logout, rememberMe, setCookie } = useAuth();
+    const { user, setUser, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, deleteUserRecord, logout, rememberMe, setCookie } = useAuth();
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
     // refresh Data Form
@@ -170,11 +170,12 @@ export default function DashboardContainer( children, ...rest ) {
                 if (auth.status === 401) {
                     refreshPasVer();
                     setErrors({ password: auth.data.message })
-                    return auth
                 } else if (auth.status < 300) {
                     const res = await deleteUser(auth.data)
-                    if (res.status < 300)
+                    if (res.status < 300) {
+                        deleteUserRecord(user)
                         handleLogout();
+                    }
                 }
             }
         } catch (err) {
