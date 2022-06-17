@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import UsersServices from '../../services/UsersServices';
 import RecordsServices from '../../services/RecordsServices';
 import { useCookies } from 'react-cookie';
+import ChecklistServices from '../../services/ChecklistServices';
 
 
 
@@ -26,6 +27,7 @@ export function AuthProvider({children}) {
     // Services
     const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, getAllUsers, updateUser, deleteUser } = UsersServices
     const { createRecord, getRecord, getAllRecords, getUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
+    const { createDescription, getAllDescriptions, updateDescription, deleteDescription, deleteManyDescription } = ChecklistServices
 
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
@@ -86,6 +88,11 @@ export function AuthProvider({children}) {
         getUserRecords,
         deleteRecord,
         deleteUserRecord,
+        createDescription,
+        getAllDescriptions,
+        updateDescription,
+        deleteDescription,
+        deleteManyDescription,
         login,
         logout,
         rememberMe,
