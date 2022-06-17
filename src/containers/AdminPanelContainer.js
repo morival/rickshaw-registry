@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Controls from '../components/controls/Controls';
-import { Box, List, Paper, useMediaQuery } from '@mui/material';
+import { Box, List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
@@ -54,7 +54,13 @@ export default function AdminPanelContainer(params) {
                                 orientation={isSS ? 'horizontal' : 'vertical'}
                                 sx={{ borderRight: 1, borderColor: 'divider', minHeight: isSS ? '36px' : null }}
                             >
-
+                                <Tab
+                                    sx={isSS
+                                    ?   { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
+                                    :   { p: 0 }}
+                                    label="descriptions"
+                                    value="0"
+                                />
                             </TabList>
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">

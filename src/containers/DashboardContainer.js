@@ -225,8 +225,8 @@ export default function DashboardContainer( children, ...rest ) {
                                     return(
                                         <Tab
                                             sx={isSS
-                                                ? { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
-                                                : { p: 0 }}
+                                            ?   { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
+                                            :   { p: 0 }}
                                             label={element} 
                                             key={i} 
                                             value={i.toString()} 
