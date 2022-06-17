@@ -18,6 +18,7 @@ export function AuthProvider({children}) {
 
     const [user, setUser] = useState(cookies.user);
     const [rememberMe, setRememberMe] = useState(cookies.rememberMe==="true"?true:false);
+    const [descriptions, setDescriptions] = useState(cookies.descriptions)
     const [recordId, setRecordId] = useState();
     const [records, setRecords] = useState();
     const [loggedIn, setLoggedIn] = useState(cookies.loggedIn);
@@ -46,8 +47,10 @@ export function AuthProvider({children}) {
             return undefined
     }
     
-    function login(data) {
+    async function login(data) {
         setUser(data)
+        const descriptionsList = await getAllDescriptions()
+        setDescriptions(descriptionsList)
         setLoggedIn(true)
     }
 
@@ -65,6 +68,7 @@ export function AuthProvider({children}) {
     const value = {
         user,
         setUser,
+        descriptions,
         recordId,
         setRecordId,
         records,
@@ -100,11 +104,18 @@ export function AuthProvider({children}) {
     }
 
     useEffect(() => {
+        if (descriptions) {
+            setCookie('descriptions', descriptions, { path: '/' })
+            // console.log(descriptions)
+        }
+    }, [descriptions, setCookie])
+
+    useEffect(() => {
         if (rememberMe && user) {
             console.log(user)
-            setCookie('user', user, { path:'/' })
-            setCookie('loggedIn', true, { path:'/' })
-            setCookie('rememberMe', rememberMe, { path:'/' })
+            setCookie('user', user, { path: '/' })
+            setCookie('loggedIn', true, { path: '/' })
+            setCookie('rememberMe', rememberMe, { path: '/' })
         }
     }, [user, rememberMe, setCookie])
 

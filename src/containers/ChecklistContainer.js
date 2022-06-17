@@ -6,19 +6,16 @@ import Controls from '../components/controls/Controls';
 import { useAuth } from '../components/context/AuthContext';
 import { Form, UseForm } from '../components/UseForm';
 import ChecklistItem from '../components/ChecklistItem';
-import Content from '../components/content/ChecklistDescriptions';
+// import Content from '../components/content/ChecklistDescriptions';
 import { useHistory } from "react-router-dom";
 
-
-const initialValues = []
-Content.forEach((element, i) => {
-    const newElement = {id: (i+1).toString(), description: element, status: null, comments: ""}
-    initialValues.push(newElement)
-})
-
+// const initialValues = []
+// Content.forEach((element, i) => {
+//         const newElement = {id: (i+1).toString(), description: element, status: null, comments: ""}
+//     initialValues.push(newElement)
+// })
 
 export default function Checklist(params) {
-
 
     
     // Validation
@@ -36,15 +33,14 @@ export default function Checklist(params) {
     }
     
 
-    // Forms
-    const { formData, setFormData, errorArr, setErrorArr } = UseForm(initialValues, true, validate);
     // Auth Context
-    const { user, setRecordId, loggedIn, createRecord } = useAuth();
-
+    const { user, descriptions, setRecordId, loggedIn, createRecord } = useAuth();
+    // Forms
+    const { formData, setFormData, errorArr, setErrorArr } = UseForm(descriptions.data, true, validate);
     const refs = useRef([]);
-
+    
     let history = useHistory();
-
+    console.log(descriptions)
 
     const newFormData = []
     const updatedValues = (data) => {
@@ -59,6 +55,7 @@ export default function Checklist(params) {
         });
         setFormData(newFormData)
     }
+
     
     // Ref to block useEffect from fireing at first render
     const isFirstRender = useRef(true)
