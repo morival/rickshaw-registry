@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SwipeableDrawer as MuiDrawer, List, ListItem, ListItemText, IconButton, ListItemIcon } from '@mui/material';
-import { Menu as MenuIcon, FactCheck as ChecklistIcon, Restore as HistoryIcon, AccountCircle as ProfileIcon, NotInterested as NotInterestedIcon, Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material'
+import { Menu as MenuIcon, FactCheck as ChecklistIcon, Restore as RecordsIcon, AccountCircle as ProfileIcon, AdminPanelSettings, Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { makeStyles } from '@mui/styles';
 import { withRouter } from 'react-router';
 import { useAuth } from './context/AuthContext';
@@ -39,16 +39,16 @@ const Drawer = props => {
         onClick: () => history.push('/checklist')
     }, {
         text: "Previous Records",
-        icon: <HistoryIcon/>,
-        onClick: () => history.push('/')
+        icon: <RecordsIcon/>,
+        onClick: () => history.push('/records')
     }, {
         text: "My Profile",
         icon: <ProfileIcon/>,
         onClick: () => history.push('/dashboard')
     }, {
-        text: "Drafts",
-        icon: <NotInterestedIcon/>,
-        onClick: () => history.push('/')
+        text: "Admin Panel",
+        icon: <AdminPanelSettings/>,
+        onClick: () => history.push('/admin')
     }, loggedIn 
     ?   {
             text: "Log Out",
