@@ -31,6 +31,11 @@ export default function Home() {
                     color="success"
                     component={Link} to={"/dashboard"}
                     />
+                    <Controls.Button
+                    text="Admin Panel"
+                    color="secondary"
+                    component={Link} to={"/admin"}
+                    />
                 </>
             : null}
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>

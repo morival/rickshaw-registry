@@ -56,6 +56,11 @@ export default function RecordsContainer(params) {
                 color="success"
                 component={Link} to={"/dashboard"}
             />
+            <Controls.Button
+                text="Admin Panel"
+                color="secondary"
+                component={Link} to={"/admin"}
+            />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper 
                     sx={{ p: 1, maxWidth: '700px', width: '100%' }}

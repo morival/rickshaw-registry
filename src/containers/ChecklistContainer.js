@@ -103,6 +103,11 @@ export default function Checklist(params) {
                 color="success"
                 component={Link} to={"/dashboard"}
             />
+            <Controls.Button
+                text="Admin Panel"
+                color="secondary"
+                component={Link} to={"/admin"}
+            />
             <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                 <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     <Form onSubmit={handleSubmit}>

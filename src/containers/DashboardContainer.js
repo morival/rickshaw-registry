@@ -206,6 +206,11 @@ export default function DashboardContainer( children, ...rest ) {
                 color="error"
                 component={Link} to={"/records"}
             />
+            <Controls.Button
+                text="Admin Panel"
+                color="secondary"
+                component={Link} to={"/admin"}
+            />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     <Box sx={{ display: isSS ? null : 'flex'}}>

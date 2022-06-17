@@ -1,5 +1,5 @@
-import { Box } from '@mui/system';
 import React from 'react';
+import { Box } from '@mui/system';
 import { Redirect, Route } from 'react-router';
 import { useAuth } from '../components/context/AuthContext';
 import Navbar from '../components/Navbar';

@@ -8,6 +8,7 @@ import SignupLogin from './containers/SignupLoginContainer';
 import Checklist from './containers/ChecklistContainer';
 import Records from './containers/RecordsContainer';
 import Dashboard from './containers/DashboardContainer';
+import AdminPanel from './containers/AdminPanelContainer';
 
 
 function App() {
@@ -20,8 +21,6 @@ function App() {
   }, [user])
 
   return (
-
-    // <AuthProvider>
         <Router>
           <Switch>
             <PublicRoute exact path="/" component={Home} restricted={false} />
@@ -29,10 +28,9 @@ function App() {
             <PrivateRoute exact path="/checklist" component={Checklist} />
             <PrivateRoute exact path="/records" component={Records} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/admin" component={AdminPanel}/>
           </Switch>
         </Router>
-    // </AuthProvider>
-
   );
 }
 
