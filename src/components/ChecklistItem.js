@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 
 
 
-const ChecklistItem = forwardRef((props, ref) => {
+const ChecklistItem = forwardRef(({ initialItemValues, updatedValues }, ref) => {
 
 
     // Theme Media Query
@@ -19,7 +19,7 @@ const ChecklistItem = forwardRef((props, ref) => {
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('status' in fieldValues)
-        temp.status = fieldValues.status ? "" : "Required"
+        temp.status = fieldValues.status ? "" : "Field required"
         setErrors({
             ...temp
         })
@@ -27,12 +27,10 @@ const ChecklistItem = forwardRef((props, ref) => {
             return Object.values(temp).every(x => x === "")
     }
     
-    // Props
-    const { initialItemValues, updatedValues } = props;
     
     // Forms
-        const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
-        const { id, description, status, comments } = formData;
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
+    const { id, description, status, comments } = formData;
         
     useImperativeHandle(ref, () => ({
         requestValues() {

@@ -28,7 +28,7 @@ export function AuthProvider({children}) {
     // Services
     const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, getAllUsers, updateUser, deleteUser } = UsersServices
     const { createRecord, getRecord, getAllRecords, getUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
-    const { createDescription, getAllDescriptions, updateDescription, deleteDescription, deleteManyDescription } = ChecklistServices
+    const { createDescription, getAllDescriptions, updateOneDescription, deleteDescription, deleteManyDescription } = ChecklistServices
 
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
@@ -49,9 +49,7 @@ export function AuthProvider({children}) {
     
     async function login(data) {
         setUser(data)
-        const descriptionsList = await getAllDescriptions()
-        setDescriptions(descriptionsList.data)
-        setCookie('descriptions', descriptionsList.data, { path: '/' })
+        findDescriptions();
         setLoggedIn(true)
     }
 
@@ -64,6 +62,30 @@ export function AuthProvider({children}) {
         setRecordId(null)
         setLoggedIn(false)
         setLoading(false)
+    }
+
+    async function findDescriptions() {
+        const descriptionsList = await getAllDescriptions()
+        setDescriptions(descriptionsList.data)
+        setCookie('descriptions', descriptionsList.data, { path: '/' })
+    }
+
+    async function updateDescription(data) {
+        try {
+            const res = await updateOneDescription(data)
+            if (res && res.status < 300) {
+                findDescriptions();
+                return res;
+            }
+        } catch (err) {
+            if(err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+            } else {
+                console.log(`Error: ${err.message}`)
+            }
+        }
     }
 
     const value = {
@@ -104,12 +126,6 @@ export function AuthProvider({children}) {
         setCookie
     }
 
-    // useEffect(() => {
-    //     if (descriptions) {
-    //         setCookie('descriptions', descriptions, { path: '/' })
-    //         console.log(descriptions)
-    //     }
-    // }, [descriptions, setCookie])
 
     useEffect(() => {
         if (rememberMe && user) {
@@ -119,6 +135,7 @@ export function AuthProvider({children}) {
             setCookie('rememberMe', rememberMe, { path: '/' })
         }
     }, [user, rememberMe, setCookie])
+
 
     return (
         <AuthContext.Provider value={value}>

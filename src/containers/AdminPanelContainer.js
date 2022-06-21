@@ -18,7 +18,7 @@ export default function AdminPanelContainer(params) {
 
 
     // Auth Context
-    const { descriptions } = useAuth();
+    const { descriptions, updateDescription } = useAuth();
 
     // Admin Panels
     const [panel, setPanel] = useState("0");
@@ -90,8 +90,9 @@ export default function AdminPanelContainer(params) {
                                         {descriptions.map((element, i) =>
                                             <DescriptionItem
                                                 // label={element.description}
-                                                defaultValue={element.description}
-                                                id={element._id}
+                                                // defaultValue={element.description}
+                                                description={element}
+                                                updateDescription={updateDescription}
                                                 key={i}
                                             />
                                         )}

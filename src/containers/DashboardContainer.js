@@ -27,11 +27,11 @@ export default function DashboardContainer( children, ...rest ) {
         const validNumber = /^\d+.{10,20}$/;
         const validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if('name' in fieldValues)
-        temp.name = fieldValues.name ? "" : "This field is required."
+        temp.name = fieldValues.name ? "" : "Field required"
         if('email' in fieldValues)
         temp.email = validEmail.test(fieldValues.email) ? "" : "Invalid email"
         if('phoneNumber' in fieldValues)
-        temp.phoneNumber = validNumber.test(fieldValues.phoneNumber) ? "" : "This number is too short"
+        temp.phoneNumber = validNumber.test(fieldValues.phoneNumber) ? "" : "The number is too short"
         if('password' in fieldValues)
         temp.password = validPassword.test(fieldValues.password) ? "" : "Invalid password: 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
         setErrors({

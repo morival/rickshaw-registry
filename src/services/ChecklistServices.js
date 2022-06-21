@@ -47,10 +47,10 @@ async function getAllDescriptions() {
 
 
 // UPDATE Description
-async function updateDescription(data) {
+async function updateOneDescription(data) {
     try {
         const res = await axios.patch(URL+data._id, data, config);
-        console.log(res)
+        // console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
@@ -85,7 +85,7 @@ async function deleteManyDescription(data) {
 const ChecklistServices = {
     createDescription,
     getAllDescriptions,
-    updateDescription,
+    updateOneDescription,
     deleteDescription,
     deleteManyDescription
 }

@@ -10,7 +10,7 @@ const Transition = forwardRef((props, ref) =>
 );
 
 
-export default function DescriptionItem(props) {
+export default function DescriptionItem({ description, updateDescription }) {
 
 
     //  Theme Media Query
@@ -19,23 +19,32 @@ export default function DescriptionItem(props) {
 
 
     // Validation
-    const [error, setError] = useState("")
-    const validate = (formData) => {
-        let temp = error
-        temp = formData && formData.length ? "" : "Required"
-        setError(
-            temp
-        )
-        // console.log(temp)
-        return temp
+    // const [error, setError] = useState("")
+    // const validate = (formData) => {
+    //     let temp = error
+    //     temp = formData && formData.length ? "" : "Required"
+    //     setError(
+    //         temp
+    //     )
+    //     // console.log(temp)
+    //     return temp
+    // }
+    const validate = ( fieldValues = formData) => {
+        let temp = {...errors}
+        if('description' in fieldValues)
+        temp.description = fieldValues.description ? "" : "Field required"
+        setErrors({
+            ...temp
+        })
+        if(fieldValues === formData)
+            return Object.values(temp).every(x => x === "")
     }
     
     // Props
-    const { defaultValue } = props;
+    // const { description, updateDescription } = props;
 
     // Forms
-    const { formData, setFormData } = UseForm(defaultValue, true, validate);
-    console.log(formData)
+    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(description, true, validate);
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
@@ -49,22 +58,23 @@ export default function DescriptionItem(props) {
     };
 
     const handleCancel = () => {
-        setFormData(defaultValue);
+        setFormData(description);
         handleClose();
     };
 
-    const handleInputChange = e => {
-        setFormData(e.target.value)
-    }
+    // const handleInputChange = e => {
+    //     setFormData(e.target.value)
+    // }
 
       async function handleSubmit(e) {
         e.preventDefault();
         try {
-            // if (!error) {
-            //     const res = await onSubmit(e)
-            //     if (res && res.status < 300)
-            //     handleClose();
-            //   }
+            if (!errors.description) {
+                const res = await updateDescription(formData)
+                console.log(res)
+                if (res && res.status < 300)
+                    handleClose();
+              }
         } catch (err) {
             if(err.response){
                 console.log(err.response.data)
@@ -77,7 +87,7 @@ export default function DescriptionItem(props) {
     };
 
     useEffect(() => {
-        validate(formData)
+        // validate(formData)
     })
 
     return (
@@ -87,7 +97,7 @@ export default function DescriptionItem(props) {
             {/* Item Label */}
             <ListItemText
                 sx={{ minWidth: isSS ? 100 : 135 }}
-                primary={defaultValue}
+                primary={description.description}
                 primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
             />
             {/* Item Change/Add Button */}
@@ -118,16 +128,16 @@ export default function DescriptionItem(props) {
                             <Controls.Input
                                 autoFocus
                                 // label={formData}
-                                name={defaultValue}
-                                value={formData}
-                                error={error}
+                                name="description"
+                                value={formData.description}
+                                error={errors.description}
                                 onChange={handleInputChange}
                             />
                         </Paper>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCancel}>Cancel</Button>
-                        <Button type="submit" color={error ? "error" : "primary"}>Save</Button>
+                        <Button type="submit" color={errors.description ? "error" : "primary"}>Save</Button>
                     </DialogActions>
                 </Form>
             </Dialog>
