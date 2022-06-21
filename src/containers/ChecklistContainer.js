@@ -40,7 +40,6 @@ export default function Checklist(params) {
     const refs = useRef([]);
     
     let history = useHistory();
-    console.log(formData)
 
     const newFormData = []
     const updatedValues = (data) => {

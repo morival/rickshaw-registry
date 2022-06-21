@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { Dialog, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery, useTheme } from '@mui/material';
 import Controls from './controls/Controls';
 import { Form, UseForm } from './UseForm';
 
@@ -31,11 +31,11 @@ export default function DescriptionItem(props) {
     }
     
     // Props
-    const { defaultValue, id } = props;
+    const { defaultValue } = props;
 
     // Forms
     const { formData, setFormData } = UseForm(defaultValue, true, validate);
-    // console.log(formData)
+    console.log(formData)
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
@@ -118,13 +118,17 @@ export default function DescriptionItem(props) {
                             <Controls.Input
                                 autoFocus
                                 // label={formData}
-                                name={id}
+                                name={defaultValue}
                                 value={formData}
                                 error={error}
                                 onChange={handleInputChange}
                             />
                         </Paper>
                     </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCancel}>Cancel</Button>
+                        <Button type="submit" color={error ? "error" : "primary"}>Save</Button>
+                    </DialogActions>
                 </Form>
             </Dialog>
         </MuiListItem>
