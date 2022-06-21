@@ -13,9 +13,8 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
             ...formData,
             [name]: value
         });
-        // console.log("name: "+name+", value: "+value)
         if(validateOnChange)
-        validate({ [name]: value })
+            validate({ [name]: value })
     };
 
     useEffect(() => {

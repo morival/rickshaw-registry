@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import DescriptionItem from '../components/DescriptionItem';
 import Controls from '../components/controls/Controls';
+import { useAuth } from '../components/context/AuthContext'
 import { Box, List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
+
 
 
 export default function AdminPanelContainer(params) {
@@ -14,12 +17,31 @@ export default function AdminPanelContainer(params) {
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
 
+    // Auth Context
+    const { descriptions } = useAuth();
+
     // Admin Panels
     const [panel, setPanel] = useState("0");
 
     const handleChangePanel = (event, newValue) => {
         setPanel(newValue);
     };
+    console.log(descriptions)
+
+    // async function handleSubmit(e) {
+    //     e.preventDefault()
+    //     try {
+    //         console.log(e)
+    //     } catch (err) {
+    //         if(err.response){
+    //             console.log(err.response.data)
+    //             console.log(err.response.status)
+    //             console.log(err.response.headers)
+    //         } else {
+    //             console.log(`Error: ${err.message}`)
+    //         }
+    //     }
+    // }
 
 
     return (
@@ -52,7 +74,7 @@ export default function AdminPanelContainer(params) {
                                 value={panel}
                                 onChange={handleChangePanel}
                                 orientation={isSS ? 'horizontal' : 'vertical'}
-                                sx={{ borderRight: 1, borderColor: 'divider', minHeight: isSS ? '36px' : null }}
+                                sx={{ borderRight: 1, borderColor: 'divider', minWidth: '115px', minHeight: isSS ? '36px' : null }}
                             >
                                 <Tab
                                     sx={isSS
@@ -65,7 +87,14 @@ export default function AdminPanelContainer(params) {
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
                                     <List sx={{ pb: 0 }}>
-                                        
+                                        {descriptions.map((element, i) =>
+                                            <DescriptionItem
+                                                // label={element.description}
+                                                defaultValue={element.description}
+                                                id={element._id}
+                                                key={i}
+                                            />
+                                        )}
                                     </List>
                                 </TabPanel>
                             </Box>

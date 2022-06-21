@@ -14,33 +14,33 @@ const ChecklistItem = forwardRef((props, ref) => {
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
     
-    const { initialItemValues, updatedValues } = props;
-    
-    useImperativeHandle(ref, () => ({
-        requestValues() {
-            updatedValues(formData)
-            validate() ? setHelperText("") : setHelperText(errors.status)
-        }
-    }));
 
     // Validation
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('status' in fieldValues)
-            temp.status = fieldValues.status ? "" : "Required"
+        temp.status = fieldValues.status ? "" : "Required"
         setErrors({
             ...temp
         })
         if(fieldValues === formData)
             return Object.values(temp).every(x => x === "")
     }
-
+    
+    // Props
+    const { initialItemValues, updatedValues } = props;
+    
     // Forms
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
+        const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialItemValues, true, validate);
+        const { id, description, status, comments } = formData;
+        
+    useImperativeHandle(ref, () => ({
+        requestValues() {
+            updatedValues(formData)
+            validate() ? setHelperText("") : setHelperText(errors.status)
+        }
+    }));
     
-    const { id, description, status, comments } = formData;
-    
-
     // Description
     const [background, setBackground] = useState(grey[100])
     
@@ -70,13 +70,13 @@ const ChecklistItem = forwardRef((props, ref) => {
             ? { fontSize: '0.6rem', minWidth: 85 }
             : { fontSize: '0.7rem', minWidth: 105 }}
         variant="contained"
-        onClick={handleClickOpen}
+        onClick={handleOpen}
         startIcon={<CommentIcon />}
         >comment</Button>
     );
     
     
-    const handleClickOpen = () => {
+    const handleOpen = () => {
         setTempValue(formData)
         setOpen(true);
     };
@@ -152,6 +152,7 @@ const ChecklistItem = forwardRef((props, ref) => {
             <Tooltip TransitionComponent={Zoom} title={!open?comments:""} placement="left" arrow>
                 <TooltipButton/>
             </Tooltip>
+            {/* Dialog */}
             <Dialog
             sx={{ '& .MuiDialog-paper': { px: 2 } }}
             fullWidth
@@ -159,12 +160,15 @@ const ChecklistItem = forwardRef((props, ref) => {
             open={open} 
             onClose={handleCancel}
             >
+                {/* Dialog Title */}
                 <DialogTitle sx={{ px: 0 }}>Add comment on:</DialogTitle>
                 <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                     <Paper sx={{ p: 1, width: isSS ? '100%' : '80%' }}>
                         <DialogContent sx={{ p: 0 }}>
+                            {/* Dialog Message */}
                             <DialogContentText gutterBottom>{description}</DialogContentText>
                         </DialogContent>
+                        {/* Dialog Input */}
                         <TextareaAutosize
                         style={{ width: '100%' }}
                         autoFocus

@@ -44,15 +44,15 @@ const AlertDialogSlide = forwardRef((props, ref) => {
   const handleCancel = () => {
     onCancel();
     handleClose();
-  }
+  };
 
   async function handleSubmit(e) {
-      e.preventDefault()
+      e.preventDefault();
       try {
         if (!error) {
           const res = await onSubmit(e)
           if (res && res.status < 300)
-          handleClose()
+          handleClose();
         }
       } catch(err) {
         if(err.response){

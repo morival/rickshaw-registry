@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
-import { useAuth } from './components/context/AuthContext';
+// import { useAuth } from './components/context/AuthContext';
 import PublicRoute from './containers/PublicRoute';
 import PrivateRoute from './containers/PrivateRoute';
 import Home from './containers/HomeContainer';
@@ -14,11 +14,11 @@ import AdminPanel from './containers/AdminPanelContainer';
 function App() {
 
 
-  const { user }  = useAuth()
+  // const { user }  = useAuth()
 
-  useEffect(() => {
-    // console.log(user)
-  }, [user])
+  // useEffect(() => {
+  //   // console.log(user)
+  // }, [user])
 
   return (
         <Router>

@@ -50,7 +50,8 @@ export function AuthProvider({children}) {
     async function login(data) {
         setUser(data)
         const descriptionsList = await getAllDescriptions()
-        setDescriptions(descriptionsList)
+        setDescriptions(descriptionsList.data)
+        setCookie('descriptions', descriptionsList.data, { path: '/' })
         setLoggedIn(true)
     }
 
@@ -103,12 +104,12 @@ export function AuthProvider({children}) {
         setCookie
     }
 
-    useEffect(() => {
-        if (descriptions) {
-            setCookie('descriptions', descriptions, { path: '/' })
-            // console.log(descriptions)
-        }
-    }, [descriptions, setCookie])
+    // useEffect(() => {
+    //     if (descriptions) {
+    //         setCookie('descriptions', descriptions, { path: '/' })
+    //         console.log(descriptions)
+    //     }
+    // }, [descriptions, setCookie])
 
     useEffect(() => {
         if (rememberMe && user) {

@@ -36,7 +36,7 @@ export default function Checklist(params) {
     // Auth Context
     const { user, descriptions, setRecordId, loggedIn, createRecord } = useAuth();
     // Forms
-    const { formData, setFormData, errorArr, setErrorArr } = UseForm(descriptions.data, true, validate);
+    const { formData, setFormData, errorArr, setErrorArr } = UseForm(descriptions, true, validate);
     const refs = useRef([]);
     
     let history = useHistory();
