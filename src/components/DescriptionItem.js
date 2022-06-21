@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery, useTheme } from '@mui/material';
 import Controls from './controls/Controls';
 import { Form, UseForm } from './UseForm';
@@ -18,17 +18,6 @@ export default function DescriptionItem({ description, updateDescription }) {
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
 
-    // Validation
-    // const [error, setError] = useState("")
-    // const validate = (formData) => {
-    //     let temp = error
-    //     temp = formData && formData.length ? "" : "Required"
-    //     setError(
-    //         temp
-    //     )
-    //     // console.log(temp)
-    //     return temp
-    // }
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('description' in fieldValues)
@@ -40,8 +29,6 @@ export default function DescriptionItem({ description, updateDescription }) {
             return Object.values(temp).every(x => x === "")
     }
     
-    // Props
-    // const { description, updateDescription } = props;
 
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(description, true, validate);
@@ -62,11 +49,7 @@ export default function DescriptionItem({ description, updateDescription }) {
         handleClose();
     };
 
-    // const handleInputChange = e => {
-    //     setFormData(e.target.value)
-    // }
-
-      async function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         try {
             if (!errors.description) {
@@ -86,9 +69,6 @@ export default function DescriptionItem({ description, updateDescription }) {
         }
     };
 
-    useEffect(() => {
-        // validate(formData)
-    })
 
     return (
         <MuiListItem
@@ -127,7 +107,6 @@ export default function DescriptionItem({ description, updateDescription }) {
                             {/* Dialog Input */}
                             <Controls.Input
                                 autoFocus
-                                // label={formData}
                                 name="description"
                                 value={formData.description}
                                 error={errors.description}

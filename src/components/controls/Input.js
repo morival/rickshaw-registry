@@ -9,7 +9,6 @@ export default function Input(props) {
     const { name, label, value, type, onChange, variant, size, fullWidth, autoComplete, error=null, onClick, ...other } = props;
 
     const checkInputType = () => {
-        // const inputType = type;
         if (type === "password") {
             if (showPassword) 
                 return "text"

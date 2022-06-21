@@ -28,21 +28,6 @@ export default function AdminPanelContainer(params) {
     };
     console.log(descriptions)
 
-    // async function handleSubmit(e) {
-    //     e.preventDefault()
-    //     try {
-    //         console.log(e)
-    //     } catch (err) {
-    //         if(err.response){
-    //             console.log(err.response.data)
-    //             console.log(err.response.status)
-    //             console.log(err.response.headers)
-    //         } else {
-    //             console.log(`Error: ${err.message}`)
-    //         }
-    //     }
-    // }
-
 
     return (
         <Box sx={{ p: isSS ? 1 : 2 }}>
@@ -89,8 +74,6 @@ export default function AdminPanelContainer(params) {
                                     <List sx={{ pb: 0 }}>
                                         {descriptions.map((element, i) =>
                                             <DescriptionItem
-                                                // label={element.description}
-                                                // defaultValue={element.description}
                                                 description={element}
                                                 updateDescription={updateDescription}
                                                 key={i}

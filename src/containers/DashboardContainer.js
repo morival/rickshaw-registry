@@ -113,7 +113,7 @@ export default function DashboardContainer( children, ...rest ) {
             if (validate()) {
                 // check for duplicate email or phone number in DB
                 const res = await testEmailAndPhoneNo(formData)
-                console.log(res)
+                console.log(formData)
                 // if duplicate, set errors
                 if (res && res.status === 200) {
                     setErrors(res.data.code === "email" ? { email: res.data.message } : { phoneNumber: res.data.message })
@@ -131,11 +131,11 @@ export default function DashboardContainer( children, ...rest ) {
                             setErrors({ password: auth.data.message })
                         // else request to update DB with formData
                         } else if (auth.status < 300) {
-                            const res = await updateUser(formData)
+                            const tempData = {...formData, password: passwordVerification.password}
+                            const res = await updateUser(tempData)
                             if (res && res.status < 300) {
                                 setUser(res.data)
                                 setCloseDialog((prevState) => !prevState)
-                                // setFormData(res.data)
                                 // if rememeberMe is on, save user details to Cookies
                                 if (rememberMe) 
                                     setCookie('user', res.data, { path:'/' })

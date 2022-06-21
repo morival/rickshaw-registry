@@ -65,7 +65,7 @@ async function getUser(data) {
 }
 
 
-// Test Email if already exists
+// TEST Email if already exists
 async function testEmail(data) {
     try {
         const res = await axios.post(URL+'email', data, config);
@@ -77,7 +77,7 @@ async function testEmail(data) {
 }
 
 
-// Test Email if already exists
+// TEST Email if already exists
 async function testPhoneNo(data) {
     try {
         const res = await axios.post(URL+'phoneNumber', data, config);
@@ -87,18 +87,6 @@ async function testPhoneNo(data) {
         catchErr(err)
     }
 }
-
-
-// // Test User (email and phone number)
-// async function testEmailAndPhoneNo(data) {
-//     try {
-//         const res = await axios.post(URL+'includes', data, config);
-//         console.log(res)
-//         return res;
-//     } catch (err) {
-//         catchErr(err)
-//     }
-// }
 
 
 // READ ALL Users
@@ -117,7 +105,7 @@ async function getAllUsers() {
 async function updateUser(data) {
     try {
         const res = await axios.put(URL+data._id, data, config);
-        console.log(res)
+        // console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
@@ -141,7 +129,6 @@ const UsersServices = {
     getUser,
     testEmail,
     testPhoneNo,
-    // testEmailAndPhoneNo,
     getAllUsers,
     updateUser,
     deleteUser
