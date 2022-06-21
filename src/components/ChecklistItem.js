@@ -93,7 +93,7 @@ const ChecklistItem = forwardRef((props, ref) => {
     
     useEffect(() => {
         value ? setHelperText("") : setHelperText(errors.status)
-        console.log(value)
+        // console.log(value)
         if (value === "passed")
         setBackground(green[100])
         else if (value === "failed")

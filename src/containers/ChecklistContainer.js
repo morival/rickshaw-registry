@@ -22,7 +22,7 @@ export default function Checklist(params) {
     const validate = ( fieldValues = formData) => {
         let temp = [...errorArr]
         fieldValues.forEach((element, i) => {
-            const error = element.status != null ? "" : "Field is required";
+            const error = element.status !== "" ? "" : "Field is required";
             temp.length === i ? temp.push(error) : temp[i] = error;
         })
         setErrorArr([
@@ -31,7 +31,7 @@ export default function Checklist(params) {
         if(fieldValues === formData)
             return Object.values(temp).every(x => x === "")
     }
-    
+    // validate(formData)
 
     // Auth Context
     const { user, descriptions, setRecordId, loggedIn, createRecord } = useAuth();
@@ -40,7 +40,7 @@ export default function Checklist(params) {
     const refs = useRef([]);
     
     let history = useHistory();
-    console.log(descriptions)
+    console.log(formData)
 
     const newFormData = []
     const updatedValues = (data) => {
@@ -49,7 +49,7 @@ export default function Checklist(params) {
 
 
     async function handleSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
         refs.current.forEach(element => {
             element.requestValues()
         });
@@ -65,9 +65,7 @@ export default function Checklist(params) {
             return;
         }
         async function saveRecord() {
-            const user_id = user._id
-            const record_date = new Date()
-            const record = {user_id: user_id, record_date: record_date, checklist: formData}
+            const record = {user_id: user._id, record_date: new Date(), checklist: formData}
             try {
                 if (validate() && loggedIn) {
                     console.log(record)

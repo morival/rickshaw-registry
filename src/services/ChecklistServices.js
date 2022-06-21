@@ -38,7 +38,7 @@ async function createDescription(data) {
 async function getAllDescriptions() {
     try {
         const res = await axios.get(URL, config);
-        console.log(res);
+        // console.log(res);
         return res;
     } catch (err) {
         catchErr(err)
