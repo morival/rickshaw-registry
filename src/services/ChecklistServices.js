@@ -23,7 +23,7 @@ function catchErr(err) {
 
 
 // CREATE Checklist Description
-async function createDescription(data) {
+async function createOneDescription(data) {
     try {
         const res = await axios.post(URL, data, config);
         console.log(res);
@@ -59,10 +59,10 @@ async function updateOneDescription(data) {
 
 
 // DELETE Description
-async function deleteDescription(data) {
+async function deleteOneDescription(data) {
     try {
         const res = await axios.delete(URL+data._id);
-        console.log(res)
+        // console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
@@ -83,10 +83,10 @@ async function deleteManyDescription(data) {
 
 
 const ChecklistServices = {
-    createDescription,
+    createOneDescription,
     getAllDescriptions,
     updateOneDescription,
-    deleteDescription,
+    deleteOneDescription,
     deleteManyDescription
 }
 

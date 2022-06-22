@@ -18,7 +18,7 @@ export default function AdminPanelContainer(params) {
 
 
     // Auth Context
-    const { descriptions, updateDescription } = useAuth();
+    const { descriptions } = useAuth();
 
     // Admin Panels
     const [panel, setPanel] = useState("0");
@@ -26,7 +26,7 @@ export default function AdminPanelContainer(params) {
     const handleChangePanel = (event, newValue) => {
         setPanel(newValue);
     };
-    console.log(descriptions)
+    // console.log(descriptions)
 
 
     return (
@@ -75,10 +75,12 @@ export default function AdminPanelContainer(params) {
                                         {descriptions.map((element, i) =>
                                             <DescriptionItem
                                                 description={element}
-                                                updateDescription={updateDescription}
                                                 key={i}
                                             />
                                         )}
+                                        <DescriptionItem
+                                            description={{description: "", status: "", comments: ""}}
+                                        />
                                     </List>
                                 </TabPanel>
                             </Box>

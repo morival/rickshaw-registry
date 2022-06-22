@@ -28,7 +28,7 @@ export function AuthProvider({children}) {
     // Services
     const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, getAllUsers, updateUser, deleteUser } = UsersServices
     const { createRecord, getRecord, getAllRecords, getUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
-    const { createDescription, getAllDescriptions, updateOneDescription, deleteDescription, deleteManyDescription } = ChecklistServices
+    const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
@@ -70,9 +70,45 @@ export function AuthProvider({children}) {
         setCookie('descriptions', descriptionsList.data, { path: '/' })
     }
 
+    async function createDescription(data) {
+        try {
+            const res = await createOneDescription(data)
+            if (res && res.status < 300) {
+                findDescriptions();
+                return res;
+            }
+        } catch (err) {
+            if(err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+            } else {
+                console.log(`Error: ${err.message}`)
+            }
+        }
+    }
+
     async function updateDescription(data) {
         try {
             const res = await updateOneDescription(data)
+            if (res && res.status < 300) {
+                findDescriptions();
+                return res;
+            }
+        } catch (err) {
+            if(err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+            } else {
+                console.log(`Error: ${err.message}`)
+            }
+        }
+    }
+
+    async function deleteDescription(data) {
+        try {
+            const res = await deleteOneDescription(data)
             if (res && res.status < 300) {
                 findDescriptions();
                 return res;

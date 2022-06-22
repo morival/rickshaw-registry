@@ -31,7 +31,6 @@ export default function Checklist(params) {
         if(fieldValues === formData)
             return Object.values(temp).every(x => x === "")
     }
-    // validate(formData)
 
     // Auth Context
     const { user, descriptions, setRecordId, loggedIn, createRecord } = useAuth();
@@ -110,7 +109,7 @@ export default function Checklist(params) {
                     <Form onSubmit={handleSubmit}>
                         {formData.map((element, i) => 
                             <ChecklistItem
-                                initialItemValues={element}
+                                initialValues={element}
                                 updatedValues={updatedValues}
                                 ref={(item)=>{refs.current[i]=item}}
                                 key={i}

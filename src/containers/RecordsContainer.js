@@ -21,20 +21,20 @@ export default function RecordsContainer(params) {
 
 
     async function handleDelete(e) {
-        const id = e.target.id
+        const id = e.target.id;
         try {
             const record = records.find(element => element._id === id)
             return await deleteRecord(record)
         } catch (err) {
             console.log(err)
         } finally {
-            findRecords()
+            findRecords();
         }
     }
 
 
     useEffect(() => {
-        findRecords()
+        findRecords();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 

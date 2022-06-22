@@ -1,6 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery, useTheme } from '@mui/material';
 import Controls from './controls/Controls';
+import { useAuth } from './context/AuthContext';
 import { Form, UseForm } from './UseForm';
 
 
@@ -10,7 +11,7 @@ const Transition = forwardRef((props, ref) =>
 );
 
 
-export default function DescriptionItem({ description, updateDescription }) {
+export default function DescriptionItem({ description }) {
 
 
     //  Theme Media Query
@@ -18,6 +19,7 @@ export default function DescriptionItem({ description, updateDescription }) {
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
 
+    // Validation
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('description' in fieldValues)
@@ -29,9 +31,11 @@ export default function DescriptionItem({ description, updateDescription }) {
             return Object.values(temp).every(x => x === "")
     }
     
-
+    // Auth Context
+    const { createDescription, updateDescription, deleteDescription } = useAuth();
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(description, true, validate);
+    // console.log(formData)
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
@@ -46,13 +50,26 @@ export default function DescriptionItem({ description, updateDescription }) {
 
     const handleCancel = () => {
         setFormData(description);
+        setErrors({})
         handleClose();
     };
 
     async function handleSubmit(e) {
         e.preventDefault();
+        validate();
         try {
-            if (!errors.description) {
+            // Add New Description
+            if (!description.description) {
+                if (!formData.description)
+                    return;
+                else {
+                    const res = await createDescription(formData)
+                    if (res && res.status < 300)
+                    handleClose();
+                }
+            }
+            // Edit Description
+            else if (!errors.description) {
                 const res = await updateDescription(formData)
                 console.log(res)
                 if (res && res.status < 300)
@@ -69,6 +86,17 @@ export default function DescriptionItem({ description, updateDescription }) {
         }
     };
 
+    async function handleDelete() {
+        try {
+            const res = await deleteDescription(formData)
+            console.log(res)
+            if (res && res.status < 300)
+                    handleClose();
+        } catch (err) {
+            
+        }
+    }
+
 
     return (
         <MuiListItem
@@ -83,7 +111,7 @@ export default function DescriptionItem({ description, updateDescription }) {
             {/* Item Change/Add Button */}
             <Controls.Button 
                 sx={{ minWidth: 70 }}
-                text="Change"
+                text={description.description ? "Change" : "Add New Description"}
                 color="primary"
                 onClick={handleOpen}
             />
@@ -97,7 +125,7 @@ export default function DescriptionItem({ description, updateDescription }) {
             >
                 <Form onSubmit={handleSubmit}>
                     {/* Dialog Title */}
-                    <DialogTitle>Update Description</DialogTitle>
+                    <DialogTitle>{description.description ? "Update Description" : "Add New Description"}</DialogTitle>
                     <DialogContent sx={{ px:2, py: 0.2, maxWidth: 260 }}>
                         <Paper sx={{ p: 1 }}>
                             {/* Dialog Message */}
@@ -116,6 +144,7 @@ export default function DescriptionItem({ description, updateDescription }) {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCancel}>Cancel</Button>
+                        {description.description ? <Button onClick={handleDelete}>Delete</Button> : null}
                         <Button type="submit" color={errors.description ? "error" : "primary"}>Save</Button>
                     </DialogActions>
                 </Form>
