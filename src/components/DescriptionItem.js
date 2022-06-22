@@ -11,7 +11,7 @@ const Transition = forwardRef((props, ref) =>
 );
 
 
-export default function DescriptionItem({ description }) {
+export default function DescriptionItem({ description, checkbox }) {
 
 
     //  Theme Media Query
@@ -36,6 +36,13 @@ export default function DescriptionItem({ description }) {
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(description, true, validate);
     // console.log(formData)
+
+
+    // Checkbox
+    const handleCheckboxChange = (e) => {
+        console.log(e)
+    }
+
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
@@ -102,6 +109,12 @@ export default function DescriptionItem({ description }) {
         <MuiListItem
             sx={{ p: isSS ? '8px 0' : '8px 8px' }}
         >
+            {/* Item Checkbox */}
+            <Controls.Checkbox
+            name={description._id}
+            value={checkbox}
+            onChange={handleCheckboxChange}
+            />
             {/* Item Label */}
             <ListItemText
                 sx={{ minWidth: isSS ? 100 : 135 }}

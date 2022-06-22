@@ -17,16 +17,16 @@ export default function AdminPanelContainer(params) {
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
 
-    // Auth Context
-    const { descriptions } = useAuth();
-
     // Admin Panels
     const [panel, setPanel] = useState("0");
-
     const handleChangePanel = (event, newValue) => {
         setPanel(newValue);
     };
     // console.log(descriptions)
+
+    // Auth Context
+    const { descriptions } = useAuth();
+
 
 
     return (
@@ -75,6 +75,7 @@ export default function AdminPanelContainer(params) {
                                         {descriptions.map((element, i) =>
                                             <DescriptionItem
                                                 description={element}
+                                                checkbox={true}
                                                 key={i}
                                             />
                                         )}
