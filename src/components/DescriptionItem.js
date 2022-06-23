@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery, useTheme } from '@mui/material';
 import Controls from './controls/Controls';
 import { useAuth } from './context/AuthContext';
@@ -11,13 +11,16 @@ const Transition = forwardRef((props, ref) =>
 );
 
 
-export default function DescriptionItem({ description, checkbox }) {
+export default function DescriptionItem(props) {
 
 
     //  Theme Media Query
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
+
+    // Props
+    const { description, onCheckboxChange, showDeleteButton, handleDeleteMany } = props
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -39,8 +42,10 @@ export default function DescriptionItem({ description, checkbox }) {
 
 
     // Checkbox
+    const [checked, setChecked] = useState(false);
     const handleCheckboxChange = (e) => {
-        console.log(e)
+        setChecked(!checked)
+        onCheckboxChange(e)
     }
 
 
@@ -103,18 +108,33 @@ export default function DescriptionItem({ description, checkbox }) {
             
         }
     }
+    const deleteManyButton = () => (
+        <Controls.Button
+        text="Delete Selected"
+        color="error"
+        onClick={handleDeleteMany}
+        />
+    )
 
+    useEffect(() => {
+        // if(description.description)
+        // deleteManyButton = null;
+    })
 
     return (
         <MuiListItem
             sx={{ p: isSS ? '8px 0' : '8px 8px' }}
         >
             {/* Item Checkbox */}
-            <Controls.Checkbox
-            name={description._id}
-            value={checkbox}
-            onChange={handleCheckboxChange}
-            />
+            {description.description 
+            ?   <Controls.Checkbox
+                name={description._id}
+                value={checked}
+                onChange={handleCheckboxChange}
+                />
+            :   showDeleteButton 
+                ?   deleteManyButton()
+                :   null}
             {/* Item Label */}
             <ListItemText
                 sx={{ minWidth: isSS ? 100 : 135 }}
@@ -124,7 +144,7 @@ export default function DescriptionItem({ description, checkbox }) {
             {/* Item Change/Add Button */}
             <Controls.Button 
                 sx={{ minWidth: 70 }}
-                text={description.description ? "Change" : "Add New Description"}
+                text={description.description ? "Change" : "Add New"}
                 color="primary"
                 onClick={handleOpen}
             />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DescriptionItem from '../components/DescriptionItem';
 import Controls from '../components/controls/Controls';
 import { useAuth } from '../components/context/AuthContext'
@@ -25,9 +25,46 @@ export default function AdminPanelContainer(params) {
     // console.log(descriptions)
 
     // Auth Context
-    const { descriptions } = useAuth();
+    const { descriptions, deleteDescriptions } = useAuth();
 
 
+    // Array of Checkboxes
+    const checkboxArray = descriptions.map(el => {
+        return {name: el._id, value: false};
+    })
+    const [checkboxes, setCheckboxes] = useState(checkboxArray);
+    function handleCheckbox(e) {
+        const data = checkboxes.map(el => {
+            if (el.name === e.target.name) {el.value = e.target.value}
+            return el
+        })
+        setCheckboxes(data)
+    }
+
+    const someCheckbox = () => {
+        return checkboxes.some(el => el.value===true)
+    }
+
+    async function handleDeleteMany() {
+        try {
+            const data = checkboxes.filter(el => el.value).map(el => el.name)
+            const res = await deleteDescriptions(data)
+            console.log(res)
+        } catch (err) {
+            if(err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+            } else {
+                console.log(`Error: ${err.message}`)
+            }
+        }
+        // console.log(checkboxes)
+    }
+    
+    useEffect(() => {
+        // console.log(someCheckbox())
+    })
 
     return (
         <Box sx={{ p: isSS ? 1 : 2 }}>
@@ -75,12 +112,14 @@ export default function AdminPanelContainer(params) {
                                         {descriptions.map((element, i) =>
                                             <DescriptionItem
                                                 description={element}
-                                                checkbox={true}
+                                                onCheckboxChange={handleCheckbox}
                                                 key={i}
                                             />
                                         )}
                                         <DescriptionItem
+                                            showDeleteButton={someCheckbox()}
                                             description={{description: "", status: "", comments: ""}}
+                                            handleDeleteMany={handleDeleteMany}
                                         />
                                     </List>
                                 </TabPanel>

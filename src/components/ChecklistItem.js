@@ -83,10 +83,17 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
         setOpen(false);
     };
 
+    const onEnterPress = (e) => {
+        if(e.keyCode === 13 && e.shiftKey === false) {
+            e.preventDefault();
+            setOpen(false);
+        }
+    };
+
     const handleCancel = () => {
         setFormData(tempValue);
         handleClose();
-    }
+    };
 
     
     useEffect(() => {
@@ -174,6 +181,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
                         name="comments"
                         value={comments}
                         onChange={handleInputChange}
+                        onKeyDown={onEnterPress}
                         minRows={4}
                         maxLength={300}
                         placeholder="write your comment here"

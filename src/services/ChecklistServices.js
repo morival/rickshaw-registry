@@ -73,7 +73,7 @@ async function deleteOneDescription(data) {
 // DELETE Many Descriptions
 async function deleteManyDescription(data) {
     try {
-        const res = await axios.delete(URL, data, config);
+        const res = await axios.delete(URL, {data: data}, config);
         console.log(res)
         return res;
     } catch (err) {

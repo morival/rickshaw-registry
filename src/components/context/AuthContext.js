@@ -124,6 +124,24 @@ export function AuthProvider({children}) {
         }
     }
 
+    async function deleteDescriptions(data) {
+        try {
+            const res = await deleteManyDescription(data)
+            if (res && res.status < 300) {
+                findDescriptions();
+                return res;
+            }
+        } catch (err) {
+            if(err.response){
+                console.log(err.response.data)
+                console.log(err.response.status)
+                console.log(err.response.headers)
+            } else {
+                console.log(`Error: ${err.message}`)
+            }
+        }
+    }
+
     const value = {
         user,
         setUser,
@@ -155,7 +173,7 @@ export function AuthProvider({children}) {
         getAllDescriptions,
         updateDescription,
         deleteDescription,
-        deleteManyDescription,
+        deleteDescriptions,
         login,
         logout,
         rememberMe,

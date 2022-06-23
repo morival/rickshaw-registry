@@ -40,18 +40,18 @@ export default function Checklist(params) {
     
     let history = useHistory();
 
-    const newFormData = []
+    const newFormData = [];
     const updatedValues = (data) => {
-        newFormData.push(data)
+        newFormData.push(data);
     }
 
 
     async function handleSubmit(e) {
         e.preventDefault();
         refs.current.forEach(element => {
-            element.requestValues()
+            element.requestValues();
         });
-        setFormData(newFormData)
+        setFormData(newFormData);
     }
 
     

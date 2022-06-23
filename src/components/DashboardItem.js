@@ -21,6 +21,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
   // const isMS = useMediaQuery(theme.breakpoints.up('md'));
 
   
+  // Props
   const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, onSubmit, onCancel, closeDialog } = props;
 
   // Dialog Window State
