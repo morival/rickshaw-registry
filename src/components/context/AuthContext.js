@@ -28,7 +28,7 @@ export function AuthProvider({children}) {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
     const [user, setUser] = useState(cookies.user);
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState(cookies.users);
     const [rememberMe, setRememberMe] = useState(cookies.rememberMe==="true"?true:false);
     const [descriptions, setDescriptions] = useState(cookies.descriptions)
     const [recordId, setRecordId] = useState();
@@ -63,10 +63,10 @@ export function AuthProvider({children}) {
     
     // Login
     async function login(data) {
-        setUser(data)
-        getUsers()
+        setUser(data);
+        findUsers();
         findDescriptions();
-        setLoggedIn(true)
+        setLoggedIn(true);
     }
 
     // Logout
@@ -80,19 +80,8 @@ export function AuthProvider({children}) {
         setLoggedIn(false)
         setLoading(false)
     }
-
-
-    // Users
-    async function getUsers() {
-        try {
-            const res = await getAllUsers();
-            setUsers(res.data)
-        } catch (err) {
-            catchErr(err)
-        }
-    }
-
-
+    
+    
     // Records
     async function getUserRecords(user) {
         try {
@@ -103,7 +92,7 @@ export function AuthProvider({children}) {
         }
     }
 
-
+    
     // Admin Descriptions
     async function findDescriptions(res) {
         if (res && res.status < 300) {
@@ -114,7 +103,7 @@ export function AuthProvider({children}) {
             return res
         }
     }
-
+    
     async function createDescription(data) {
         try {
             const res = await createOneDescription(data);
@@ -141,7 +130,7 @@ export function AuthProvider({children}) {
             catchErr(err)
         }
     }
-
+    
     async function deleteDescriptions(data) {
         try {
             const res = await deleteManyDescription(data);
@@ -150,6 +139,19 @@ export function AuthProvider({children}) {
             catchErr(err)
         }
     }
+
+
+    // Users
+    async function findUsers() {
+        try {
+            const usersList = await getAllUsers();
+            setUsers(usersList.data)
+            setCookie('users', usersList.data, { path: '/' });
+        } catch (err) {
+            catchErr(err)
+        }
+    }
+
 
     const value = {
         user,
@@ -171,7 +173,7 @@ export function AuthProvider({children}) {
         testEmail,
         testPhoneNo,
         testEmailAndPhoneNo,
-        getUsers,
+        getAllUsers,
         updateUser,
         deleteUser,
         createRecord,
