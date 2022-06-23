@@ -28,6 +28,7 @@ export function AuthProvider({children}) {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
     const [user, setUser] = useState(cookies.user);
+    const [users, setUsers] = useState();
     const [rememberMe, setRememberMe] = useState(cookies.rememberMe==="true"?true:false);
     const [descriptions, setDescriptions] = useState(cookies.descriptions)
     const [recordId, setRecordId] = useState();
@@ -41,11 +42,13 @@ export function AuthProvider({children}) {
     const { createRecord, getRecord, getAllRecords, getAllUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
     const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
+    // Authenticate
     async function authenticate(data) {
         setRememberMe(data.rememberMe)
         return await authenticateUser(data)
     }
 
+    // Email and Phone Number Test
     async function testEmailAndPhoneNo(data) {
         console.log("checking if email or phone number exists")
         const resEmail = await testEmail(data)
@@ -58,12 +61,15 @@ export function AuthProvider({children}) {
             return undefined
     }
     
+    // Login
     async function login(data) {
         setUser(data)
+        getUsers()
         findDescriptions();
         setLoggedIn(true)
     }
 
+    // Logout
     function logout() {
         setLoading(true)
         removeCookie('user')
@@ -76,10 +82,21 @@ export function AuthProvider({children}) {
     }
 
 
+    // Users
+    async function getUsers() {
+        try {
+            const res = await getAllUsers();
+            setUsers(res.data)
+        } catch (err) {
+            catchErr(err)
+        }
+    }
+
+
     // Records
     async function getUserRecords(user) {
         try {
-            const filteredRecords = await getAllUserRecords(user)
+            const filteredRecords = await getAllUserRecords(user);
             setRecords(filteredRecords.data)
         } catch (err) {
             
@@ -100,7 +117,7 @@ export function AuthProvider({children}) {
 
     async function createDescription(data) {
         try {
-            const res = await createOneDescription(data)
+            const res = await createOneDescription(data);
             return findDescriptions(res)
         } catch (err) {
             catchErr(err)
@@ -109,7 +126,7 @@ export function AuthProvider({children}) {
 
     async function updateDescription(data) {
         try {
-            const res = await updateOneDescription(data)
+            const res = await updateOneDescription(data);
             return findDescriptions(res)
         } catch (err) {
             catchErr(err)
@@ -118,7 +135,7 @@ export function AuthProvider({children}) {
 
     async function deleteDescription(data) {
         try {
-            const res = await deleteOneDescription(data)
+            const res = await deleteOneDescription(data);
             return findDescriptions(res)
         } catch (err) {
             catchErr(err)
@@ -127,7 +144,7 @@ export function AuthProvider({children}) {
 
     async function deleteDescriptions(data) {
         try {
-            const res = await deleteManyDescription(data)
+            const res = await deleteManyDescription(data);
             return findDescriptions(res)
         } catch (err) {
             catchErr(err)
@@ -137,6 +154,8 @@ export function AuthProvider({children}) {
     const value = {
         user,
         setUser,
+        users,
+        setUsers,
         descriptions,
         recordId,
         setRecordId,
@@ -152,7 +171,7 @@ export function AuthProvider({children}) {
         testEmail,
         testPhoneNo,
         testEmailAndPhoneNo,
-        getAllUsers,
+        getUsers,
         updateUser,
         deleteUser,
         createRecord,

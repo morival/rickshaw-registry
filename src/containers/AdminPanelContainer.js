@@ -6,7 +6,7 @@ import { Box, List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
-// import AdminUserItem from '../components/AdminUserItem';
+import AdminUserItem from '../components/AdminUserItem';
 
 
 
@@ -25,14 +25,11 @@ export default function AdminPanelContainer(params) {
     };
     
     // Auth Context
-    const { descriptions, deleteDescriptions, getAllUsers } = useAuth();
+    const { descriptions, deleteDescriptions, users } = useAuth();
 
 
     // DESCRIPTIONS
     // Array of Checkboxes
-    // const checkboxArray = descriptions.map(el => {
-    //     return {name: el._id, value: false};
-    // })
     const [checkboxes, setCheckboxes] = useState([]);
     function handleCheckbox(e) {
         const data = checkboxes.map(el => {
@@ -66,14 +63,12 @@ export default function AdminPanelContainer(params) {
 
 
     // USERS
-    const [users, setUsers] = useState(getAllUsers)
     
     useEffect(() => {
         const checkboxArray = descriptions.map(el => {
             return {name: el._id, value: false};
         })
         setCheckboxes(checkboxArray)
-        // console.log(descriptions.length)
     },[descriptions])
 
     return (
@@ -144,12 +139,12 @@ export default function AdminPanelContainer(params) {
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value='1'>
                                     <List sx={{ pb: 0 }}>
-                                        {/* {getAllUsers.map((el, i) =>
+                                        {users.map((el, i) =>
                                             <AdminUserItem
                                             user={el}
                                             key={i}
                                             />
-                                        )} */}
+                                        )}
                                     </List>
                                 </TabPanel>
                             </Box>

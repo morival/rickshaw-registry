@@ -130,9 +130,9 @@ export default function DescriptionItem(props) {
             {/* Item Checkbox */}
             {hasDescription 
             ?   <Controls.Checkbox
-                name={description._id}
-                value={checked}
-                onChange={handleCheckboxChange}
+                    name={description._id}
+                    value={checked}
+                    onChange={handleCheckboxChange}
                 />
             :   showDeleteButton 
                 ?   deleteManyButton()
