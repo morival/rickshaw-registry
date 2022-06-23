@@ -20,7 +20,7 @@ export default function DescriptionItem(props) {
 
 
     // Props
-    const { description, onCheckboxChange, showDeleteButton, handleDeleteMany } = props
+    const { description, descriptionsLength, onCheckboxChange, showDeleteButton, handleDeleteMany } = props
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -39,6 +39,7 @@ export default function DescriptionItem(props) {
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(description, true, validate);
     // console.log(formData)
+    const hasDescription = description.description;
 
 
     // Checkbox
@@ -71,13 +72,14 @@ export default function DescriptionItem(props) {
         validate();
         try {
             // Add New Description
-            if (!description.description) {
+            if (!hasDescription) {
                 if (!formData.description)
                     return;
                 else {
                     const res = await createDescription(formData)
-                    if (res && res.status < 300)
-                    handleClose();
+                    if (res && res.status < 300) {
+                        handleCancel();
+                    }
                 }
             }
             // Edit Description
@@ -117,16 +119,16 @@ export default function DescriptionItem(props) {
     )
 
     useEffect(() => {
-        // if(description.description)
-        // deleteManyButton = null;
-    })
+        if (hasDescription)
+            setChecked(false)
+    },[descriptionsLength, hasDescription])
 
     return (
         <MuiListItem
             sx={{ p: isSS ? '8px 0' : '8px 8px' }}
         >
             {/* Item Checkbox */}
-            {description.description 
+            {hasDescription 
             ?   <Controls.Checkbox
                 name={description._id}
                 value={checked}
@@ -138,13 +140,13 @@ export default function DescriptionItem(props) {
             {/* Item Label */}
             <ListItemText
                 sx={{ minWidth: isSS ? 100 : 135 }}
-                primary={description.description}
+                primary={hasDescription}
                 primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
             />
             {/* Item Change/Add Button */}
             <Controls.Button 
                 sx={{ minWidth: 70 }}
-                text={description.description ? "Change" : "Add New"}
+                text={hasDescription ? "Change" : "Add New"}
                 color="primary"
                 onClick={handleOpen}
             />
@@ -158,7 +160,7 @@ export default function DescriptionItem(props) {
             >
                 <Form onSubmit={handleSubmit}>
                     {/* Dialog Title */}
-                    <DialogTitle>{description.description ? "Update Description" : "Add New Description"}</DialogTitle>
+                    <DialogTitle>{hasDescription ? "Update Description" : "Add New Description"}</DialogTitle>
                     <DialogContent sx={{ px:2, py: 0.2, maxWidth: 260 }}>
                         <Paper sx={{ p: 1 }}>
                             {/* Dialog Message */}
@@ -177,7 +179,7 @@ export default function DescriptionItem(props) {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCancel}>Cancel</Button>
-                        {description.description ? <Button onClick={handleDelete}>Delete</Button> : null}
+                        {hasDescription ? <Button onClick={handleDelete}>Delete</Button> : null}
                         <Button type="submit" color={errors.description ? "error" : "primary"}>Save</Button>
                     </DialogActions>
                 </Form>

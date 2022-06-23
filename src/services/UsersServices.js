@@ -93,7 +93,7 @@ async function testPhoneNo(data) {
 async function getAllUsers() {
     try {
         const res = await axios.get(URL, config);
-        console.log(res.data);
+        // console.log(res.data);
         return res;
     } catch (err) {
         catchErr(err)  

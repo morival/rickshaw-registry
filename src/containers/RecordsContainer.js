@@ -11,13 +11,7 @@ export default function RecordsContainer(params) {
     
 
     // Auth
-    const { user, records, setRecords, getUserRecords, deleteRecord } = useAuth()
-    
-    
-    async function findRecords() {
-        const filteredRecords = await getUserRecords(user)
-        setRecords(filteredRecords.data)
-    }
+    const { user, records, getUserRecords, deleteRecord } = useAuth()
 
 
     async function handleDelete(e) {
@@ -28,13 +22,13 @@ export default function RecordsContainer(params) {
         } catch (err) {
             console.log(err)
         } finally {
-            findRecords();
+            getUserRecords(user)
         }
     }
 
 
     useEffect(() => {
-        findRecords();
+        getUserRecords(user)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 

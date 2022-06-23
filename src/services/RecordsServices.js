@@ -58,7 +58,7 @@ async function getAllRecords() {
 }
 
 // READ User Records
-async function getUserRecords(user) {
+async function getAllUserRecords(user) {
     try {
         const res = await axios.get(URL+"user/"+user._id, config)
         // console.log(res);
@@ -97,7 +97,7 @@ const RecordsServices = {
     createRecord,
     getRecord,
     getAllRecords,
-    getUserRecords,
+    getAllUserRecords,
     deleteRecord,
     deleteUserRecord
 }

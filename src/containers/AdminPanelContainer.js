@@ -6,6 +6,7 @@ import { Box, List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Link } from 'react-router-dom';
+// import AdminUserItem from '../components/AdminUserItem';
 
 
 
@@ -22,17 +23,17 @@ export default function AdminPanelContainer(params) {
     const handleChangePanel = (event, newValue) => {
         setPanel(newValue);
     };
-    // console.log(descriptions)
-
+    
     // Auth Context
-    const { descriptions, deleteDescriptions } = useAuth();
+    const { descriptions, deleteDescriptions, getAllUsers } = useAuth();
 
 
+    // DESCRIPTIONS
     // Array of Checkboxes
-    const checkboxArray = descriptions.map(el => {
-        return {name: el._id, value: false};
-    })
-    const [checkboxes, setCheckboxes] = useState(checkboxArray);
+    // const checkboxArray = descriptions.map(el => {
+    //     return {name: el._id, value: false};
+    // })
+    const [checkboxes, setCheckboxes] = useState([]);
     function handleCheckbox(e) {
         const data = checkboxes.map(el => {
             if (el.name === e.target.name) {el.value = e.target.value}
@@ -41,6 +42,7 @@ export default function AdminPanelContainer(params) {
         setCheckboxes(data)
     }
 
+    // Check if any Checkbox is selected
     const someCheckbox = () => {
         return checkboxes.some(el => el.value===true)
     }
@@ -50,6 +52,7 @@ export default function AdminPanelContainer(params) {
             const data = checkboxes.filter(el => el.value).map(el => el.name)
             const res = await deleteDescriptions(data)
             console.log(res)
+            // setCheckboxes(checkboxArray)
         } catch (err) {
             if(err.response){
                 console.log(err.response.data)
@@ -59,12 +62,19 @@ export default function AdminPanelContainer(params) {
                 console.log(`Error: ${err.message}`)
             }
         }
-        // console.log(checkboxes)
     }
+
+
+    // USERS
+    const [users, setUsers] = useState(getAllUsers)
     
     useEffect(() => {
-        // console.log(someCheckbox())
-    })
+        const checkboxArray = descriptions.map(el => {
+            return {name: el._id, value: false};
+        })
+        setCheckboxes(checkboxArray)
+        // console.log(descriptions.length)
+    },[descriptions])
 
     return (
         <Box sx={{ p: isSS ? 1 : 2 }}>
@@ -105,22 +115,41 @@ export default function AdminPanelContainer(params) {
                                     label="descriptions"
                                     value="0"
                                 />
+                                <Tab
+                                    sx={isSS
+                                    ?   { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
+                                    :   { p: 0 }}
+                                    label="users"
+                                    value="1"
+                                />
                             </TabList>
                             <Box sx={{ width: '100%' }}>
-                                <TabPanel sx={{ p: 0 }} value="0">
+                                <TabPanel sx={{ p: 0 }} value='0'>
                                     <List sx={{ pb: 0 }}>
-                                        {descriptions.map((element, i) =>
+                                        {descriptions.map((el, i) =>
                                             <DescriptionItem
-                                                description={element}
+                                                descriptionsLength={descriptions.length}
+                                                description={el}
                                                 onCheckboxChange={handleCheckbox}
                                                 key={i}
                                             />
                                         )}
+                                        {/* Delete Selected and Add New Buttons */}
                                         <DescriptionItem
-                                            showDeleteButton={someCheckbox()}
                                             description={{description: "", status: "", comments: ""}}
                                             handleDeleteMany={handleDeleteMany}
+                                            showDeleteButton={someCheckbox()}
                                         />
+                                    </List>
+                                </TabPanel>
+                                <TabPanel sx={{ p: 0 }} value='1'>
+                                    <List sx={{ pb: 0 }}>
+                                        {/* {getAllUsers.map((el, i) =>
+                                            <AdminUserItem
+                                            user={el}
+                                            key={i}
+                                            />
+                                        )} */}
                                     </List>
                                 </TabPanel>
                             </Box>

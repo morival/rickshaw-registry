@@ -5,6 +5,17 @@ import { useCookies } from 'react-cookie';
 import ChecklistServices from '../../services/ChecklistServices';
 
 
+// Catch Error
+function catchErr(err) {
+    if(err.response){
+        console.log(err.response.data)
+        console.log(err.response.status)
+        console.log(err.response.headers)
+    } else {
+        console.log(`Error: ${err.message}`)
+    }
+}
+
 
 const AuthContext = createContext()
 
@@ -27,7 +38,7 @@ export function AuthProvider({children}) {
 
     // Services
     const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, getAllUsers, updateUser, deleteUser } = UsersServices
-    const { createRecord, getRecord, getAllRecords, getUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
+    const { createRecord, getRecord, getAllRecords, getAllUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
     const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
     async function authenticate(data) {
@@ -64,81 +75,62 @@ export function AuthProvider({children}) {
         setLoading(false)
     }
 
-    async function findDescriptions() {
-        const descriptionsList = await getAllDescriptions()
-        setDescriptions(descriptionsList.data)
-        setCookie('descriptions', descriptionsList.data, { path: '/' })
+
+    // Records
+    async function getUserRecords(user) {
+        try {
+            const filteredRecords = await getAllUserRecords(user)
+            setRecords(filteredRecords.data)
+        } catch (err) {
+            
+        }
+    }
+
+
+    // Admin Descriptions
+    async function findDescriptions(res) {
+        if (res && res.status < 300) {
+            const descriptionsList = await getAllDescriptions();
+            setDescriptions(descriptionsList.data);
+            setCookie('descriptions', descriptionsList.data, { path: '/' });
+            console.log(res)
+            return res
+        }
     }
 
     async function createDescription(data) {
         try {
             const res = await createOneDescription(data)
-            if (res && res.status < 300) {
-                findDescriptions();
-                return res;
-            }
+            return findDescriptions(res)
         } catch (err) {
-            if(err.response){
-                console.log(err.response.data)
-                console.log(err.response.status)
-                console.log(err.response.headers)
-            } else {
-                console.log(`Error: ${err.message}`)
-            }
+            catchErr(err)
         }
     }
 
     async function updateDescription(data) {
         try {
             const res = await updateOneDescription(data)
-            if (res && res.status < 300) {
-                findDescriptions();
-                return res;
-            }
+            return findDescriptions(res)
         } catch (err) {
-            if(err.response){
-                console.log(err.response.data)
-                console.log(err.response.status)
-                console.log(err.response.headers)
-            } else {
-                console.log(`Error: ${err.message}`)
-            }
+            catchErr(err)
         }
     }
 
     async function deleteDescription(data) {
         try {
             const res = await deleteOneDescription(data)
-            if (res && res.status < 300) {
-                findDescriptions();
-                return res;
-            }
+            return findDescriptions(res)
         } catch (err) {
-            if(err.response){
-                console.log(err.response.data)
-                console.log(err.response.status)
-                console.log(err.response.headers)
-            } else {
-                console.log(`Error: ${err.message}`)
-            }
+            catchErr(err)
         }
     }
 
     async function deleteDescriptions(data) {
         try {
             const res = await deleteManyDescription(data)
-            if (res && res.status < 300) {
-                findDescriptions();
-                return res;
-            }
+            return findDescriptions(res)
         } catch (err) {
-            if(err.response){
-                console.log(err.response.data)
-                console.log(err.response.status)
-                console.log(err.response.headers)
-            } else {
-                console.log(`Error: ${err.message}`)
-            }
+            catchErr(err)
         }
     }
 
