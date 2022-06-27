@@ -24,6 +24,9 @@ const AlertDialogSlide = forwardRef((props, ref) => {
   // Props
   const { dialogTitle, dialogText, label, name, type, defaultValue, value, error, onChange, onSubmit, onCancel, closeDialog } = props;
 
+  // Button text
+  const buttonValue = name === "password" ? "*****" : !defaultValue ? "This field is empty" : defaultValue;
+
   // Dialog Window State
   const [open, setOpen] = useState(false);
 
@@ -82,12 +85,12 @@ const AlertDialogSlide = forwardRef((props, ref) => {
     >
       {/* Item Label */}
       <ListItemText
-        sx={{ minWidth: isSS ? 100 : 135 }}
+        sx={{ minWidth: isSS ? 100 : 135, width: '35%' }}
         primary={label}
-        primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
+        primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: 1 }}
       />
       {/* Item Value */}
-      <ListItemText
+      {/* <ListItemText
         sx={{ width: '100%' }}
         primary={name === "password" ? "*****" : defaultValue}
         primaryTypographyProps={isSS
@@ -95,11 +98,12 @@ const AlertDialogSlide = forwardRef((props, ref) => {
           : { px: 3 }}
       // set error message
       // secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
-      />
+      /> */}
       {/* Item Change/Add Button */}
       <Controls.Button 
-        sx={{ minWidth: 70 }}
-        text={defaultValue || name === "password" ? "Change" : "Add"}
+        sx={{ minWidth: 70, width: '65%', textTransform: 'none' }}
+        text={buttonValue}
+        variant={defaultValue || name === "password" ? "contained" : "outlined"}
         color="primary"
         onClick={handleOpen}
       />
