@@ -196,7 +196,7 @@ export function AuthProvider({children}) {
 
     useEffect(() => {
         if (rememberMe && user) {
-            console.log(user)
+            // console.log(user)
             setCookie('user', user, { path: '/' })
             setCookie('loggedIn', true, { path: '/' })
             setCookie('rememberMe', rememberMe, { path: '/' })
