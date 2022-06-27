@@ -99,7 +99,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       // set error message
       // secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
       /> */}
-      {/* Item Change/Add Button */}
+      {/* Item Value Button */}
       <Controls.Button 
         sx={{ minWidth: 70, width: '65%', textTransform: 'none' }}
         text={buttonValue}

@@ -73,22 +73,22 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
         <ListItemText
           sx={{ minWidth: isSS ? 100 : 135 }}
           primary="Delete Account"
-          primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
+          primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: 1 }}
         />
         {/* Item Value */}
-        <ListItemText
+        {/* <ListItemText
           sx={{ width: '100%' }}
           primary="Permanently delete your Rickshaw account"
           primaryTypographyProps={isSS
             ? { fontSize: '0.8rem', p: '0 5px'  }
             : { px: 3 }}
-        />
+        /> */}
         {/* Item Delete Button */}
         <Controls.Button 
-          sx={{ minWidth: 70 }}
+          sx={{ minWidth: 70, width: '65%', textTransform: 'none' }}
           color="error"
           onClick={handleOpen}
-          text="Delete"
+          text="Permanently delete your Rickshaw account"
         />
 
         {/* Dialog Window */}
