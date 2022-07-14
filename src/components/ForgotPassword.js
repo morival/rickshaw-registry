@@ -36,7 +36,7 @@ export default function ForgotPassword() {
 
 
     // Auth Context
-    const { testEmail } = useAuth();
+    const { requestPasswordReset } = useAuth();
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
 
@@ -62,12 +62,11 @@ export default function ForgotPassword() {
         e.preventDefault();
         try {
             if (validate()) {
-                // check if email exists
-                console.log(formData)
-                const res = await testEmail(formData)
+                // reset password if email exists
+                const res = await requestPasswordReset(formData)
+                if (res.status === 202)
+                    setErrors({ email: res.data.message })
                 console.log(res)
-                // if (res.status === 202)
-                //     setErrors({ email: res.data.message })
             }
         } catch (err) {
             console.log(err)
@@ -122,7 +121,7 @@ export default function ForgotPassword() {
                                 />
                                 <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1, mt: 2 }}>
                                     <Controls.Button
-                                        text="Confirm"
+                                        text="Send"
                                         type="submit"
                                         fullWidth
                                     />

@@ -88,6 +88,17 @@ async function testPhoneNo(data) {
     }
 }
 
+// REQUEST Password Reset
+async function requestPasswordReset(data) {
+    try {
+        const res = await axios.post(URL+'resetPassword', data, config);
+        console.log(res)
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
 
 // READ ALL Users
 async function getAllUsers() {
@@ -129,6 +140,7 @@ const UsersServices = {
     getUser,
     testEmail,
     testPhoneNo,
+    requestPasswordReset,
     getAllUsers,
     updateUser,
     deleteUser

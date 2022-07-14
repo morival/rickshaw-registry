@@ -38,7 +38,7 @@ export function AuthProvider({children}) {
 
 
     // Services
-    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, getAllUsers, updateUser, deleteUser } = UsersServices
+    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, requestPasswordReset, getAllUsers, updateUser, deleteUser } = UsersServices
     const { createRecord, getRecord, getAllRecords, getAllUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
     const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
@@ -173,6 +173,7 @@ export function AuthProvider({children}) {
         testEmail,
         testPhoneNo,
         testEmailAndPhoneNo,
+        requestPasswordReset,
         getAllUsers,
         updateUser,
         deleteUser,

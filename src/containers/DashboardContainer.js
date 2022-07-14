@@ -113,7 +113,7 @@ export default function DashboardContainer( children, ...rest ) {
             if (validate()) {
                 // check for duplicate email or phone number in DB
                 const res = await testEmailAndPhoneNo(formData)
-                console.log(formData)
+                console.log(res)
                 // if duplicate, set errors
                 if (res && res.status === 200) {
                     setErrors(res.data.code === "email" ? { email: res.data.message } : { phoneNumber: res.data.message })
