@@ -43,7 +43,7 @@ export default function AdminUserItem({ user }) {
 
 
     // Auth Context
-    const { testEmailAndPhoneNo } = useAuth()
+    const { testEmailAndPhoneNo, updateUser } = useAuth()
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
 
@@ -68,9 +68,18 @@ export default function AdminUserItem({ user }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const res = await testEmailAndPhoneNo(formData)
-        console.log(res)
         console.log(formData)
+        // check for duplicate email or phone number in DB
+        const res = await testEmailAndPhoneNo(formData)
+        if (res && res.status === 200)
+            setErrors(res.data.code === "email" ? { email: res.data.message } : { phoneNumber: res.data.message });
+        else {
+            const res = await updateUser(formData)
+            if (res && res.status < 300) {
+                console.log(res)
+                handleClose();
+            }
+        }
     }
 
     return (

@@ -9,7 +9,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     
 
     // Auth Context
-    const {loggedIn}  = useAuth()
+    const { loggedIn }  = useAuth()
 
     
     return (

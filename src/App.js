@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
-// import { useAuth } from './components/context/AuthContext';
-import PublicRoute from './containers/PublicRoute';
-import PrivateRoute from './containers/PrivateRoute';
+import PublicRoute from './routes/PublicRoute';
+import PrivateRoute from './routes/PrivateRoute';
+import AdminRoute from './routes/AdminRoute';
 import Home from './containers/HomeContainer';
 import SignupLogin from './containers/SignupLoginContainer';
 import Checklist from './containers/ChecklistContainer';
@@ -14,12 +14,6 @@ import AdminPanel from './containers/AdminPanelContainer';
 function App() {
 
 
-  // const { user }  = useAuth()
-
-  // useEffect(() => {
-  //   // console.log(user)
-  // }, [user])
-
   return (
         <Router>
           <Switch>
@@ -28,7 +22,7 @@ function App() {
             <PrivateRoute exact path="/checklist" component={Checklist} />
             <PrivateRoute exact path="/records" component={Records} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            <PrivateRoute exact path="/admin" component={AdminPanel}/>
+            <AdminRoute exact path="/admin" component={AdminPanel}/>
           </Switch>
         </Router>
   );

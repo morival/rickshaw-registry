@@ -23,7 +23,7 @@ const Drawer = props => {
     const [open, setOpen] = useState(false);
     
     // Auth Context
-    const { loggedIn, logout }  = useAuth()
+    const { user, loggedIn, logout }  = useAuth()
     
     const { history } = props;
 
@@ -31,7 +31,6 @@ const Drawer = props => {
         history.push('/')
         logout();
     }
-
 
     const itemsList = [{
         text: "Safety Checklist",
@@ -49,20 +48,25 @@ const Drawer = props => {
         text: "Admin Panel",
         icon: <AdminPanelSettings/>,
         onClick: () => history.push('/admin')
-    }, loggedIn 
-    ?   {
-            text: "Log Out",
-            icon: <LogoutIcon/>,
-            onClick: () => handleLogout()
-        }
-    :   {
-            text: "Log in / Sign up",
-            icon: <LoginIcon/>,
-            onClick: () => history.push('/login')
+    }, {
+        text: "Log Out",
+        icon: <LogoutIcon/>,
+        onClick: () => handleLogout()
+    }, {
+        text: "Log in / Sign up",
+        icon: <LoginIcon/>,
+        onClick: () => history.push('/login')
         }
     ];
 
-
+    const selectedItems = () => {
+        if (loggedIn && user.acc_type === "admin")
+            return [0, 1, 2, 3, 4]
+        else if (loggedIn)
+            return [0, 1, 2, 4]
+        else 
+            return [5]
+    }
 
     return(
         <>
@@ -83,7 +87,9 @@ const Drawer = props => {
                 <List
                 className={classes.drawer}
                 >
-                    {itemsList.map((item, i) => {
+                    {itemsList
+                    .filter((item, i) => selectedItems().includes(i))
+                    .map((item, i) => {
                         const {text, icon, onClick} = item;
                         return(
                             <ListItem button key={i} onClick={onClick}>
