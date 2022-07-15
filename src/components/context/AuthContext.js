@@ -94,20 +94,18 @@ export function AuthProvider({children}) {
 
     
     // Admin Descriptions
-    async function findDescriptions(res) {
-        if (res && res.status < 300) {
-            const descriptionsList = await getAllDescriptions();
-            setDescriptions(descriptionsList.data);
-            setCookie('descriptions', descriptionsList.data, { path: '/' });
-            console.log(res)
-            return res
-        }
+    async function findDescriptions() {
+        const descriptionsList = await getAllDescriptions();
+        setDescriptions(descriptionsList.data);
+        setCookie('descriptions', descriptionsList.data, { path: '/' });
     }
     
     async function createDescription(data) {
         try {
             const res = await createOneDescription(data);
-            return findDescriptions(res)
+            if (res && res.status < 300)
+                findDescriptions();
+            return res;
         } catch (err) {
             catchErr(err)
         }
@@ -116,7 +114,9 @@ export function AuthProvider({children}) {
     async function updateDescription(data) {
         try {
             const res = await updateOneDescription(data);
-            return findDescriptions(res)
+            if (res && res.status < 300)
+                findDescriptions();
+            return res;
         } catch (err) {
             catchErr(err)
         }
@@ -125,7 +125,9 @@ export function AuthProvider({children}) {
     async function deleteDescription(data) {
         try {
             const res = await deleteOneDescription(data);
-            return findDescriptions(res)
+            if (res && res.status < 300)
+                findDescriptions();
+            return res;
         } catch (err) {
             catchErr(err)
         }
@@ -134,7 +136,9 @@ export function AuthProvider({children}) {
     async function deleteDescriptions(data) {
         try {
             const res = await deleteManyDescription(data);
-            return findDescriptions(res)
+            if (res && res.status < 300)
+                findDescriptions();
+            return res;
         } catch (err) {
             catchErr(err)
         }
