@@ -93,7 +93,7 @@ export default function Signup({handleChange}) {
                         return (
                             <Controls.Input
                                 label={element.label}
-                                name={element.name}
+                                name={elementName}
                                 type={element.type}
                                 value={formData[elementName]}
                                 error={errors[elementName]}

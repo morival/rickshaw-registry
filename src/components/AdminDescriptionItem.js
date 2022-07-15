@@ -57,7 +57,7 @@ export default function DescriptionItem(props) {
         setOpen(true);
     };
     
-      const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
     };
 
@@ -161,6 +161,7 @@ export default function DescriptionItem(props) {
                 <Form onSubmit={handleSubmit}>
                     {/* Dialog Title */}
                     <DialogTitle>{hasDescription ? "Update Description" : "Add New Description"}</DialogTitle>
+                    
                     <DialogContent sx={{ px:2, py: 0.2, maxWidth: 260 }}>
                         <Paper sx={{ p: 1 }}>
                             {/* Dialog Message */}

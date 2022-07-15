@@ -82,7 +82,7 @@ export function AuthProvider({children}) {
     }
     
     
-    // Records
+    // RECORDS
     async function getUserRecords(user) {
         try {
             const filteredRecords = await getAllUserRecords(user);
@@ -93,7 +93,7 @@ export function AuthProvider({children}) {
     }
 
     
-    // Admin Descriptions
+    // DESCRIPTIONS
     async function findDescriptions() {
         const descriptionsList = await getAllDescriptions();
         setDescriptions(descriptionsList.data);
@@ -145,7 +145,7 @@ export function AuthProvider({children}) {
     }
 
 
-    // Users
+    // USERS
     async function findUsers() {
         try {
             const usersList = await getAllUsers();

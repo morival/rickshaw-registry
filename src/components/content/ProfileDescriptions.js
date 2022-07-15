@@ -64,9 +64,9 @@ const profileDetails = [
         label: "Confirm Password",
         name: "confirmPassword",
         type: "password"
-    },{
-        label: "Account Type",
-        name: "acc_type"
+    // },{
+    //     label: "Account Type",
+    //     name: "acc_type"
     }
 ]
 

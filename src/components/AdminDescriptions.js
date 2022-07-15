@@ -52,7 +52,7 @@ export default function AdminDescriptions(params) {
     },[descriptions])
 
 
-    return(
+    return (
         <List sx={{ pb: 0 }}>
             {descriptions.map((el, i) =>
                 <DescriptionItem
