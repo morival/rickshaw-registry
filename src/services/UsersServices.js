@@ -1,7 +1,7 @@
 require('dotenv').config()
 const axios = require('axios').default;
 
-const URL = process.env.REACT_APP_DEFAULT_URL+"users/"
+const URL = process.env.REACT_APP_DEFAULT_URL+'users/'
 // const URL = "https://parseapi.back4app.com/classes/users";
 
 
@@ -122,6 +122,16 @@ async function updateUser(data) {
         catchErr(err)
     }
 }
+
+// UPDATE User as Admin
+async function updateUserAsAdmin(data) {
+    try {
+        const res = await axios.put(URL+'updateAsAdmin/'+data._id, data, config);
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
     
 
 // DELETE User
@@ -143,6 +153,7 @@ const UsersServices = {
     requestPasswordReset,
     getAllUsers,
     updateUser,
+    updateUserAsAdmin,
     deleteUser
 }
 
