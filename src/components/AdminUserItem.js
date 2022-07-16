@@ -96,16 +96,20 @@ export default function AdminUserItem({ user }) {
             
             {/* Dialog Window */}
             <Dialog
+                fullScreen={ isSS ? true : false }
                 open={open}
                 onClose={handleCancel}
                 TransitionComponent={Transition}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <Form onSubmit={handleSubmit}>
+                <Form 
+                    style={ isSS ? { display: 'flex', flexDirection: 'column', alignItems: 'center' } : null}
+                    onSubmit={handleSubmit}
+                >
                     {/* Dialog Title */}
-                    <DialogTitle>{user.name}</DialogTitle>
 
-                    <DialogContent sx={{ px:2, py: 0.2, maxWidth: 260 }}>
+                    <DialogTitle sx={{ textAlign: 'center' }}>{user.name}</DialogTitle>
+                    <DialogContent sx={{ px:2, py: 0.2, maxWidth: 300 }}>
                         <Paper sx={{ p: 1 }}>
                             {/* Dialog Message */}
                             <DialogContentText id="alert-dialog-slide-description">
@@ -140,7 +144,7 @@ export default function AdminUserItem({ user }) {
                             />
                         </Paper>
                     </DialogContent>
-                    <DialogActions>
+                    <DialogActions sx={{ width: '100%', maxWidth: 300 }}>
                     <Button onClick={handleCancel}>Cancel</Button>
                         <Button type="submit" color={errors.description ? "error" : "primary"}>Save</Button>
                     </DialogActions>
