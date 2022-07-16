@@ -38,7 +38,7 @@ export function AuthProvider({children}) {
 
 
     // Services
-    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, requestPasswordReset, getAllUsers, updateUser, updateUserAsAdmin, deleteUser } = UsersServices
+    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, requestPasswordReset, getAllUsers, updateOneUser, deleteUser } = UsersServices
     const { createRecord, getRecord, getAllRecords, getAllUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
     const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
@@ -156,6 +156,16 @@ export function AuthProvider({children}) {
         }
     }
 
+    async function updateUser(data, updateAs) {
+        try {
+            const res = await updateOneUser(data, updateAs)
+            console.log(res)
+            return res;
+        } catch (err) {
+            catchErr(err)
+        }
+    }
+
 
     const value = {
         user,
@@ -180,7 +190,7 @@ export function AuthProvider({children}) {
         requestPasswordReset,
         findUsers,
         updateUser,
-        updateUserAsAdmin,
+        // updateUserAsAdmin,
         deleteUser,
         createRecord,
         getRecord,

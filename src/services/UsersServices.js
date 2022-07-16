@@ -113,9 +113,9 @@ async function getAllUsers() {
 
 
 // UPDATE User
-async function updateUser(data) {
+async function updateOneUser(data, updateAs) {
     try {
-        const res = await axios.put(URL+data._id, data, config);
+        const res = await axios.put(URL+updateAs+'/'+data._id, data, config);
         // console.log(res)
         return res;
     } catch (err) {
@@ -124,14 +124,14 @@ async function updateUser(data) {
 }
 
 // UPDATE User as Admin
-async function updateUserAsAdmin(data) {
-    try {
-        const res = await axios.put(URL+'updateAsAdmin/'+data._id, data, config);
-        return res;
-    } catch (err) {
-        catchErr(err)
-    }
-}
+// async function updateUserAsAdmin(data) {
+//     try {
+//         const res = await axios.put(URL+'admin/'+data._id, data, config);
+//         return res;
+//     } catch (err) {
+//         catchErr(err)
+//     }
+// }
     
 
 // DELETE User
@@ -152,8 +152,8 @@ const UsersServices = {
     testPhoneNo,
     requestPasswordReset,
     getAllUsers,
-    updateUser,
-    updateUserAsAdmin,
+    updateOneUser,
+    // updateUserAsAdmin,
     deleteUser
 }
 

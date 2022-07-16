@@ -11,7 +11,6 @@ function AdminRoute({ component: Component, ...rest }) {
     // Auth Context
     const { loggedIn, user }  = useAuth()
 
-    console.log(user.acc_type)
 
     return ( 
         <Route {...rest} render={props => (

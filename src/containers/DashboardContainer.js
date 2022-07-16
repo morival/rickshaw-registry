@@ -132,7 +132,7 @@ export default function DashboardContainer( children, ...rest ) {
                         // else request to update DB with formData
                         } else if (auth.status < 300) {
                             const tempData = {...formData, password: passwordVerification.password}
-                            const res = await updateUser(tempData)
+                            const res = await updateUser(tempData, "user")
                             if (res && res.status < 300) {
                                 setUser(res.data)
                                 setCloseDialog((prevState) => !prevState)

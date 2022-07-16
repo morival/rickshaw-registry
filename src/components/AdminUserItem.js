@@ -43,7 +43,7 @@ export default function AdminUserItem({ user }) {
 
 
     // Auth Context
-    const { testEmailAndPhoneNo, updateUserAsAdmin, findUsers } = useAuth()
+    const { testEmailAndPhoneNo, updateUser, findUsers } = useAuth()
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
 
@@ -74,7 +74,7 @@ export default function AdminUserItem({ user }) {
         if (res && res.status === 200)
             setErrors(res.data.code === "email" ? { email: res.data.message } : { phoneNumber: res.data.message });
         else {
-            const res = await updateUserAsAdmin(formData)
+            const res = await updateUser(formData, "admin")
             if (res && res.status < 300) {
                 console.log(res)
                 findUsers();
