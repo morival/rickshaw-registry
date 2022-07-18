@@ -38,7 +38,7 @@ export function AuthProvider({children}) {
 
 
     // Services
-    const { authenticateUser, createUser, getUser, testEmail, testPhoneNo, requestPasswordReset, getAllUsers, updateOneUser, deleteUser } = UsersServices
+    const { authenticateUser, createUser, getUser, testEmailAndPhoneNo, testEmail, testPhoneNo, requestPasswordReset, getAllUsers, updateOneUser, deleteUser } = UsersServices
     const { createRecord, getRecord, getAllRecords, getAllUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
     const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
@@ -49,17 +49,17 @@ export function AuthProvider({children}) {
     }
 
     // Email and Phone Number Test
-    async function testEmailAndPhoneNo(data) {
-        console.log("checking if email or phone number exists")
-        const resEmail = await testEmail(data)
-        const resPhoneNo = await testPhoneNo(data)
-        if (resEmail.status === 200)
-            return resEmail
-        else if (resPhoneNo.status === 200)
-            return resPhoneNo
-        else
-            return undefined
-    }
+    // async function testEmailAndPhoneNo(data) {
+    //     console.log("checking if email or phone number exists")
+    //     const resEmail = await testEmail(data)
+    //     const resPhoneNo = await testPhoneNo(data)
+    //     if (resEmail.status === 200)
+    //         return resEmail
+    //     else if (resPhoneNo.status === 200)
+    //         return resPhoneNo
+    //     else
+    //         return undefined
+    // }
     
     // Login
     async function login(data) {

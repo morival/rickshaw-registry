@@ -64,6 +64,17 @@ async function getUser(data) {
     }        
 }
 
+// TEST Email & Phone Number if already exists
+async function testEmailAndPhoneNo(data) {
+    try {
+        const res = await axios.post(URL+'testForDuplicate', data, config);
+        console.log(res)
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
 
 // TEST Email if already exists
 async function testEmail(data) {
@@ -148,6 +159,7 @@ const UsersServices = {
     authenticateUser,
     createUser,
     getUser,
+    testEmailAndPhoneNo,
     testEmail,
     testPhoneNo,
     requestPasswordReset,
