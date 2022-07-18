@@ -68,7 +68,7 @@ async function getUser(data) {
 async function testEmailAndPhoneNo(data) {
     try {
         const res = await axios.post(URL+'testForDuplicate', data, config);
-        console.log(res)
+        // console.log(res)
         return res;
     } catch (err) {
         catchErr(err)

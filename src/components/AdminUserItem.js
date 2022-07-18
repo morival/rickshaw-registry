@@ -70,11 +70,9 @@ export default function AdminUserItem({ user }) {
         e.preventDefault();
         // check for duplicate email or phone number in DB
         const res = await testEmailAndPhoneNo(formData)
-        console.log(res)
+        console.log(res.data)
         if (res && res.status === 203) {
-            res.data
-            .filter((element) => !Object.values(element).includes("ok"))
-            .forEach((element) => setErrors(element))
+            setErrors(res.data)
         } else {
             const res = await updateUser(formData, "admin")
             if (res && res.status < 300) {
