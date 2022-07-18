@@ -115,8 +115,8 @@ export default function DashboardContainer( children, ...rest ) {
                 const res = await testEmailAndPhoneNo(formData)
                 console.log(res)
                 // if duplicate, set errors
-                if (res && res.status === 200) {
-                    setErrors(res.data.code === "email" ? { email: res.data.message } : { phoneNumber: res.data.message })
+                if (res && res.status === 203) {
+                    setErrors(res.data)
                 } else {
                     // request password verification if not done before
                     if (!passwordVerification.password) {
