@@ -42,7 +42,7 @@ export default function DashboardContainer( children, ...rest ) {
     }
     
     // Auth Context
-    const { user, setUser, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, deleteUserRecord, logout, rememberMe, setCookie } = useAuth();
+    const { user, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, deleteUserRecord, logout } = useAuth();
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
     // refresh Data Form
@@ -111,10 +111,8 @@ export default function DashboardContainer( children, ...rest ) {
         try {
             // validate entry
             if (validate()) {
-                // check for duplicate email or phone number in DB
+                // check for duplicate email or phone number in DB and set errors
                 const res = await testEmailAndPhoneNo(formData)
-                console.log(res)
-                // if duplicate, set errors
                 if (res && res.status === 203) {
                     setErrors(res.data)
                 } else {
@@ -125,23 +123,21 @@ export default function DashboardContainer( children, ...rest ) {
                     } else {
                         const userCredentials = { _id: user._id, password: passwordVerification.password }
                         const auth = await authenticate(userCredentials)
-                        // if password verification failed, set errors
-                        if (auth.status === 401) {
-                            refreshPasVer();
-                            setErrors({ password: auth.data.message })
-                        // else request to update DB with formData
-                        } else if (auth.status < 300) {
-                            const tempData = {...formData, password: passwordVerification.password}
-                            const res = await updateUser(tempData, "user")
-                            if (res && res.status < 300) {
-                                setUser(res.data)
+                        // request to update DB with formData
+                        if (auth.status === 200) {
+                            if (!formData.password)
+                                formData['password'] = passwordVerification.password
+                            console.log(formData)
+                            const res = await updateUser(formData, "user")
+                            if (res && res.status === 200) {
                                 setCloseDialog((prevState) => !prevState)
-                                // if rememeberMe is on, save user details to Cookies
-                                if (rememberMe) 
-                                    setCookie('user', res.data, { path:'/' })
                                 console.log("Update completed")
                             }
-                            return res
+                        // else, set errors and refresh passwordVerification form
+                        } else {
+                            console.log(auth.data)
+                            refreshPasVer();
+                            setErrors(auth.data)
                         }
                     }
                 }

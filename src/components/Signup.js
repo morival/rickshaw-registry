@@ -45,7 +45,7 @@ export default function Signup({handleChange}) {
     // Forms
     const { formData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
     // Auth Context
-    const { setLoading, createUser, login } = useAuth();
+    const { setLoading, testEmailAndPhoneNo, signup } = useAuth();
     
 
     async function handleSubmit(e) {
@@ -53,18 +53,12 @@ export default function Signup({handleChange}) {
         e.preventDefault()
         try {
             if (validate()) {
-                const res = await createUser(formData)
-                console.log(res)
-                if (res && res.status < 300) {
-                    login(res.data)
-                } else if (res && res.status === 409) {
-                    setErrors(res.data.code === "email"
-                    ?   { email: res.data.message }
-                    :   { phoneNumber: res.data.message }
-                    )
+                const res = await testEmailAndPhoneNo(formData)
+                if (res && res.status === 203) {
+                    setErrors(res.data)
+                } else {
+                    signup(formData)
                 }
-            } else {
-                return console.log("validation failed")
             }
         } catch (err){
             console.log(err)

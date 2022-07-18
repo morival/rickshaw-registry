@@ -38,7 +38,7 @@ export function AuthProvider({children}) {
 
 
     // Services
-    const { authenticateUser, createUser, getUser, testEmailAndPhoneNo, testEmail, testPhoneNo, requestPasswordReset, getAllUsers, updateOneUser, deleteUser } = UsersServices
+    const { authenticateUser, createUser, getUser, testEmailAndPhoneNo, requestPasswordReset, getAllUsers, updateOneUser, deleteUser } = UsersServices
     const { createRecord, getRecord, getAllRecords, getAllUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
     const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
@@ -48,21 +48,17 @@ export function AuthProvider({children}) {
         return await authenticateUser(data)
     }
 
-    // Email and Phone Number Test
-    // async function testEmailAndPhoneNo(data) {
-    //     console.log("checking if email or phone number exists")
-    //     const resEmail = await testEmail(data)
-    //     const resPhoneNo = await testPhoneNo(data)
-    //     if (resEmail.status === 200)
-    //         return resEmail
-    //     else if (resPhoneNo.status === 200)
-    //         return resPhoneNo
-    //     else
-    //         return undefined
-    // }
+    // Signup
+    async function signup(data) {
+        console.log(data)
+        const res = await createUser(data)
+        if (res && res.status === 201)
+            login(res.data)
+    }
     
     // Login
     async function login(data) {
+        console.log(data)
         setUser(data);
         findUsers();
         findDescriptions();
@@ -159,7 +155,13 @@ export function AuthProvider({children}) {
     async function updateUser(data, updateAs) {
         try {
             const res = await updateOneUser(data, updateAs)
-            console.log(res)
+            if(res && res.status === 200) {
+                if(updateAs === "user" || data._id === user._id) {
+                    setUser(res.data)
+                    if (rememberMe)
+                        setCookie('user', res.data, { path:'/' })
+                }
+            }
             return res;
         } catch (err) {
             catchErr(err)
@@ -184,13 +186,10 @@ export function AuthProvider({children}) {
         authenticate,
         createUser,
         getUser,
-        testEmail,
-        testPhoneNo,
         testEmailAndPhoneNo,
         requestPasswordReset,
         findUsers,
         updateUser,
-        // updateUserAsAdmin,
         deleteUser,
         createRecord,
         getRecord,
@@ -203,6 +202,7 @@ export function AuthProvider({children}) {
         updateDescription,
         deleteDescription,
         deleteDescriptions,
+        signup,
         login,
         logout,
         rememberMe,

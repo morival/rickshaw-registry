@@ -48,9 +48,10 @@ export default function Login({handleChange}) {
 
 
     async function handleSubmit(e) {
-        setLoading(true)
         e.preventDefault()
+        setLoading(true)
         try {
+            // validate entry
             if (validate()) {
                 const auth = await authenticate(formData)
                 console.log(auth)
@@ -58,10 +59,8 @@ export default function Login({handleChange}) {
                     const res = await getUser(auth.data)
                     console.log(res)
                     login(res.data)
-                } else if (auth && auth.status === 404) {
-                    setErrors({ userLogin: auth.data.message })
-                } else if (auth && auth.status === 401) {
-                    setErrors({ password: auth.data.message })
+                } else {
+                    setErrors(auth.data)
                 }
             }
         } catch(err) {
