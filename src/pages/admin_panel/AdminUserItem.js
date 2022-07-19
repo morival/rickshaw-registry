@@ -47,10 +47,12 @@ export default function AdminUserItem(props) {
 
 
     // Auth Context
-    const { testEmailAndPhoneNo, updateUser, findUsers } = useAuth()
+    const { testEmailAndPhoneNo, updateUser, findUsers, deleteUser } = useAuth()
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
 
+    if (!user)
+        console.log("empty user")
 
     // Checkbox
     const [checked, setChecked] = useState(false);
@@ -61,6 +63,8 @@ export default function AdminUserItem(props) {
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
+    // Dialog Checkbox State for user deletion
+    const [dChecked, setDChecked] = useState(false);
 
     const menuItems=["user", "admin"]
 
@@ -77,6 +81,10 @@ export default function AdminUserItem(props) {
         setErrors({})
         handleClose();
     };
+
+    const handleChange = (e) => {
+        setDChecked(e.target.value);
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -95,20 +103,34 @@ export default function AdminUserItem(props) {
         }
     }
 
+    async function handleDelete() {
+        console.log(formData)
+        try {
+            if (dChecked) {
+                const res = await deleteUser(formData)
+                console.log(res)
+                if (res.status < 300)
+                    handleClose()
+            }
+        } catch (err) {
+            console.log(`Error: ${err.message}`)
+        }
+    }
+
+
     useEffect(() => {
         setChecked(false)
     }, [numberOfUsers]);
 
     return (
-        <MuiListItem
-        sx={{ p: isSS ? '8px 0' : '8px 8px' }}
-        >
-            {/* Item Checkbox */}
+        <MuiListItem sx={{ p: isSS ? '8px 0' : '8px 8px' }}>
+            {/* Item Checkbox / Delete Button */}
             <Controls.Checkbox
                 name={user._id}
                 value={checked}
                 onChange={handleCheckboxChange}
             />
+            {/* Item Name / Change Button */}
             <Controls.Button
                 text={user.name}
                 // color='warning'
@@ -165,10 +187,18 @@ export default function AdminUserItem(props) {
                                 fullWidth
                             />
                         </Paper>
+                        <Controls.Checkbox
+                            sx={{ pt: 1 }}
+                            labelSX={{ fontSize: '12px' }}
+                            label="check this box to confirm you want to delete this record"
+                            value={dChecked}
+                            onChange={handleChange}
+                        />
                     </DialogContent>
                     <DialogActions sx={{ width: '100%', maxWidth: 300 }}>
                     <Button onClick={handleCancel}>Cancel</Button>
-                        <Button type="submit" color={errors.user ? "error" : "primary"}>Save</Button>
+                    {dChecked ? <Button id={user._id} onClick={handleDelete}>Delete</Button> : null}
+                    <Button type="submit" color={errors.user ? "error" : "primary"}>Save</Button>
                     </DialogActions>
                 </Form>
             </Dialog>

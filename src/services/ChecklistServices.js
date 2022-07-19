@@ -58,7 +58,7 @@ async function updateOneDescription(data) {
 }
 
 
-// DELETE Description
+// DELETE One Description
 async function deleteOneDescription(data) {
     try {
         const res = await axios.delete(URL+data._id);

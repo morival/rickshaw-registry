@@ -38,7 +38,7 @@ export function AuthProvider({children}) {
 
 
     // Services
-    const { authenticateUser, createUser, getUser, testEmailAndPhoneNo, requestPasswordReset, getAllUsers, updateOneUser, deleteUser } = UsersServices
+    const { authenticateUser, createUser, getUser, testEmailAndPhoneNo, requestPasswordReset, getAllUsers, updateOneUser, deleteOneUser, deleteManyUsers } = UsersServices
     const { createRecord, getRecord, getAllRecords, getAllUserRecords, deleteRecord, deleteUserRecord } = RecordsServices
     const { createOneDescription, getAllDescriptions, updateOneDescription, deleteOneDescription, deleteManyDescription } = ChecklistServices
 
@@ -71,9 +71,9 @@ export function AuthProvider({children}) {
         removeCookie('user')
         removeCookie('loggedIn')
         removeCookie('rememberMe')
+        setLoggedIn(false)
         setUser(null)
         setRecordId(null)
-        setLoggedIn(false)
         setLoading(false)
     }
     
@@ -168,6 +168,28 @@ export function AuthProvider({children}) {
         }
     }
 
+    async function deleteUser(data) {
+        try {
+            const res = await deleteOneUser(data);
+            if (res && res.status < 300)
+                findUsers();
+            return res;
+        } catch (err) {
+            catchErr(err)
+        }
+    }
+    
+    async function deleteUsers(data) {
+        try {
+            const res = await deleteManyUsers(data);
+            if (res && res.status < 300)
+                findUsers();
+            return res;
+        } catch (err) {
+            catchErr(err)
+        }
+    }
+
 
     const value = {
         user,
@@ -191,6 +213,7 @@ export function AuthProvider({children}) {
         findUsers,
         updateUser,
         deleteUser,
+        deleteUsers,
         createRecord,
         getRecord,
         getAllRecords,

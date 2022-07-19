@@ -38,7 +38,7 @@ export default function DescriptionItem(props) {
     const { createDescription, updateDescription, deleteDescription } = useAuth();
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(description, true, validate);
-    // console.log(formData)
+    
     const hasDescription = description.description;
 
 
@@ -107,14 +107,14 @@ export default function DescriptionItem(props) {
             if (res && res.status < 300)
                     handleClose();
         } catch (err) {
-            
+            console.log(`Error: ${err.message}`)
         }
     }
     const deleteManyButton = () => (
         <Controls.Button
-        text="Delete Selected"
-        color="error"
-        onClick={handleDeleteMany}
+            text="Delete Selected"
+            color="error"
+            onClick={handleDeleteMany}
         />
     )
 
@@ -124,10 +124,8 @@ export default function DescriptionItem(props) {
     },[numberOfDescriptions, hasDescription])
 
     return (
-        <MuiListItem
-            sx={{ p: isSS ? '8px 0' : '8px 8px' }}
-        >
-            {/* Item Checkbox */}
+        <MuiListItem sx={{ p: isSS ? '8px 0' : '8px 8px' }}>
+            {/* Item Checkbox / Delete Button */}
             {hasDescription 
             ?   <Controls.Checkbox
                     name={description._id}
@@ -143,7 +141,7 @@ export default function DescriptionItem(props) {
                 primary={hasDescription}
                 primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
             />
-            {/* Item Change/Add Button */}
+            {/* Item Change / Add Button */}
             <Controls.Button 
                 sx={{ minWidth: 70 }}
                 text={hasDescription ? "Change" : "Add New"}

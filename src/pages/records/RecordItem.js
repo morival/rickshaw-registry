@@ -30,7 +30,7 @@ export default function RecordItem({ record, onDelete }) {
     const [openPDF, setOpenPDF] = useState(false);
     
     // Checkbox State for Record deletion
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     
 
     // Handlers
@@ -57,19 +57,13 @@ export default function RecordItem({ record, onDelete }) {
     async function handleDelete(e) {
         try {
             if (checked) {
-                const callDelete = await onDelete(e)
-                callDelete.status === 200
+                const res = await onDelete(e)
+                res.status === 200
                 ?   handleClose()
-                :   console.log(callDelete)
+                :   console.log(res)
             }
         } catch (err) {
-            if (err.response){
-                console.log(err.response.data)
-                console.log(err.response.status)
-                console.log(err.response.headers)
-            } else {
-                console.log(`Error: ${err.message}`)
-            }
+            console.log(`Error: ${err.message}`)
         }
     }
     

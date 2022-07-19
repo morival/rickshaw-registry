@@ -55,8 +55,9 @@ async function createUser(data) {
 
 // READ User 
 async function getUser(data) {
+    console.log(data._id)
     try {
-        const res = await axios.get(URL+data.id , config);
+        const res = await axios.get(URL+data._id , config);
         console.log(res)
         return res;
     } catch (err) {
@@ -113,9 +114,21 @@ async function updateOneUser(data, updateAs) {
     
 
 // DELETE User
-async function deleteUser(data) {
+async function deleteOneUser(data) {
     try {
-        const res = await axios.delete(URL+data.id);
+        const res = await axios.delete(URL+data._id);
+        return res;
+    } catch (err) {
+        catchErr(err)
+    }
+}
+
+
+// DELETE Many Users
+async function deleteManyUsers(data) {
+    try {
+        const res = await axios.delete(URL, {data: data}, config);
+        console.log(res)
         return res;
     } catch (err) {
         catchErr(err)
@@ -130,7 +143,8 @@ const UsersServices = {
     requestPasswordReset,
     getAllUsers,
     updateOneUser,
-    deleteUser
+    deleteOneUser,
+    deleteManyUsers
 }
 
 export default UsersServices;

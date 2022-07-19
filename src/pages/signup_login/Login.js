@@ -54,7 +54,7 @@ export default function Login({handleChange}) {
             // validate entry
             if (validate()) {
                 const auth = await authenticate(formData)
-                console.log(auth)
+                // console.log(auth.data)
                 if (auth && auth.status < 300) {
                     const res = await getUser(auth.data)
                     console.log(res)

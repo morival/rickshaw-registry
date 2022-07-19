@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminUserItem from './AdminUserItem';
 import { List } from '@mui/material';
 import { useAuth } from 'context/AuthContext';
+import Controls from 'components/controls/Controls';
 
 export default function AdminUsers(params) {
     
@@ -43,6 +44,14 @@ export default function AdminUsers(params) {
     }
 
 
+    useEffect(() => {
+        const checkboxArray = users.map(el => {
+            return {name: el._id, value: false};
+        })
+        setCheckboxes(checkboxArray)
+    },[users])
+
+
     return(
         <List sx={{ pb: 0 }}>
             {users.map((el, i) =>
@@ -53,6 +62,17 @@ export default function AdminUsers(params) {
                 key={i}
                 />
             )}
+            {/* Delete Selected Button */}
+            <Controls.ListControlButtons
+            handleDeleteMany={handleDeleteMany}
+            showDeleteButton={someCheckbox()}
+            showAddNewButton={null}
+            />
+            {/* <AdminUserItem
+                user={null}
+                handleDeleteMany={handleDeleteMany}
+                showDeleteButton={someCheckbox()}
+            /> */}
         </List>
     )
 };
