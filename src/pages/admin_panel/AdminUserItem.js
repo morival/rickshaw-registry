@@ -1,9 +1,9 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, Paper, Slide, useMediaQuery, useTheme } from '@mui/material';
-import Controls from './controls/Controls';
-import Content from './content/ProfileDescriptions';
-import { Form, UseForm } from './UseForm';
-import { useAuth } from './context/AuthContext';
+import Controls from 'components/controls/Controls';
+import Content from 'components/content/ProfileDescriptions';
+import { Form, UseForm } from 'components/UseForm';
+import { useAuth } from 'context/AuthContext';
 
 
 
@@ -12,12 +12,16 @@ const Transition = forwardRef((props, ref) =>
 );
 
 
-export default function AdminUserItem({ user }) {
+export default function AdminUserItem(props) {
 
 
     //  Theme Media Query
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+    // Props 
+    const { user, numberOfUsers, onCheckboxChange } = props
     
 
     // Validation
@@ -46,6 +50,14 @@ export default function AdminUserItem({ user }) {
     const { testEmailAndPhoneNo, updateUser, findUsers } = useAuth()
     // Forms
     const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
+
+
+    // Checkbox
+    const [checked, setChecked] = useState(false);
+    const handleCheckboxChange = (e) => {
+        setChecked(!checked)
+        onCheckboxChange(e)
+    }
 
     // Dialog Window State
     const [open, setOpen] = useState(false);
@@ -83,10 +95,20 @@ export default function AdminUserItem({ user }) {
         }
     }
 
+    useEffect(() => {
+        setChecked(false)
+    }, [numberOfUsers]);
+
     return (
         <MuiListItem
         sx={{ p: isSS ? '8px 0' : '8px 8px' }}
         >
+            {/* Item Checkbox */}
+            <Controls.Checkbox
+                name={user._id}
+                value={checked}
+                onChange={handleCheckboxChange}
+            />
             <Controls.Button
                 text={user.name}
                 // color='warning'
@@ -146,7 +168,7 @@ export default function AdminUserItem({ user }) {
                     </DialogContent>
                     <DialogActions sx={{ width: '100%', maxWidth: 300 }}>
                     <Button onClick={handleCancel}>Cancel</Button>
-                        <Button type="submit" color={errors.description ? "error" : "primary"}>Save</Button>
+                        <Button type="submit" color={errors.user ? "error" : "primary"}>Save</Button>
                     </DialogActions>
                 </Form>
             </Dialog>

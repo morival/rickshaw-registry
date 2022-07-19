@@ -76,29 +76,6 @@ async function testEmailAndPhoneNo(data) {
 }
 
 
-// // TEST Email if already exists
-// async function testEmail(data) {
-//     try {
-//         const res = await axios.post(URL+'email', data, config);
-//         console.log(res)
-//         return res;
-//     } catch (err) {
-//         catchErr(err)
-//     }
-// }
-
-
-// // TEST Email if already exists
-// async function testPhoneNo(data) {
-//     try {
-//         const res = await axios.post(URL+'phoneNumber', data, config);
-//         console.log(res)
-//         return res;
-//     } catch (err) {
-//         catchErr(err)
-//     }
-// }
-
 // REQUEST Password Reset
 async function requestPasswordReset(data) {
     try {
@@ -133,16 +110,6 @@ async function updateOneUser(data, updateAs) {
         catchErr(err)
     }
 }
-
-// UPDATE User as Admin
-// async function updateUserAsAdmin(data) {
-//     try {
-//         const res = await axios.put(URL+'admin/'+data._id, data, config);
-//         return res;
-//     } catch (err) {
-//         catchErr(err)
-//     }
-// }
     
 
 // DELETE User
@@ -160,12 +127,9 @@ const UsersServices = {
     createUser,
     getUser,
     testEmailAndPhoneNo,
-    // testEmail,
-    // testPhoneNo,
     requestPasswordReset,
     getAllUsers,
     updateOneUser,
-    // updateUserAsAdmin,
     deleteUser
 }
 

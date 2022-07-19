@@ -1,10 +1,10 @@
 import React from 'react';
-import {UseForm, Form} from './UseForm';
-import Controls from './controls/Controls';
-import { useAuth } from './context/AuthContext';
 import { Avatar, Grid, Link, Paper,Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import ForgotPassword from './ForgotPassword';
+import {UseForm, Form} from 'components/UseForm';
+import Controls from 'components/controls/Controls';
+import { useAuth } from 'context/AuthContext';
 
 
 const loginContent = [
@@ -48,8 +48,8 @@ export default function Login({handleChange}) {
 
 
     async function handleSubmit(e) {
-        e.preventDefault()
-        setLoading(true)
+        e.preventDefault();
+        setLoading(true);
         try {
             // validate entry
             if (validate()) {

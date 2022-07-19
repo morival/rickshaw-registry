@@ -1,8 +1,8 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery, useTheme } from '@mui/material';
-import Controls from './controls/Controls';
-import { useAuth } from './context/AuthContext';
-import { Form, UseForm } from './UseForm';
+import Controls from 'components/controls/Controls';
+import { useAuth } from 'context/AuthContext';
+import { Form, UseForm } from 'components/UseForm';
 
 
 
@@ -20,7 +20,7 @@ export default function DescriptionItem(props) {
 
 
     // Props
-    const { description, descriptionsLength, onCheckboxChange, showDeleteButton, handleDeleteMany } = props
+    const { description, numberOfDescriptions, onCheckboxChange, showDeleteButton, handleDeleteMany } = props
 
     // Validation
     const validate = ( fieldValues = formData) => {
@@ -121,7 +121,7 @@ export default function DescriptionItem(props) {
     useEffect(() => {
         if (hasDescription)
             setChecked(false)
-    },[descriptionsLength, hasDescription])
+    },[numberOfDescriptions, hasDescription])
 
     return (
         <MuiListItem

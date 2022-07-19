@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/system';
 import { Redirect, Route } from 'react-router';
-import { useAuth } from '../components/context/AuthContext';
-import Navbar from '../components/Navbar';
+import { useAuth } from 'context/AuthContext';
+import Navbar from 'components/Navbar';
 
 
 const PublicRoute = ({component: Component, restricted, ...rest}) => {

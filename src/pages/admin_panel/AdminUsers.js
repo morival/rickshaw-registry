@@ -1,14 +1,13 @@
+import React, { useState } from 'react';
+import AdminUserItem from './AdminUserItem';
 import { List } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import DescriptionItem from './AdminDescriptionItem';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from 'context/AuthContext';
 
-
-export default function AdminDescriptions(params) {
+export default function AdminUsers(params) {
     
 
     // Auth Context
-    const { descriptions, deleteDescriptions } = useAuth();
+    const { users, deleteUsers } = useAuth();
 
 
     // Array of Checkboxes
@@ -29,7 +28,7 @@ export default function AdminDescriptions(params) {
     async function handleDeleteMany() {
         try {
             const data = checkboxes.filter(el => el.value).map(el => el.name)
-            const res = await deleteDescriptions(data)
+            const res = await deleteUsers(data)
             console.log(res)
             // setCheckboxes(checkboxArray)
         } catch (err) {
@@ -44,30 +43,16 @@ export default function AdminDescriptions(params) {
     }
 
 
-    useEffect(() => {
-        const checkboxArray = descriptions.map(el => {
-            return {name: el._id, value: false};
-        })
-        setCheckboxes(checkboxArray)
-    },[descriptions])
-
-
-    return (
+    return(
         <List sx={{ pb: 0 }}>
-            {descriptions.map((el, i) =>
-                <DescriptionItem
-                    descriptionsLength={descriptions.length}
-                    description={el}
-                    onCheckboxChange={handleCheckbox}
-                    key={i}
+            {users.map((el, i) =>
+                <AdminUserItem
+                user={el}
+                numberOfUsers={users.length}
+                onCheckboxChange={handleCheckbox}
+                key={i}
                 />
             )}
-            {/* Delete Selected and Add New Buttons */}
-            <DescriptionItem
-                description={{description: "", status: "", comments: ""}}
-                handleDeleteMany={handleDeleteMany}
-                showDeleteButton={someCheckbox()}
-            />
         </List>
     )
 };

@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import DashboardItem from '../components/DashboardItem';
-import DashboardDeleteItem from '../components/DashboardItemDeleteAccount'
-import Controls from '../components/controls/Controls';
-import { useAuth } from '../components/context/AuthContext';
-import { UseForm } from '../components/UseForm';
-import Content from '../components/content/ProfileDescriptions';
+import DashboardItem from './DashboardItem';
+import DashboardDeleteItem from './DashboardItemDeleteAccount'
+import Controls from 'components/controls/Controls';
+import { useAuth } from 'context/AuthContext';
+import { UseForm } from 'components/UseForm';
+import Content from 'components/content/ProfileDescriptions';
 import { Box, List, Paper, Tab, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';

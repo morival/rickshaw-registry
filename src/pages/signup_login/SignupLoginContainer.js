@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import Login from '../components/Login';
-import Signup from '../components/Signup';
+import Login from './Login';
+import Signup from './Signup';
 import { Paper, Tab } from '@mui/material';
 
 

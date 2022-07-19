@@ -1,8 +1,8 @@
 import React from 'react';
-import {UseForm, Form} from './UseForm';
-import Controls from './controls/Controls';
-import Content from './content/ProfileDescriptions';
-import { useAuth } from './context/AuthContext';
+import {UseForm, Form} from 'components/UseForm';
+import Controls from 'components/controls/Controls';
+import Content from 'components/content/ProfileDescriptions';
+import { useAuth } from 'context/AuthContext';
 import { Avatar, Grid, Link, Paper, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
@@ -49,8 +49,8 @@ export default function Signup({handleChange}) {
     
 
     async function handleSubmit(e) {
-        setLoading(true)
-        e.preventDefault()
+        e.preventDefault();
+        setLoading(true);
         try {
             if (validate()) {
                 const res = await testEmailAndPhoneNo(formData)

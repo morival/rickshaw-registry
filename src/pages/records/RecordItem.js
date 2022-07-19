@@ -1,9 +1,9 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, ListItem, Paper, Slide, Typography, useMediaQuery } from '@mui/material';
 import RecordItemPDF from './RecordItemPDF';
-import Controls from './controls/Controls';
+import Controls from 'components/controls/Controls';
+import { useAuth } from 'context/AuthContext';
 import { grey, green, red } from '@mui/material/colors';
-import { useAuth } from './context/AuthContext';
 import { useTheme } from '@mui/material/styles';
 
 

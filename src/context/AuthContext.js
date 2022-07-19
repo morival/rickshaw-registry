@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import UsersServices from '../../services/UsersServices';
-import RecordsServices from '../../services/RecordsServices';
+import UsersServices from 'services/UsersServices';
+import RecordsServices from 'services/RecordsServices';
+import ChecklistServices from 'services/ChecklistServices';
 import { useCookies } from 'react-cookie';
-import ChecklistServices from '../../services/ChecklistServices';
 
 
 // Catch Error

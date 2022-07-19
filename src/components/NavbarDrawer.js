@@ -3,7 +3,7 @@ import { SwipeableDrawer as MuiDrawer, List, ListItem, ListItemText, IconButton,
 import { Menu as MenuIcon, FactCheck as ChecklistIcon, Restore as RecordsIcon, AccountCircle as ProfileIcon, AdminPanelSettings, Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { makeStyles } from '@mui/styles';
 import { withRouter } from 'react-router';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from 'context/AuthContext';
 
 
 const useStyles = makeStyles({

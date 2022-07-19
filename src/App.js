@@ -1,14 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
-import PublicRoute from './routes/PublicRoute';
-import PrivateRoute from './routes/PrivateRoute';
-import AdminRoute from './routes/AdminRoute';
-import Home from './containers/HomeContainer';
-import SignupLogin from './containers/SignupLoginContainer';
-import Checklist from './containers/ChecklistContainer';
-import Records from './containers/RecordsContainer';
-import Dashboard from './containers/DashboardContainer';
-import AdminPanel from './containers/AdminPanelContainer';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import PublicRoute from 'routes/PublicRoute';
+import PrivateRoute from 'routes/PrivateRoute';
+import AdminRoute from 'routes/AdminRoute';
+import Home from 'pages/home/HomeContainer';
+import SignupLogin from 'pages/signup_login/SignupLoginContainer';
+import Checklist from 'pages/checklist/ChecklistContainer';
+import Records from 'pages/records/RecordsContainer';
+import Dashboard from 'pages/dashboard/DashboardContainer';
+import AdminPanel from 'pages/admin_panel/AdminPanelContainer';
 
 
 function App() {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import RecordItem from '../components/RecordItem';
-import { useAuth } from '../components/context/AuthContext';
-import Controls from '../components/controls/Controls';
+import RecordItem from './RecordItem';
+import { useAuth } from 'context/AuthContext';
+import Controls from 'components/controls/Controls';
 import { Box, List, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 

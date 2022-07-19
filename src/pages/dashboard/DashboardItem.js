@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem as MuiListItem, ListItemText, Paper, Slide, useMediaQuery} from '@mui/material';
-import Controls from './controls/Controls';
-import { Form } from './UseForm';
+import Controls from 'components/controls/Controls';
+import { Form } from 'components/UseForm';
 import { useTheme } from '@mui/material/styles';
 
 

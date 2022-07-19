@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../components/context/AuthContext';
-import Controls from '../components/controls/Controls';
+import { useAuth } from 'context/AuthContext';
+import Controls from 'components/controls/Controls';
 
 export default function Home() {
 

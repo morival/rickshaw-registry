@@ -1,8 +1,8 @@
 import React, { forwardRef, useState } from 'react';
 import { Box, Dialog, DialogContent, DialogTitle, Link, Paper, Slide, Typography } from '@mui/material';
-import Controls from './controls/Controls';
-import { Form, UseForm } from './UseForm';
-import { useAuth } from './context/AuthContext';
+import Controls from 'components/controls/Controls';
+import { Form, UseForm } from 'components/UseForm';
+import { useAuth } from 'context/AuthContext';
 
 
 

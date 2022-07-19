@@ -1,8 +1,8 @@
 import { Box } from '@mui/system';
 import React from 'react';
 import { Redirect, Route } from 'react-router';
-import { useAuth } from '../components/context/AuthContext';
-import Navbar from '../components/Navbar';
+import { useAuth } from 'context/AuthContext';
+import Navbar from 'components/Navbar';
 
 
 function AdminRoute({ component: Component, ...rest }) {

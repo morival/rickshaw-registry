@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'rea
 import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormHelperText, Paper, Radio, RadioGroup, TextareaAutosize, Tooltip, Typography, useMediaQuery, Zoom } from '@mui/material';
 import { grey, green, red } from '@mui/material/colors';
 import CommentIcon from '@mui/icons-material/Comment';
-import { UseForm } from './UseForm';
+import { UseForm } from 'components/UseForm';
 import { useTheme } from '@mui/material/styles';
 
 

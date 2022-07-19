@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from 'context/AuthContext';
 import Drawer from './NavbarDrawer';
 import Controls from './controls/Controls';
 import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material';

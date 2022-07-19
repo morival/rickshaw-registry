@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
-import Controls from '../components/controls/Controls';
-import { useAuth } from '../components/context/AuthContext';
-import { Form, UseForm } from '../components/UseForm';
-import ChecklistItem from '../components/ChecklistItem';
-// import Content from '../components/content/ChecklistDescriptions';
+import Controls from 'components/controls/Controls';
+import { useAuth } from 'context/AuthContext';
+import { Form, UseForm } from 'components/UseForm';
+import ChecklistItem from './ChecklistItem';
+// import Content from 'components/content/ChecklistDescriptions';
 import { useHistory } from "react-router-dom";
 
 // const initialValues = []

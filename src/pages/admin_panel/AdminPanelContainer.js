@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AdminDescriptions from '../components/AdminDescriptions';
-import AdminUsers from '../components/AdminUsers';
-import Controls from '../components/controls/Controls';
+import AdminDescriptions from './AdminDescriptions';
+import AdminUsers from './AdminUsers';
+import Controls from 'components/controls/Controls';
 import { Box, Paper, Tab, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
