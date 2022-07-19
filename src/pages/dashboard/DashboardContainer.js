@@ -44,12 +44,12 @@ export default function DashboardContainer( children, ...rest ) {
     // Auth Context
     const { user, testEmailAndPhoneNo, authenticate, updateUser, deleteUser, deleteUserRecord, logout } = useAuth();
     // Forms
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
+    const { formData, errors, setErrors, handleInputChange, resetForm } = UseForm(user, true, validate)
     // refresh Data Form
-    const refreshFormData = () => {
-        setFormData(user);
-        setErrors({});
-    }
+    // const refreshFormData = () => {
+    //     setFormData(user);
+    //     setErrors({});
+    // }
 
     // Password Verification Form
     const [passwordVerification, setPasswordVerification] = useState({ password: "" });
@@ -85,7 +85,7 @@ export default function DashboardContainer( children, ...rest ) {
                 error={errors[element.name]}
                 onChange={handleInputChange}
                 onSubmit={handleSubmit}
-                onCancel={refreshFormData}
+                onCancel={resetForm}
                 closeDialog={closeDialog}
                 key={i}
             /> 

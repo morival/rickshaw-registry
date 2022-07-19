@@ -35,9 +35,9 @@ export default function DescriptionItem(props) {
     }
     
     // Auth Context
-    const { createDescription, updateDescription, deleteDescription } = useAuth();
+    const { setLoading, createDescription, updateDescription, deleteDescription } = useAuth();
     // Forms
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(description, true, validate);
+    const { formData, errors, setErrors, handleInputChange, resetForm } = UseForm(description, true, validate);
     
     const hasDescription = description.description;
 
@@ -62,13 +62,14 @@ export default function DescriptionItem(props) {
     };
 
     const handleCancel = () => {
-        setFormData(description);
+        resetForm();
         setErrors({})
         handleClose();
     };
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setLoading(true)
         validate();
         try {
             // Add New Description
@@ -97,10 +98,13 @@ export default function DescriptionItem(props) {
             } else {
                 console.log(`Error: ${err.message}`)
             }
+        } finally {
+            setLoading(false)
         }
     };
 
     async function handleDelete() {
+        setLoading(true)
         try {
             const res = await deleteDescription(formData)
             console.log(res)
@@ -108,8 +112,11 @@ export default function DescriptionItem(props) {
                     handleClose();
         } catch (err) {
             console.log(`Error: ${err.message}`)
+        } finally {
+            setLoading(false)
         }
     }
+    
     const deleteManyButton = () => (
         <Controls.Button
             text="Delete Selected"

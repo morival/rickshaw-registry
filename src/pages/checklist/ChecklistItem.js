@@ -55,7 +55,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
     // Window State
     const [open, setOpen] = useState(false);
     // Temporary Value
-    const [tempValue, setTempValue] = useState(formData)
+    const [comment, setComment] = useState(formData)
     
     
     // Tooltip child Button component
@@ -75,7 +75,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
     
     
     const handleOpen = () => {
-        setTempValue(formData)
+        setComment(formData)
         setOpen(true);
     };
     
@@ -91,7 +91,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
     };
 
     const handleCancel = () => {
-        setFormData(tempValue);
+        setFormData(comment);
         handleClose();
     };
 
@@ -110,6 +110,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
         <FormControl 
         sx={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}
         >
+            {/* Description */}
             <Container 
             disableGutters
             sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: isSS ? 1 : 2 }}
@@ -127,6 +128,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
             disableGutters
             sx={{ width: 80 }}
             >
+                {/* Status */}
                 <RadioGroup
                 sx={{ flexWrap: 'nowrap' }}
                 value={value}
@@ -157,7 +159,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
             <Tooltip TransitionComponent={Zoom} title={!open?comments:""} placement="left" arrow>
                 <TooltipButton/>
             </Tooltip>
-            {/* Dialog */}
+            {/* Comment - Dialog */}
             <Dialog
             sx={{ '& .MuiDialog-paper': { px: 2 } }}
             fullWidth
@@ -188,6 +190,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
                         />
                     </Paper>
                 </Box>
+                {/* Dialog Cancel/Save buttons */}
                 <DialogActions>
                     <Button onClick={handleCancel}>Cancel</Button>
                     <Button onClick={handleClose}>Save</Button>

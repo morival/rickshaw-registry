@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 
 
 export function UseForm(initialValues, validateOnChange=false, validate) {
@@ -17,9 +17,12 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
             validate({ [name]: value })
     };
 
-    useEffect(() => {
-        // console.log(formData)
-    },[formData])
+    const resetForm = () => {
+        setFormData(initialValues);
+        setErrors({});
+        setErrorArr([]);
+    }
+
     
     return {
         formData,
@@ -28,7 +31,8 @@ export function UseForm(initialValues, validateOnChange=false, validate) {
         setErrors,
         errorArr,
         setErrorArr,
-        handleInputChange
+        handleInputChange,
+        resetForm
     }
 }
 

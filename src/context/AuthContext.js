@@ -34,7 +34,7 @@ export function AuthProvider({children}) {
     const [recordId, setRecordId] = useState();
     const [records, setRecords] = useState();
     const [loggedIn, setLoggedIn] = useState(cookies.loggedIn);
-    const [loading, setLoading] = useState();
+    const [loading, setLoading] = useState(false);
 
 
     // Services
@@ -242,11 +242,15 @@ export function AuthProvider({children}) {
         }
     }, [user, rememberMe, setCookie])
 
+    useEffect(() => {
+        console.log(loading)
+    }, [loading])
+
 
     return (
         <AuthContext.Provider value={value}>
             {
-            // !loading && 
+            !loading && 
             children
             }
         </AuthContext.Provider>

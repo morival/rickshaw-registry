@@ -47,9 +47,9 @@ export default function AdminUserItem(props) {
 
 
     // Auth Context
-    const { testEmailAndPhoneNo, updateUser, findUsers, deleteUser } = useAuth()
+    const { setLoading, testEmailAndPhoneNo, updateUser, findUsers, deleteUser } = useAuth()
     // Forms
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(user, true, validate)
+    const { formData, errors, setErrors, handleInputChange, resetForm } = UseForm(user, true, validate)
 
     if (!user)
         console.log("empty user")
@@ -77,7 +77,7 @@ export default function AdminUserItem(props) {
     };
 
     const handleCancel = () => {
-        setFormData(user);
+        resetForm();
         setErrors({})
         handleClose();
     };
@@ -88,23 +88,31 @@ export default function AdminUserItem(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        // check for duplicate email or phone number in DB
-        const res = await testEmailAndPhoneNo(formData)
-        if (res && res.status === 203) {
-            console.log(res.data)
-            setErrors(res.data)
-        } else {
-            const res = await updateUser(formData, "admin")
-            if (res && res.status < 300) {
-                console.log(res)
-                findUsers();
-                handleClose();
+        setLoading(true)
+        try {
+            // check for duplicate email or phone number in DB
+            const res = await testEmailAndPhoneNo(formData)
+            if (res && res.status === 203) {
+                console.log(res.data)
+                setErrors(res.data)
+            } else {
+                const res = await updateUser(formData, "admin")
+                if (res && res.status < 300) {
+                    console.log(res)
+                    findUsers();
+                    handleClose();
+                }
             }
+        } catch (err) {
+            console.log(`Error: ${err.message}`)
+        } finally {
+            setLoading(false)
         }
     }
 
     async function handleDelete() {
         console.log(formData)
+        setLoading(true)
         try {
             if (dChecked) {
                 const res = await deleteUser(formData)
@@ -114,12 +122,15 @@ export default function AdminUserItem(props) {
             }
         } catch (err) {
             console.log(`Error: ${err.message}`)
+        } finally {
+            setLoading(false)
         }
     }
 
 
     useEffect(() => {
         setChecked(false)
+        console.log("useEffect lunched")
     }, [numberOfUsers]);
 
     return (

@@ -38,7 +38,7 @@ export default function ForgotPassword() {
     // Auth Context
     const { requestPasswordReset } = useAuth();
     // Forms
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
+    const { formData, errors, setErrors, handleInputChange, resetForm } = UseForm(initialValues, true, validate);
 
 
     // Dialog Window State
@@ -53,7 +53,7 @@ export default function ForgotPassword() {
     };
 
     const handleCancel = () => {
-        setFormData(initialValues);
+        resetForm();
         setErrors({});
         handleClose();
     }
