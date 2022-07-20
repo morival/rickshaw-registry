@@ -38,28 +38,27 @@ export default function Input(props) {
         >
             <InputLabel>{label || name[0].toUpperCase()+name.slice(1)}</InputLabel>
             <MuiInput
-            name={name}
-            value={value} 
-            type={checkInputType()}
-            onChange={onChange}
-            size={size || "small"}
-            autoComplete={autoComplete || "off"}
-            {...(error && {error:true})}
-            {...other}
-            endAdornment={type === "password"
-            ?   <InputAdornment position="end">
-                  <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                  >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-            :   null
-            }
-            />
+                name={name}
+                value={value} 
+                type={checkInputType()}
+                onChange={onChange}
+                size={size || "small"}
+                autoComplete={autoComplete || "off"}
+                {...(error && {error:true})}
+                {...other}
+                endAdornment={type === "password"
+                ?   <InputAdornment position="end">
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                        >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </InputAdornment>
+                :   null
+                } />
             <FormHelperText error>{error}</FormHelperText>
         </FormControl>
     )

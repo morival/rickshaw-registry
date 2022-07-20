@@ -66,30 +66,18 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
 
   
   return (
-    <MuiListItem
-    sx={{ p: isSS ? '8px 0' : '8px 8px' }}
-    >
+    <MuiListItem sx={{ p: isSS ? '8px 0' : '8px 8px' }}>
         {/* Item Label */}
         <ListItemText
           sx={{ minWidth: isSS ? 100 : 135 }}
           primary="Delete Account"
-          primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: 1 }}
-        />
-        {/* Item Value */}
-        {/* <ListItemText
-          sx={{ width: '100%' }}
-          primary="Permanently delete your Rickshaw account"
-          primaryTypographyProps={isSS
-            ? { fontSize: '0.8rem', p: '0 5px'  }
-            : { px: 3 }}
-        /> */}
+          primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: 1 }} />
         {/* Item Delete Button */}
         <Controls.Button 
           sx={{ minWidth: 70, width: '65%', textTransform: 'none' }}
           color="error"
           onClick={handleOpen}
-          text="Permanently delete your Rickshaw account"
-        />
+          text="Permanently delete your Rickshaw account" />
 
         {/* Dialog Window */}
         <Dialog
@@ -98,30 +86,29 @@ const AlertDialogSlide = forwardRef(({ onSubmit }, ref) => {
           TransitionComponent={Transition}
           aria-describedby="alert-dialog-slide-description"
         >
-            <Form onSubmit={handleSubmit}>
-                <DialogTitle>Delete Account</DialogTitle>
-                <DialogContent sx={{ px: 2, py: 0.2, maxWidth: 260 }}>
-                  <Paper sx={{ p: 1 }}>
-                    <DialogContentText 
-                      sx={{ color: red[800] }}
-                      id="alert-dialog-slide-description"
-                    >
-                      When you delete your account, you won't be able to retrieve the content that you stored
-                    </DialogContentText>
-                  </Paper>
-                  <Controls.Checkbox
-                    sx={{ pt: 1 }}
-                    labelSX={{ fontSize: '12px' }}
-                    label="check this box to confirm you want to delete your account"
-                    value={checked}
-                    onChange={handleChange}
-                  />
-                </DialogContent>
-                <DialogActions>
-                    {checked ? <Button type="submit">Confirm</Button> : null}
-                    <Button onClick={handleClose}>Cancel</Button>
-                </DialogActions>
-            </Form>
+          <Form onSubmit={handleSubmit}>
+            <DialogTitle>Delete Account</DialogTitle>
+            <DialogContent sx={{ px: 2, py: 0.2, maxWidth: 260 }}>
+              <Paper sx={{ p: 1 }}>
+                <DialogContentText 
+                  sx={{ color: red[800] }}
+                  id="alert-dialog-slide-description"
+                >
+                  When you delete your account, you won't be able to retrieve the content that you stored
+                </DialogContentText>
+              </Paper>
+              <Controls.Checkbox
+                sx={{ pt: 1 }}
+                labelSX={{ fontSize: '12px' }}
+                label="check this box to confirm you want to delete your account"
+                value={checked}
+                onChange={handleChange} />
+            </DialogContent>
+            <DialogActions>
+                {checked ? <Button type="submit">Confirm</Button> : null}
+                <Button onClick={handleClose}>Cancel</Button>
+            </DialogActions>
+          </Form>
         </Dialog>
     </MuiListItem>
   );

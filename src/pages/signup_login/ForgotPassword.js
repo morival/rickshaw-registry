@@ -108,8 +108,7 @@ export default function ForgotPassword() {
                                     error={errors.email}
                                     onChange={handleInputChange}
                                     fullWidth
-                                    autoFocus
-                                />
+                                    autoFocus />
                                 <Controls.Input
                                     label='Confirm email address'
                                     name='confirmEmail'
@@ -117,20 +116,17 @@ export default function ForgotPassword() {
                                     value={formData.confirmEmail}
                                     error={errors.confirmEmail}
                                     onChange={handleInputChange}
-                                    fullWidth
-                                />
+                                    fullWidth />
                                 <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1, mt: 2 }}>
                                     <Controls.Button
                                         text="Send"
                                         type="submit"
-                                        fullWidth
-                                    />
+                                        fullWidth />
                                     <Controls.Button
                                         text="Cancel"
                                         variant="outlined"
                                         onClick={handleCancel}
-                                        fullWidth
-                                    />
+                                        fullWidth />
                                 </Box>
                             </Form>
                         </Paper>

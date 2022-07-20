@@ -41,14 +41,12 @@ export default function Navbar() {
         ?   null
         :   loggedIn
             ?   <Controls.Button
-                text="Log Out"
-                onClick={handleLogout}
-                />
+                    text="Log Out"
+                    onClick={handleLogout} />
             :   <Controls.Button
-                text="Log in / Sign up"
-                color="primary"
-                component={Link} to={"/login"}
-                />
+                    text="Log in / Sign up"
+                    color="primary"
+                    component={Link} to={"/login"} />
     }
 
 

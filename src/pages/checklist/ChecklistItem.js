@@ -113,50 +113,43 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
     
 
     return (
-        <FormControl 
-        sx={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}
-        >
+        <FormControl sx={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
             {/* Description */}
             <Container 
-            disableGutters
-            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: isSS ? 1 : 2 }}
+                disableGutters
+                sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minHeight: 40, minWidth: 100, m: 0.5, borderRadius: 2, bgcolor: background, px: isSS ? 1 : 2 }}
             >
                 <Typography
-                sx={isSS
-                    ? { fontSize: '0.8rem' }
-                    : { px: 1 }}
-                variant='body1'
+                    sx={isSS
+                        ? { fontSize: '0.8rem' }
+                        : { px: 1 }}
+                    variant='body1'
                 >
                     {description}
                 </Typography>
             </Container>
-            <Container
-            disableGutters
-            sx={{ width: 80 }}
-            >
+            <Container disableGutters sx={{ width: 80 }}>
                 {/* Status */}
                 <RadioGroup
-                sx={{ flexWrap: 'nowrap' }}
-                value={value}
-                onChange={handleRadioChange}
-                row
+                    sx={{ flexWrap: 'nowrap' }}
+                    value={value}
+                    onChange={handleRadioChange}
+                    row
                 >
                     <FormControlLabel
-                    sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
-                    value="passed"
-                    control={
-                        <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='success'/>
-                    } 
-                    label="yes"
-                    />
+                        sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
+                        value="passed"
+                        control={
+                            <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='success'/>
+                        } 
+                        label="yes" />
                     <FormControlLabel
-                    sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
-                    value="failed"
-                    control={
-                        <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='error'/>
-                    } 
-                    label="no"
-                    />
+                        sx={{ justifyContent: 'center', flexDirection: 'column-reverse', mx: 1 }}
+                        value="failed"
+                        control={
+                            <Radio name='status' id={id} sx={{ p: 0, mb: 0.5 }} color='error'/>
+                        } 
+                        label="no" />
                 </RadioGroup>
                 <FormHelperText error={helperText ? true : false} sx={{ pb: 1, mt: 0 }}>
                     {helperText}
@@ -167,11 +160,11 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
             </Tooltip>
             {/* Comment - Dialog */}
             <Dialog
-            sx={{ '& .MuiDialog-paper': { px: 2 } }}
-            fullWidth
-            maxWidth='md'
-            open={open} 
-            onClose={handleCancel}
+                sx={{ '& .MuiDialog-paper': { px: 2 } }}
+                fullWidth
+                maxWidth='md'
+                open={open} 
+                onClose={handleCancel}
             >
                 {/* Dialog Title */}
                 <DialogTitle sx={{ px: 0 }}>{description}</DialogTitle>
@@ -183,17 +176,16 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
                         </DialogContent>
                         {/* Dialog Input */}
                         <TextareaAutosize
-                        style={{ width: '100%' }}
-                        autoFocus
-                        id={id}
-                        name="comments"
-                        value={comments}
-                        onChange={handleInputChange}
-                        onKeyDown={onEnterPress}
-                        minRows={4}
-                        maxLength={300}
-                        placeholder="write your comment here"
-                        />
+                            style={{ width: '100%' }}
+                            autoFocus
+                            id={id}
+                            name="comments"
+                            value={comments}
+                            onChange={handleInputChange}
+                            onKeyDown={onEnterPress}
+                            minRows={4}
+                            maxLength={300}
+                            placeholder="write your comment here" />
                     </Paper>
                 </Box>
                 {/* Dialog Cancel/Save buttons */}

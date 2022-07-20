@@ -55,24 +55,17 @@ export default function AdminUsers(params) {
     return(
         <List sx={{ pb: 0 }}>
             {users.map((el, i) =>
-                <AdminUserItem
+            <AdminUserItem
                 user={el}
                 numberOfUsers={users.length}
                 onCheckboxChange={handleCheckbox}
-                key={i}
-                />
+                key={i} />
             )}
             {/* Delete Selected Button */}
             <Controls.ListControlButtons
-            handleDeleteMany={handleDeleteMany}
-            showDeleteButton={someCheckbox()}
-            showAddNewButton={null}
-            />
-            {/* <AdminUserItem
-                user={null}
                 handleDeleteMany={handleDeleteMany}
                 showDeleteButton={someCheckbox()}
-            /> */}
+                showAddNewButton={null} />
         </List>
     )
 };

@@ -17,25 +17,21 @@ export default function Home() {
             {loggedIn
             ?   <>
                     <Controls.Button
-                    text="Checklist"
-                    color="warning"
-                    component={Link} to={"/checklist"}
-                    />
+                        text="Checklist"
+                        color="warning"
+                        component={Link} to={"/checklist"} />
                     <Controls.Button
-                    text="Records"
-                    color="error"
-                    component={Link} to={"/records"}
-                    />
+                        text="Records"
+                        color="error"
+                        component={Link} to={"/records"} />
                     <Controls.Button
-                    text="Dashboard"
-                    color="success"
-                    component={Link} to={"/dashboard"}
-                    />
+                        text="Dashboard"
+                        color="success"
+                        component={Link} to={"/dashboard"} />
                     <Controls.Button
-                    text="Admin Panel"
-                    color="secondary"
-                    component={Link} to={"/admin"}
-                    />
+                        text="Admin Panel"
+                        color="secondary"
+                        component={Link} to={"/admin"} />
                 </>
             : null}
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>

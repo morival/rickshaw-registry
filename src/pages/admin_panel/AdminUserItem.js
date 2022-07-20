@@ -142,15 +142,13 @@ export default function AdminUserItem(props) {
             <Controls.Checkbox
                 name={user._id}
                 value={checked}
-                onChange={handleCheckboxChange}
-            />
+                onChange={handleCheckboxChange} />
             {/* Item Name / Change Button */}
             <Controls.Button
                 text={user.name}
                 // color='warning'
                 variant='text'
-                onClick={handleOpen}
-            />
+                onClick={handleOpen} />
             
             {/* Dialog Window */}
             <Dialog
@@ -165,7 +163,6 @@ export default function AdminUserItem(props) {
                     onSubmit={handleSubmit}
                 >
                     {/* Dialog Title */}
-
                     <DialogTitle sx={{ textAlign: 'center' }}>{user.name}</DialogTitle>
                     <DialogContent sx={{ px:2, py: 0.2, maxWidth: 300 }}>
                         <Paper sx={{ p: 1 }}>
@@ -178,17 +175,16 @@ export default function AdminUserItem(props) {
                             .filter(element => element.name !== "password" && element.name !== "confirmPassword")
                             .map((element, i) => {
                                 return (
-                                    <Controls.Input
-                                        name={element.name}
-                                        label={element.label}
-                                        type={element.type}
-                                        value={formData[element.name] || ""}
-                                        error={errors[element.name]}
-                                        onChange={handleInputChange}
-                                        fullWidth
-                                        autoFocus={i === 0 ? true : false}
-                                        key={i}
-                                    />
+                            <Controls.Input
+                                name={element.name}
+                                label={element.label}
+                                type={element.type}
+                                value={formData[element.name] || ""}
+                                error={errors[element.name]}
+                                onChange={handleInputChange}
+                                fullWidth
+                                autoFocus={i === 0 ? true : false}
+                                key={i} />
                                 )
                             })}
                             <Controls.Select
@@ -198,21 +194,19 @@ export default function AdminUserItem(props) {
                                 value={formData["acc_type"] || ""}
                                 error={errors["acc_type"]}
                                 onChange={handleInputChange}
-                                fullWidth
-                            />
+                                fullWidth />
                         </Paper>
                         <Controls.Checkbox
                             sx={{ pt: 1 }}
                             labelSX={{ fontSize: '12px' }}
                             label="check this box to confirm you want to delete this record"
                             value={dChecked}
-                            onChange={handleChange}
-                        />
+                            onChange={handleChange} />
                     </DialogContent>
                     <DialogActions sx={{ width: '100%', maxWidth: 300 }}>
-                    <Button onClick={handleCancel}>Cancel</Button>
-                    {dChecked ? <Button id={user._id} onClick={handleDelete}>Delete</Button> : null}
-                    {user !== formData ? <Button type="submit" color={errors.user ? "error" : "primary"}>Save</Button> : null}
+                        <Button onClick={handleCancel}>Cancel</Button>
+                        {dChecked ? <Button id={user._id} onClick={handleDelete}>Delete</Button> : null}
+                        {user !== formData ? <Button type="submit" color={errors.user ? "error" : "primary"}>Save</Button> : null}
                     </DialogActions>
                 </Form>
             </Dialog>

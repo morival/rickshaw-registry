@@ -89,8 +89,7 @@ export default function RecordItem({ record, onDelete }) {
             <Controls.Button
                 text={recordedOnDate}
                 onClick={handleOpen}
-                fullWidth
-            />
+                fullWidth />
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -135,8 +134,7 @@ export default function RecordItem({ record, onDelete }) {
                         labelSX={{ fontSize: '12px' }}
                         label="check this box to confirm you want to delete this record"
                         value={checked}
-                        onChange={handleChange}
-                    />
+                        onChange={handleChange} />
                 </DialogContent>
                 <DialogActions sx={{}}>
                     <Button onClick={handlePrint}>Print</Button>

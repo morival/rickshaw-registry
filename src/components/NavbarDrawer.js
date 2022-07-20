@@ -71,31 +71,29 @@ const Drawer = props => {
     return(
         <>
             <IconButton
-            edge="start"
-            color="inherit"
-            arial-label="open drawer"
-            onClick={() => setOpen(true)}
+                edge="start"
+                color="inherit"
+                arial-label="open drawer"
+                onClick={() => setOpen(true)}
             >
                 <MenuIcon/>
             </IconButton>
             <MuiDrawer 
-            open={open}
-            onClose={() => setOpen(false)}
-            onOpen={() => {}}
-            anchor="left"
+                open={open}
+                onClose={() => setOpen(false)}
+                onOpen={() => {}}
+                anchor="left"
             >
-                <List
-                className={classes.drawer}
-                >
+                <List className={classes.drawer}>
                     {itemsList
                     .filter((item, i) => selectedItems().includes(i))
                     .map((item, i) => {
                         const {text, icon, onClick} = item;
                         return(
-                            <ListItem button key={i} onClick={onClick}>
-                                {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                                <ListItemText primary={text} />
-                            </ListItem>
+                    <ListItem button key={i} onClick={onClick}>
+                        {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                        <ListItemText primary={text} />
+                    </ListItem>
                         )
                     })}
                 </List>

@@ -90,45 +90,38 @@ export default function Checklist(params) {
             <h1>Checklist</h1>
             <Controls.Button
                 text="Home"
-                component={Link} to={"/"}
-            />
+                component={Link} to={"/"} />
             <Controls.Button
                 text="Records"
                 color="error"
-                component={Link} to={"/records"}
-            />
+                component={Link} to={"/records"} />
             <Controls.Button
                 text="Dashboard"
                 color="success"
-                component={Link} to={"/dashboard"}
-            />
+                component={Link} to={"/dashboard"} />
             <Controls.Button
                 text="Admin Panel"
                 color="secondary"
-                component={Link} to={"/admin"}
-            />
+                component={Link} to={"/admin"} />
             <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                 <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     <Form onSubmit={handleSubmit}>
                         {formData.map((element, i) => 
-                            <ChecklistItem
-                                initialValues={element}
-                                updatedValues={updatedValues}
-                                ref={(item)=>{refs.current[i]=item}}
-                                key={i}
-                            />
+                        <ChecklistItem
+                            initialValues={element}
+                            updatedValues={updatedValues}
+                            ref={(item)=>{refs.current[i]=item}}
+                            key={i} />
                         )}
                         <Stack direction='row' sx={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
                             <Controls.Button
                                 text="Save"
                                 size="small"
-                                type="submit"
-                            />
+                                type="submit" />
                             <Controls.Button
                                 text="Reset Form"
                                 size="small"
-                                onClick={resetAllForms}
-                            />
+                                onClick={resetAllForms} />
                         </Stack>
                     </Form>
                 </Paper>

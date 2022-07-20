@@ -17,8 +17,8 @@ export default function SelectInput(props) {
 
     return (
         <FormControl
-        sx={{ my: 1 }}
-        fullWidth={fullWidth || false}
+            sx={{ my: 1 }}
+            fullWidth={fullWidth || false}
         >
             <InputLabel id={name}>{label}</InputLabel>
             <Select
@@ -31,7 +31,7 @@ export default function SelectInput(props) {
                 {...other}
             >
                 {menuItems.map((element, i) => 
-                    <MenuItem value={element} key={i}>{element}</MenuItem>
+                <MenuItem value={element} key={i}>{element}</MenuItem>
                 )}
             </Select>
         </FormControl>

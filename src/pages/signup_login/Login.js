@@ -85,32 +85,29 @@ export default function Login({handleChange}) {
                     {loginContent.map((element, i) => {
                         const elementName = element.name;
                         return (
-                            <Controls.Input
-                            label={element.label}
-                            name={element.name}
-                            type={element.type}
-                            value={formData[elementName]}
-                            error={errors[elementName]}
-                            onChange={handleInputChange}
-                            fullWidth
-                            autoComplete="on"
-                            autoFocus={i === 0 ? true : false}
-                            key={i}
-                            />
+                    <Controls.Input
+                    label={element.label}
+                    name={element.name}
+                    type={element.type}
+                    value={formData[elementName]}
+                    error={errors[elementName]}
+                    onChange={handleInputChange}
+                    fullWidth
+                    autoComplete="on"
+                    autoFocus={i === 0 ? true : false}
+                    key={i}  />
                         )
                     })}
                     <Controls.Checkbox
                     label="Remember me"
                     name="rememberMe"
                     value={formData.rememberMe}
-                    onChange={handleInputChange}
-                    />
+                    onChange={handleInputChange} />
                     <Controls.Button
                     text="Log In"
                     type="submit"
                     // disabled={loading}
-                    fullWidth
-                    />
+                    fullWidth />
                 </Form>
                 <ForgotPassword />
             </Paper>

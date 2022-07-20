@@ -85,43 +85,25 @@ export default function Signup({handleChange}) {
                     .map((element, i) => {
                         const elementName = element.name;
                         return (
-                            <Controls.Input
-                                label={element.label}
-                                name={elementName}
-                                type={element.type}
-                                value={formData[elementName]}
-                                error={errors[elementName]}
-                                onChange={handleInputChange}
-                                fullWidth
-                                autoFocus={i === 0 ? true : false}
-                                key={i}
-                            />
+                    <Controls.Input
+                        label={element.label}
+                        name={elementName}
+                        type={element.type}
+                        value={formData[elementName]}
+                        error={errors[elementName]}
+                        onChange={handleInputChange}
+                        fullWidth
+                        autoFocus={i === 0 ? true : false}
+                        key={i} />
                         )
                     })}
-                    {/* {Content.signupContent.map((element, i) => {
-                        const elementName = element.name;
-                        return (
-                            <Controls.Input
-                                label={element.label}
-                                name={element.name}
-                                type={element.type}
-                                value={formData[elementName]}
-                                error={errors[elementName]}
-                                onChange={handleInputChange}
-                                fullWidth
-                                autoFocus={i === 0 ? true : false}
-                                key={i}
-                            />
-                        )
-                    })} */}
                     <Typography sx={{ fontSize: '0.75rem' }} paragraph>
                         By signing up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy, and how we use cookies and similar technology in our Cookie Policy.
                     </Typography>
                     <Controls.Button
                         text="Create Account"
                         type="submit"
-                        fullWidth
-                    />
+                        fullWidth  />
                 </Form>
             </Paper>
 

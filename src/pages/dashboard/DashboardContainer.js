@@ -190,23 +190,19 @@ export default function DashboardContainer( children, ...rest ) {
             <h1>Dashboard</h1>
             <Controls.Button
                 text="Home"
-                component={Link} to={"/"}
-            />
+                component={Link} to={"/"} />
             <Controls.Button
                 text="Checklist"
                 color="warning"
-                component={Link} to={"/checklist"}
-            />
+                component={Link} to={"/checklist"} />
             <Controls.Button
                 text="Records"
                 color="error"
-                component={Link} to={"/records"}
-            />
+                component={Link} to={"/records"} />
             <Controls.Button
                 text="Admin Panel"
                 color="secondary"
-                component={Link} to={"/admin"}
-            />
+                component={Link} to={"/admin"} />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     <Box sx={{ display: isSS ? null : 'flex'}}>
@@ -217,18 +213,15 @@ export default function DashboardContainer( children, ...rest ) {
                                 orientation={isSS ? 'horizontal' : 'vertical'}
                                 sx={{ borderRight: 1, borderColor: 'divider', minHeight: isSS ? '36px' : null }}
                             >
-                                {Content.profileTabs.map((element, i) => {
-                                    return(
-                                        <Tab
-                                            sx={isSS
-                                            ?   { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
-                                            :   { p: 0 }}
-                                            label={element} 
-                                            key={i} 
-                                            value={i.toString()} 
-                                        />
-                                    )
-                                })}
+                                {Content.profileTabs.map((element, i) => (
+                                <Tab
+                                    sx={isSS
+                                    ?   { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
+                                    :   { p: 0 }}
+                                    label={element} 
+                                    key={i} 
+                                    value={i.toString()} />
+                                ))}
                             </TabList>
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value="0">
@@ -239,21 +232,18 @@ export default function DashboardContainer( children, ...rest ) {
                                 <TabPanel sx={{ p: 0 }} value="1">
                                     <List sx={{ pb: 0 }}>
                                         {dashboardComponents(["line_1", "line_2", "line_3", "post_town", "postcode"])}
-                                        
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="2">
                                     <List sx={{ pb: 0 }}>
                                         {dashboardComponents(["lic_type", "lic_no", "lic_name", "lic_isb", "lic_iso", "lic_exp"])}
-                                        
                                     </List>
                                 </TabPanel>
                                 <TabPanel sx={{ p: 0 }} value="3">
                                     <List sx={{ pb: 0 }}>
                                         {dashboardComponents(["password"])}
                                         <DashboardDeleteItem
-                                            onSubmit={handleDeleteAcc}
-                                        />
+                                            onSubmit={handleDeleteAcc} />
                                     </List>
                                 </TabPanel>
                                 <DashboardItem
@@ -266,8 +256,7 @@ export default function DashboardContainer( children, ...rest ) {
                                     onSubmit={handleAction}
                                     onCancel={refreshPasVer}
                                     closeDialog={closeDialog}
-                                    ref={refOpen}
-                                />
+                                    ref={refOpen} />
                             </Box>
                         </TabContext>
                     </Box>

@@ -28,23 +28,19 @@ export default function AdminPanelContainer(params) {
             <h1>Admin Panel</h1>
             <Controls.Button
                 text="Home"
-                component={Link} to={"/"}
-            />
+                component={Link} to={"/"} />
             <Controls.Button
                 text="Checklist"
                 color="warning"
-                component={Link} to={"/checklist"}
-            />
+                component={Link} to={"/checklist"} />
             <Controls.Button
                 text="Records"
                 color="error"
-                component={Link} to={"/records"}
-            />
+                component={Link} to={"/records"} />
             <Controls.Button
                 text="Dashboard"
                 color="success"
-                component={Link} to={"/dashboard"}
-            />
+                component={Link} to={"/dashboard"} />
             <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                 <Paper sx={{ p: 1, maxWidth: '700px', width: '100%' }}>
                     <Box sx={{ display: isSS ? null : 'flex'}}>
@@ -60,15 +56,13 @@ export default function AdminPanelContainer(params) {
                                     ?   { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
                                     :   { p: 0 }}
                                     label="descriptions"
-                                    value="0"
-                                />
+                                    value="0" />
                                 <Tab
                                     sx={isSS
                                     ?   { fontSize: '0.625rem', p: 0.75, minHeight: '36px', minWidth: '' }
                                     :   { p: 0 }}
                                     label="users"
-                                    value="1"
-                                />
+                                    value="1" />
                             </TabList>
                             <Box sx={{ width: '100%' }}>
                                 <TabPanel sx={{ p: 0 }} value='0'>

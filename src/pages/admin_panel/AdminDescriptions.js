@@ -55,19 +55,17 @@ export default function AdminDescriptions(params) {
     return (
         <List sx={{ pb: 0 }}>
             {descriptions.map((el, i) =>
-                <DescriptionItem
-                    description={el}
-                    numberOfDescriptions={descriptions.length}
-                    onCheckboxChange={handleCheckbox}
-                    key={i}
-                />
+            <DescriptionItem
+                description={el}
+                numberOfDescriptions={descriptions.length}
+                onCheckboxChange={handleCheckbox}
+                key={i} />
             )}
             {/* Delete Selected and Add New Buttons */}
             <DescriptionItem
                 description={{description: "", status: "", comments: ""}}
                 handleDeleteMany={handleDeleteMany}
-                showDeleteButton={someCheckbox()}
-            />
+                showDeleteButton={someCheckbox()} />
         </List>
     )
 };

@@ -87,26 +87,14 @@ const AlertDialogSlide = forwardRef((props, ref) => {
       <ListItemText
         sx={{ minWidth: isSS ? 100 : 135, width: '35%' }}
         primary={label}
-        primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: 1 }}
-      />
-      {/* Item Value */}
-      {/* <ListItemText
-        sx={{ width: '100%' }}
-        primary={name === "password" ? "*****" : defaultValue}
-        primaryTypographyProps={isSS
-          ? { fontSize: '0.8rem', p: '0 5px' }
-          : { px: 3 }}
-      // set error message
-      // secondary={error?<Typography variant="subtitle2" color="error">{error}</Typography>:null}
-      /> */}
+        primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: 1 }} />
       {/* Item Value Button */}
       <Controls.Button 
         sx={{ minWidth: 70, width: '65%', textTransform: 'none' }}
         text={buttonValue}
         variant={defaultValue || name === "password" ? "contained" : "outlined"}
         color="primary"
-        onClick={handleOpen}
-      />
+        onClick={handleOpen} />
 
       {/* Dialog Window */}
       <Dialog
@@ -132,8 +120,7 @@ const AlertDialogSlide = forwardRef((props, ref) => {
                 type={type}
                 value={value}
                 error={error}
-                onChange={onChange}
-              />
+                onChange={onChange} />
             </Paper>
           </DialogContent>
           {/* Dialog Confirm/Cancel Buttons */}

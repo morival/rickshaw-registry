@@ -121,8 +121,7 @@ export default function DescriptionItem(props) {
         <Controls.Button
             text="Delete Selected"
             color="error"
-            onClick={handleDeleteMany}
-        />
+            onClick={handleDeleteMany} />
     )
 
     useEffect(() => {
@@ -137,8 +136,7 @@ export default function DescriptionItem(props) {
             ?   <Controls.Checkbox
                     name={description._id}
                     value={checked}
-                    onChange={handleCheckboxChange}
-                />
+                    onChange={handleCheckboxChange} />
             :   showDeleteButton 
                 ?   deleteManyButton()
                 :   null}
@@ -146,15 +144,13 @@ export default function DescriptionItem(props) {
             <ListItemText
                 sx={{ minWidth: isSS ? 100 : 135 }}
                 primary={hasDescription}
-                primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }}
-            />
+                primaryTypographyProps={{ fontWeight: 'bold', align: 'right', fontSize: isSS ? '0.8rem' : null, px: isSS ? null : 1 }} />
             {/* Item Change / Add Button */}
             <Controls.Button 
                 sx={{ minWidth: 70 }}
                 text={hasDescription ? "Change" : "Add New"}
                 color="primary"
-                onClick={handleOpen}
-            />
+                onClick={handleOpen} />
 
             {/* Dialog Window */}
             <Dialog
@@ -179,8 +175,7 @@ export default function DescriptionItem(props) {
                                 name="description"
                                 value={formData.description}
                                 error={errors.description}
-                                onChange={handleInputChange}
-                            />
+                                onChange={handleInputChange} />
                         </Paper>
                     </DialogContent>
                     <DialogActions>

@@ -10,7 +10,6 @@ export default function ListControlButtons(props) {
     const theme = useTheme();
     const isSS = useMediaQuery(theme.breakpoints.down('sm'));
 
-
     const { handleDeleteMany, showDeleteButton, showAddNewButton } = props
 
     
@@ -21,14 +20,12 @@ export default function ListControlButtons(props) {
             ?   <Controls.Button
                     text="Delete Selected"
                     color="error"
-                    onClick={handleDeleteMany}
-                />
+                    onClick={handleDeleteMany} />
             :   null}
             {showAddNewButton
             ?   <Controls.Button
                     sx={{  minWidth: 70}}
-                    text="Add New"
-                />
+                    text="Add New" />
             :   null}
         </MuiListItem>
     )

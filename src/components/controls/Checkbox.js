@@ -15,9 +15,7 @@ export default function Checkbox(props) {
 
     
     return(
-        <FormControl
-            sx={sx}
-        >
+        <FormControl sx={sx}>
             <FormControlLabel
                 control={<MuiCheckbox
                     name={name}
@@ -27,9 +25,7 @@ export default function Checkbox(props) {
                     {...other}
                 />}
                 label={<Typography sx={labelSX}>{label}</Typography> || ""}
-                sx={{ mr: 0 }}
-                
-            />
+                sx={{ mr: 0 }} />
         </FormControl>
     )
 };
