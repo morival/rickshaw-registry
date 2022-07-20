@@ -55,7 +55,7 @@ async function createUser(data) {
 
 // READ User 
 async function getUser(data) {
-    console.log(data._id)
+    // console.log(data._id)
     try {
         const res = await axios.get(URL+data._id , config);
         console.log(res)

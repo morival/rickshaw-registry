@@ -57,7 +57,7 @@ export default function Signup({handleChange}) {
                 if (res && res.status === 203) {
                     setErrors(res.data)
                 } else {
-                    signup(formData)
+                    await signup(formData)
                 }
             }
         } catch (err){

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Paper } from '@mui/material';
+import { Paper, Stack } from '@mui/material';
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
 import Controls from 'components/controls/Controls';
@@ -48,10 +48,13 @@ export default function Checklist(params) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        refs.current.forEach(element => {
-            element.requestValues();
-        });
+        refs.current.forEach(el => el.requestValues());
         setFormData(newFormData);
+    }
+
+    function resetAllForms(e) {
+        e.preventDefault();
+        refs.current.forEach(el => el.reset())
     }
 
     
@@ -115,11 +118,18 @@ export default function Checklist(params) {
                                 key={i}
                             />
                         )}
-                        <Controls.Button
-                            text="Save"
-                            size="small"
-                            type="submit"
-                        />
+                        <Stack direction='row' sx={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
+                            <Controls.Button
+                                text="Save"
+                                size="small"
+                                type="submit"
+                            />
+                            <Controls.Button
+                                text="Reset Form"
+                                size="small"
+                                onClick={resetAllForms}
+                            />
+                        </Stack>
                     </Form>
                 </Paper>
             </Box>

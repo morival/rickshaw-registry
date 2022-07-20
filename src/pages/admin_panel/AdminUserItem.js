@@ -78,6 +78,7 @@ export default function AdminUserItem(props) {
 
     const handleCancel = () => {
         resetForm();
+        setDChecked(false)
         setErrors({})
         handleClose();
     };
@@ -90,17 +91,19 @@ export default function AdminUserItem(props) {
         e.preventDefault();
         setLoading(true)
         try {
-            // check for duplicate email or phone number in DB
-            const res = await testEmailAndPhoneNo(formData)
-            if (res && res.status === 203) {
-                console.log(res.data)
-                setErrors(res.data)
-            } else {
-                const res = await updateUser(formData, "admin")
-                if (res && res.status < 300) {
-                    console.log(res)
-                    findUsers();
-                    handleClose();
+            if (user !== formData) {
+                // check for duplicate email or phone number in DB
+                const res = await testEmailAndPhoneNo(formData)
+                if (res && res.status === 203) {
+                    console.log(res.data)
+                    setErrors(res.data)
+                } else {
+                    const res = await updateUser(formData, "admin")
+                    if (res && res.status < 300) {
+                        console.log(res)
+                        findUsers();
+                        // handleClose();
+                    }
                 }
             }
         } catch (err) {
@@ -209,7 +212,7 @@ export default function AdminUserItem(props) {
                     <DialogActions sx={{ width: '100%', maxWidth: 300 }}>
                     <Button onClick={handleCancel}>Cancel</Button>
                     {dChecked ? <Button id={user._id} onClick={handleDelete}>Delete</Button> : null}
-                    <Button type="submit" color={errors.user ? "error" : "primary"}>Save</Button>
+                    {user !== formData ? <Button type="submit" color={errors.user ? "error" : "primary"}>Save</Button> : null}
                     </DialogActions>
                 </Form>
             </Dialog>

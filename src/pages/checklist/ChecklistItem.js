@@ -19,7 +19,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
     const validate = ( fieldValues = formData) => {
         let temp = {...errors}
         if('status' in fieldValues)
-        temp.status = fieldValues.status ? "" : "Field required"
+        temp.status = fieldValues.status ? "" : "Required"
         setErrors({
             ...temp
         })
@@ -29,13 +29,19 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
     
     
     // Forms
-    const { formData, setFormData, errors, setErrors, handleInputChange } = UseForm(initialValues, true, validate);
+    const { formData, setFormData, errors, setErrors, handleInputChange, resetForm } = UseForm(initialValues, true, validate);
     const { id, description, status, comments } = formData;
         
     useImperativeHandle(ref, () => ({
         requestValues() {
             updatedValues(formData)
             validate() ? setHelperText("") : setHelperText(errors.status)
+        },
+        reset() {
+            resetForm();
+            setValue("")
+            setComment("")
+            console.log(formData)
         }
     }));
     
@@ -55,7 +61,7 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
     // Window State
     const [open, setOpen] = useState(false);
     // Temporary Value
-    const [comment, setComment] = useState(formData)
+    const [comment, setComment] = useState(comments)
     
     
     // Tooltip child Button component
@@ -168,12 +174,12 @@ const ChecklistItem = forwardRef(({ initialValues, updatedValues }, ref) => {
             onClose={handleCancel}
             >
                 {/* Dialog Title */}
-                <DialogTitle sx={{ px: 0 }}>Add comment on:</DialogTitle>
+                <DialogTitle sx={{ px: 0 }}>{description}</DialogTitle>
                 <Box sx={{ justifyContent: 'center', display: 'flex' }}>
                     <Paper sx={{ p: 1, width: isSS ? '100%' : '80%' }}>
                         <DialogContent sx={{ p: 0 }}>
                             {/* Dialog Message */}
-                            <DialogContentText gutterBottom>{description}</DialogContentText>
+                            <DialogContentText gutterBottom>Add comment:</DialogContentText>
                         </DialogContent>
                         {/* Dialog Input */}
                         <TextareaAutosize

@@ -57,8 +57,8 @@ export default function Login({handleChange}) {
                 // console.log(auth.data)
                 if (auth && auth.status < 300) {
                     const res = await getUser(auth.data)
-                    console.log(res)
-                    login(res.data)
+                    // console.log(res)
+                    await login(res.data)
                 } else {
                     setErrors(auth.data)
                 }
